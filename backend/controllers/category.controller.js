@@ -1,0 +1,55 @@
+import Category from "../models/category.model.js";
+
+export const cretaeCategory = async(req, res) => {
+  try {
+    const {name, parentCategory, image} = req.body;
+
+    if (!name || !image) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const newCategory = await Category.create({
+      name,
+      parentCategory,
+      image,
+    });
+
+    console.log(newCategory);
+    
+
+    return res.status(200).json({
+      message: "Category created successfully.",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllParentCategories = async(req, res) => {
+    try {
+        
+        const categories = await Category.find({parentCategory : null});
+
+        return  res.status(200).json({
+            categories,
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const  getSubCategories = async(req, res) => {
+    try {
+        const {parentCategory}  = req.params;
+
+        const subCategories = await Category.find({parentCategory});
+
+        res.status(200).json({
+            subCategories,
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
