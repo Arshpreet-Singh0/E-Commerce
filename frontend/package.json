@@ -9,7 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "preact": "^10.24.1"
+    "@heroicons/react": "^2.1.5",
+    "@material-tailwind/react": "^2.1.10",
+    "axios": "^1.7.7",
+    "iconoir-react": "^7.9.0",
+    "preact": "^10.24.1",
+    "react-router": "^6.27.0",
+    "react-router-dom": "^6.27.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.1",
