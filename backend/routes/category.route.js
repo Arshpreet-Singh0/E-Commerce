@@ -5,8 +5,7 @@ const router = express.Router();
 
 router.route('/create').post(isAuthenticated, cretaeCategory);
 
-router.route('/get').get(getAllParentCategories); // get parent categoies
+router.route('/get').get(getAllParentCategories);
 
-router.route('/get/:parentCategory').get(getSubCategories); //get subcategories
-
+router.route('/get/:parentCategory').get(getSubCategories);
 export default router
