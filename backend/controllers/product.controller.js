@@ -84,7 +84,14 @@ export const updateProductInfo = async(req, res)=>{
 
 export const getAllProduct = async(req, res)=>{
     try {
-        const products = await Product.find({});
+        const keyword = req.query.keyword || "";
+        const query = {
+            $or: [
+                { name: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } },
+            ],
+        };
+        const products = await Product.find(query);
 
         return res.status(200).json({
             products,
@@ -188,3 +195,4 @@ export const deleteProduct = async(req, res)=>{
         
     }
 }
+
