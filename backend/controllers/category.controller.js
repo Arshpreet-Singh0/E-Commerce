@@ -8,13 +8,23 @@ export const cretaeCategory = async(req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    const category = await Category.findOne({name:name});
+    
+
+    if(category){
+      return res.status(400).json({
+        message: "Category already exists",
+        success : false,
+      })
+    }
+
     const newCategory = await Category.create({
       name,
       parentCategory,
       image,
     });
 
-    console.log(newCategory);
+    // console.log(newCategory);
     
 
     return res.status(200).json({
