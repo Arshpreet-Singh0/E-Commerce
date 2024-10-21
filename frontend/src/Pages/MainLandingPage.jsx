@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import BannerSlider from '../components/BannerSlider';
 
 function MainLandingPage() {
   const [data, setData] = useState([]);
@@ -7,8 +8,9 @@ function MainLandingPage() {
   useEffect(() => {
     axios.get('http://localhost:8080/api/v1/product/get')
       .then((response) => {
+        // Access the products array from the API response
         console.log(response);
-
+        
         if (response.data.success) {
           setData(response.data.products);
         } else {
@@ -21,28 +23,36 @@ function MainLandingPage() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-grow min-h-screen"> 
-      <div className="container mx-auto px-4">
+    <div className="flex flex-col flex-grow w-full">
+      <div className=""><BannerSlider/></div>
+      <div className=" mx-auto flex flex-col gap-7 px-4 w-full ">
         <h1 className="text-3xl font-bold mb-8 text-center">Items</h1>
+        <div className='flex flex-row w-full h-96'>
+        <div className='flex flex-col h-full w-full bg-[#000] hover:scale-105 transition-transform duration-1000 ease-in-out'>
+        </div>
+
+
+          <div className='flex flex-col w-full'>
+          <div className='flex flex-col'>
+              
+          </div>
+           <div className='flex flex-col'>
+              
+          </div>
+          </div>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data.map((item) => (
-<<<<<<< HEAD
             <div 
               key={item._id} 
-              className="relative bg-white rounded-lg shadow-md overflow-hidden group"
-=======
-            <div
-              key={item._id}
               className="relative bg-white h-60 rounded-lg shadow-md overflow-hidden group"
->>>>>>> c029038a400828c1725de1db199fa42103f25f85
             >
-              {/* Make the image responsive with h-auto to avoid layout issues */}
               <img
-                src={item.images[0].url}
+                src={item.images[0].url} 
                 alt={item.name}
-                className="object-contain w-full h-60 group-hover:opacity-50 transition-opacity duration-300"
+                className="object-contain w-full h-full group-hover:opacity-50 transition-opacity duration-300"
               />
-
+              
               {/* Details on hover */}
               <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 bg-white bg-opacity-90 transition-opacity duration-300 p-4 text-center">
                 <h2 className="text-xl font-bold mb-2">{item.name}</h2>

@@ -29,7 +29,7 @@ const SearchNav = () => {
 //   };
 
   return (
-    <div className="bg-[#F6F1EE] p-6 flex flex-row gap-8">
+    <div className="bg-[#F6F1EE] p-6 flex flex-row gap-8 items-center justify-between">
         <div id="input">
           <FaSearch id="search-icon" />
           <input
