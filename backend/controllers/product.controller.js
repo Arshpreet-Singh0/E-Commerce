@@ -91,7 +91,9 @@ export const getAllProduct = async(req, res)=>{
                 { description: { $regex: keyword, $options: "i" } },
             ],
         };
-        const products = await Product.find(query);
+        const products = await Product.find(query).populate({
+            path : 'category'
+        });
 
         return res.status(200).json({
             products,
@@ -107,7 +109,10 @@ export const getProductById = async(req, res)=>{
     try {
         const {id} = req.params;
 
-        const product = await Product.findById(id);
+        const product = await Product.findById(id).populate({
+            path : 'category',
+            strictpopulate : false,
+        });;
 
         if(!product){
             return res.status(400).json({
@@ -130,7 +135,9 @@ export const getCategoryProducts = async(req, res)=>{
     try {
         const {category} = req.params;
 
-        const products = await Product.find({category});
+        const products = await Product.find({category}).populate({
+            path : 'category'
+        });;
 
         return res.status(200).json({
             products,
@@ -161,7 +168,9 @@ export const getProductBySubCategory = async(req, res)=>{
     try {
         const {subcategory} = req.params;
 
-        const products = await Product.find({subcategory});
+        const products = await Product.find({subcategory}).populate({
+            path : 'subcategory'
+        });;
 
         return res.status(200).json({
             products,
