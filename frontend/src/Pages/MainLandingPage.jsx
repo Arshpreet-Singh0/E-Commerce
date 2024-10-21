@@ -7,9 +7,8 @@ function MainLandingPage() {
   useEffect(() => {
     axios.get('http://localhost:8080/api/v1/product/get')
       .then((response) => {
-        // Access the products array from the API response
         console.log(response);
-        
+
         if (response.data.success) {
           setData(response.data.products);
         } else {
@@ -22,20 +21,20 @@ function MainLandingPage() {
   }, []);
 
   return (
-    <div className="flex flex-col">
-      <div className=""></div>
+    <div className="flex flex-col flex-grow min-h-screen"> 
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8 text-center">Items</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data.map((item) => (
             <div 
               key={item._id} 
-              className="relative bg-white h-60 rounded-lg shadow-md overflow-hidden group"
+              className="relative bg-white rounded-lg shadow-md overflow-hidden group"
             >
+              {/* Make the image responsive with h-auto to avoid layout issues */}
               <img
                 src={item.images[0].url} 
                 alt={item.name}
-                className="object-contain w-full h-full group-hover:opacity-50 transition-opacity duration-300"
+                className="object-contain w-full h-60 group-hover:opacity-50 transition-opacity duration-300"
               />
               
               {/* Details on hover */}
