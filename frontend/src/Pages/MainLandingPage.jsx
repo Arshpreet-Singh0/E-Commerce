@@ -26,17 +26,23 @@ function MainLandingPage() {
         <h1 className="text-3xl font-bold mb-8 text-center">Items</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data.map((item) => (
+<<<<<<< HEAD
             <div 
               key={item._id} 
               className="relative bg-white rounded-lg shadow-md overflow-hidden group"
+=======
+            <div
+              key={item._id}
+              className="relative bg-white h-60 rounded-lg shadow-md overflow-hidden group"
+>>>>>>> c029038a400828c1725de1db199fa42103f25f85
             >
               {/* Make the image responsive with h-auto to avoid layout issues */}
               <img
-                src={item.images[0].url} 
+                src={item.images[0].url}
                 alt={item.name}
                 className="object-contain w-full h-60 group-hover:opacity-50 transition-opacity duration-300"
               />
-              
+
               {/* Details on hover */}
               <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 bg-white bg-opacity-90 transition-opacity duration-300 p-4 text-center">
                 <h2 className="text-xl font-bold mb-2">{item.name}</h2>

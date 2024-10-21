@@ -16,9 +16,9 @@ const Navbar = () => {
   return (
     <div className="bg-blue-500">
       <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
-        <a className="text-3xl font-bold leading-none" href="#">
-          {/* Logo or brand name can go here */}
-        </a>
+        <Link className="text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
+          ShopIt
+        </Link>
         <div className="lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
@@ -89,18 +89,18 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        <a
+        <Link
           className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200 ease-in-out"
-          href="#"
+          to="/sign-in"
         >
           Sign In
-        </a>
-        <a
+        </Link>
+        <Link
           className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
-          href="#"
+          to="sign-up"
         >
           Sign Up
-        </a>
+        </Link>
       </nav>
       {isMenuOpen && (
         <div className="navbar-menu relative z-50 transition duration-200 ease-in-out">
@@ -110,9 +110,9 @@ const Navbar = () => {
           ></div>
           <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
             <div className="flex items-center mb-8">
-              <a className="mr-auto text-3xl font-bold leading-none" href="#">
-                {/* Logo or brand name can go here */}
-              </a>
+              <Link className="mr-auto text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
+                ShopIt
+              </Link>
               <button className="navbar-close" onClick={toggleMenu}>
                 <svg
                   className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500 transition duration-200 ease-in-out"
@@ -156,7 +156,7 @@ const Navbar = () => {
                     className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
                     onClick={() => handleButtonClick('Accommodations')}
                   >
-                   About 
+                    About
                   </Link>
                 </li>
                 <li>
@@ -181,21 +181,21 @@ const Navbar = () => {
             </nav>
             <div className="mt-auto">
               <div className="pt-6">
-                <a
+                <Link
                   className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl transition duration-200 ease-in-out"
-                  href="#"
+                  to="/sign-in"
                 >
                   Sign in
-                </a>
-                <a
+                </Link>
+                <Link
                   className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl transition duration-200 ease-in-out"
-                  href="#"
+                  to="/sign-up"
                 >
                   Sign Up
-                </a>
+                </Link>
               </div>
               <p className="my-4 text-xs text-center text-gray-400">
-                <span>Copyright © 508</span>
+                <span>Copyright © {new Date().getFullYear()}</span>
               </p>
             </div>
           </nav>
