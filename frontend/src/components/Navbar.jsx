@@ -13,9 +13,26 @@ const Navbar = () => {
     closeMenu();
   };
 
+  const navStyles = {
+    position: 'fixed',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0.7rem 2rem',
+    overflow: 'hidden',
+    zIndex: 1,
+    width: '100%',
+    marginBottom: '20px',
+    top: 0,
+    borderBottom: '5px solid blue',
+    opacity: 0.8,
+    backgroundColor: 'black',
+    boxShadow: '12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8)',
+  };
+
   return (
     <div className="bg-blue-500">
-      <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
+      <nav style={navStyles}>
         <Link className="text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
           ShopIt
         </Link>

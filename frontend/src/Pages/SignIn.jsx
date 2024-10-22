@@ -41,11 +41,11 @@ const SignIn = () => {
       if (res?.data?.success) {
 
         dispatch(setUser(res?.data?.user));
-          navigate('/');
+        navigate('/');
       }
     } catch (error) {
-     console.log(error);
-     
+      console.log(error);
+
     }
 
     // After successful sign in, navigate to Home page
@@ -98,7 +98,7 @@ const SignIn = () => {
           </form>
         </div>
       </div>
-      
+
     </>
   );
 };

@@ -3,13 +3,15 @@ import Navbar from './components/Navbar';
 import SearchNav from './components/SearchNav';
 
 function App() {
-
+  const content = {
+    paddingTop: '4rem'
+  }
   return (
-    <>
+    <div style={content}>
       <Navbar />
-      <SearchNav/>
+      <SearchNav />
       <Outlet />
-    </>
+    </div>
   );
 }
 

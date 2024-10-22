@@ -3,26 +3,26 @@ import { useNavigate } from 'react-router';
 
 const SignUp = () => {
      const [input, setInput] = useState({
-          email : "",
-          name : "",
-          phone : "",
-          password : "",
-          confirmPassword : "",
+          email: "",
+          name: "",
+          phone: "",
+          password: "",
+          confirmPassword: "",
      })
      const [error, setError] = useState('');
      const navigate = useNavigate();
      const handleInputChange = (e) => {
           setInput((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
+               ...prev,
+               [e.target.name]: e.target.value,
           }));
-        };
+     };
 
      const handleSubmit = (e) => {
           setError('');
           e.preventDefault();
           // Simple validation for empty fields and password match
-          const {email, password, confirmPassword,  name, phone} = input;
+          const { email, password, confirmPassword, name, phone } = input;
           if (!email || !password || !confirmPassword) {
                setError('Please fill in all fields');
                return;
@@ -33,7 +33,7 @@ const SignUp = () => {
           }
 
           console.log(input);
-          
+
 
           // setError('');
           // Add actual sign-up logic here
@@ -48,7 +48,7 @@ const SignUp = () => {
                          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Sign Up</h1>
                          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                          <form onSubmit={handleSubmit} className="space-y-4">
-                              
+
                               <div>
                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                                    <input

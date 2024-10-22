@@ -22,6 +22,6 @@ const routes = createBrowserRouter([
 
 render(
      <Provider store={store}>
-     <RouterProvider router={routes} />
+          <RouterProvider router={routes} />
      </Provider>
      , document.getElementById('app'))
