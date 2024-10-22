@@ -93,6 +93,8 @@ export const getAllProduct = async(req, res)=>{
         };
         const products = await Product.find(query).populate({
             path : 'category'
+        }).populate({
+            path : 'reviews'
         });
 
         return res.status(200).json({
@@ -111,8 +113,12 @@ export const getProductById = async(req, res)=>{
 
         const product = await Product.findById(id).populate({
             path : 'category',
-            strictpopulate : false,
-        });;
+            // strictpopulate : false,
+        }).populate({
+            path : 'reviews'
+        });
+        console.log(product);
+        
 
         if(!product){
             return res.status(400).json({
