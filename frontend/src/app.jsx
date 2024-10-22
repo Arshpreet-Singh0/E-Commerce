@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import Navbar from './components/Navbar';
 import SearchNav from './components/SearchNav';
+import Footer from './components/Footer';
 
 function App() {
   const content = {
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <SearchNav />
       <Outlet />
+      <Footer/>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import './Navbar.css'
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeButton, setActiveButton] = useState('Home');
@@ -22,17 +22,16 @@ const Navbar = () => {
     overflow: 'hidden',
     zIndex: 1,
     width: '100%',
+    opacity:'0.8',
     marginBottom: '20px',
     top: 0,
     borderBottom: '5px solid blue',
-    opacity: 0.8,
-    backgroundColor: 'black',
-    boxShadow: '12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8)',
+    backgroundColor: 'white',
   };
 
   return (
     <div className="bg-blue-500">
-      <nav style={navStyles}>
+      <nav id='nav' style={navStyles}>
         <Link className="text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
           ShopIt
         </Link>

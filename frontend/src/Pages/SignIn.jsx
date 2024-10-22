@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
 import { setUser } from "../redux/authSlice";
-
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 const SignIn = () => {
+ // const navigate = useNavigate();
+useEffect(() => {
+    Aos.init({ duration: 3000 });
+  },[]);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -50,15 +55,20 @@ const SignIn = () => {
 
     // After successful sign in, navigate to Home page
   };
+  const handleclick = ()=>{
+    navigate('/sign-up');
+  }
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+      <div className="flex items-center h-[600px]	justify-center bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-1/2 flex flex-col md:flex-row">
+         <div className="w-full" data-aos='fade-left'><iframe className="w-full h-full" src="https://lottie.host/embed/59a0afa1-8c51-4675-bece-2247b6b89beb/SOkDiL958B.json"></iframe></div>
+        <div className="w-full" data-aos="fade-right">
           <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
             Sign In
           </h1>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6 ">
             <div>
               <label htmlFor="email" className="font-medium text-gray-700">
                 Email
@@ -95,7 +105,9 @@ const SignIn = () => {
             >
               Sign In
             </button>
+            <div className="h-full text-center w-full">New User ? <button className="text-blue-600" onClick={handleclick}>Register Now</button></div>
           </form>
+          </div>
         </div>
       </div>
 
