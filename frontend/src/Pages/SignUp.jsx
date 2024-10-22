@@ -2,14 +2,27 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const SignUp = () => {
-     const [email, setEmail] = useState('');
-     const [password, setPassword] = useState('');
-     const [confirmPassword, setConfirmPassword] = useState('');
+     const [input, setInput] = useState({
+          email : "",
+          name : "",
+          phone : "",
+          password : "",
+          confirmPassword : "",
+     })
      const [error, setError] = useState('');
      const navigate = useNavigate();
+     const handleInputChange = (e) => {
+          setInput((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+          }));
+        };
 
      const handleSubmit = (e) => {
+          setError('');
+          e.preventDefault();
           // Simple validation for empty fields and password match
+          const {email, password, confirmPassword,  name, phone} = input;
           if (!email || !password || !confirmPassword) {
                setError('Please fill in all fields');
                return;
@@ -19,10 +32,13 @@ const SignUp = () => {
                return;
           }
 
-          setError('');
+          console.log(input);
+          
+
+          // setError('');
           // Add actual sign-up logic here
           // Example: Redirect to home page or show success message
-          navigate('/');
+          // navigate('/');
      };
 
      return (
@@ -32,6 +48,20 @@ const SignUp = () => {
                          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Sign Up</h1>
                          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                          <form onSubmit={handleSubmit} className="space-y-4">
+                              
+                              <div>
+                                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                                   <input
+                                        id='name'
+                                        type="name"
+                                        name='name'
+                                        placeholder="Name"
+                                        value={input.name}
+                                        onChange={handleInputChange}
+                                        className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                                        required
+                                   />
+                              </div>
                               <div>
                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                                    <input
@@ -39,8 +69,21 @@ const SignUp = () => {
                                         type="email"
                                         name='email'
                                         placeholder="Email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={input.email}
+                                        onChange={handleInputChange}
+                                        className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                                        required
+                                   />
+                              </div>
+                              <div>
+                                   <label htmlFor="number" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                   <input
+                                        id='number'
+                                        type="number"
+                                        name='phone'
+                                        placeholder="Phone Number"
+                                        value={input.phone}
+                                        onChange={handleInputChange}
                                         className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
                                         required
                                    />
@@ -50,9 +93,10 @@ const SignUp = () => {
                                    <input
                                         id='password'
                                         type="password"
+                                        name='password'
                                         placeholder="Password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={input.password}
+                                        onChange={handleInputChange}
                                         className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
                                         required
                                    />
@@ -63,8 +107,9 @@ const SignUp = () => {
                                         id='confirmPassword'
                                         type="password"
                                         placeholder="Confirm Password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        value={input.confirmPassword}
+                                        name='confirmPassword'
+                                        onChange={handleInputChange}
                                         className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
                                         required
                                    />

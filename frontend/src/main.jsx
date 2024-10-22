@@ -6,6 +6,8 @@ import MainLandingPage from './Pages/MainLandingPage.jsx'
 import SignIn from './Pages/SignIn.jsx'
 import SignUp from './Pages/SignUp.jsx'
 import NotFound from './Pages/NotFound.jsx'
+import { Provider } from 'react-redux'
+import store from './redux/store.js'
 
 const routes = createBrowserRouter([
      {
@@ -18,4 +20,8 @@ const routes = createBrowserRouter([
      }
 ])
 
-render(<RouterProvider router={routes} />, document.getElementById('app'))
+render(
+     <Provider store={store}>
+     <RouterProvider router={routes} />
+     </Provider>
+     , document.getElementById('app'))
