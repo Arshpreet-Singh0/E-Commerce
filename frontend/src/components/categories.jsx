@@ -69,9 +69,9 @@ const renderCategoryRow = (category) => {
       className="box flex-shrink-0 w-full sm:w-1/2 md:w-full lg:w-1/4 h-auto bg-white rounded-lg shadow-md scroll-snap-start p-4"
     >
       <img
-        src={product.image?.url || '/path/to/fallback-image.jpg'}
+        src={product.images[0]?.url || '/path/to/fallback-image.jpg'}
         alt={product.name || 'Product'}
-        className="w-full h-32 object-cover rounded-lg mb-2"
+        className="w-full h-32 object-contain rounded-lg mb-2"
       />
       <h2 className="text-lg font-semibold">{product.name}</h2>
       <p className="text-gray-600">${product.price}</p>

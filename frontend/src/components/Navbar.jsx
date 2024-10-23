@@ -41,7 +41,7 @@ const Navbar = () => {
         <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff',fontStyle:'italic' }}>
             ShopIt
         </Link>
-        <img className="w-full h-9"src={log}/>
+        <img className="w-full h-9"/>
         </div>
         <div className="lg:hidden">
           <button
