@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
+import log from '../assets/shopping-basket-svgrepo-com.svg'
 import { useSelector } from 'react-redux';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +41,7 @@ const Navbar = () => {
         <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff',fontStyle:'italic' }}>
             ShopIt
         </Link>
-        <img className="w-full h-9"src={log}/>
+        <img className="w-full h-9" src={log}/>
         </div>
         <div className="lg:hidden">
           <button
