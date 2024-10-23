@@ -55,7 +55,7 @@ const SearchNav = () => {
   };
 
   return (
-    <div className="relative bg-blueGray-200 p-6 flex flex-row gap-8 items-center justify-between">
+    <div className="relative bg-[#E4E0E1] p-2 flex flex-row gap-8 items-center justify-between">
       <div id="input" onBlur={handleBlur} className="relative">
         <FaSearch id="search-icon" />
         <input

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
+import log from '../assets/shopping-basket-svgrepo-com.svg'
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeButton, setActiveButton] = useState('Home');
@@ -23,18 +24,21 @@ const Navbar = () => {
     zIndex: 1,
     width: '100%',
     opacity:'0.8',
+    backgroundColor:"#0073e6",
     marginBottom: '20px',
     top: 0,
     borderBottom: '5px solid blue',
-    backgroundColor: 'white',
   };
 
   return (
     <div className="bg-blue-500">
       <nav id='nav' style={navStyles}>
-        <Link className="text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
-          ShopIt
+        <div className='flex flex-row justify-center align-middle gap-3 text-center'> 
+        <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff',fontStyle:'italic' }}>
+            ShopIt
         </Link>
+        <img className="w-full h-9"src={log}/>
+        </div>
         <div className="lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
@@ -57,7 +61,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-blue-800 font-bold ' : 'text-gray-400 hover:text-gray-500'
+              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-white font-bold ' : 'text-gray-400 hover:text-gray-500'
                 } transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Home')}
             >
@@ -67,7 +71,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'About' ? 'text-xl text-blue-800 font-bold' : 'text-gray-400 hover:text-gray-500'
+              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
                 } transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
             >
@@ -77,7 +81,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Services' ? 'text-xl text-blue-800 font-bold' : 'text-gray-400 hover:text-gray-500'
+              className={`text-sm ${activeButton === 'Services' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
                 } transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Services')}
             >
@@ -87,7 +91,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Pricing' ? 'text-xl text-blue-800 font-bold' : 'text-gray-400 hover:text-gray-500'
+              className={`text-sm ${activeButton === 'Pricing' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
                 } transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Pricing')}
             >
@@ -97,7 +101,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-blue-800 font-bold' : 'text-gray-400 hover:text-gray-500'
+              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
                 } transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Contact')}
             >
@@ -112,7 +116,7 @@ const Navbar = () => {
           Sign In
         </Link>
         <Link
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
+          className="hidden lg:inline-block py-2 px-6 bg-[#FF0000] hover:bg-[#FFA27F] text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
           to="sign-up"
         >
           Sign Up

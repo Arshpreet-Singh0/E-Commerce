@@ -4,25 +4,11 @@ import BannerSlider from '../components/BannerSlider';
 
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import Category from '../../../backend/models/category.model';
+import Categories from '../components/categories';
 function MainLandingPage() {
-  const [data, setData] = useState([]);
-
   useEffect(() => {
     Aos.init({ duration: 3000 });
-    axios.get('http://localhost:8080/api/v1/product/get')
-      .then((response) => {
-        // Access the products array from the API response
-        console.log(response);
-        
-        if (response.data.success) {
-          setData(response.data.products);
-        } else {
-          console.error('Error: API response not successful');
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
   }, []);
 
   return (
@@ -74,26 +60,8 @@ function MainLandingPage() {
   </div>
 </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-aos="zoom-in">
-          {data.map((item) => (
-            <div 
-              key={item._id} 
-              className="relative bg-white h-60 rounded-lg shadow-md overflow-hidden group"
-            >
-              <img
-                src={item.images[0].url} 
-                alt={item.name}
-                className="object-contain w-full h-full group-hover:opacity-50 transition-opacity duration-300"
-              />
-              
-              {/* Details on hover */}
-              <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 bg-white bg-opacity-90 transition-opacity duration-300 p-4 text-center">
-                <h2 className="text-xl font-bold mb-2">{item.name}</h2>
-                <p className="text-gray-600 mb-2">{item.description}</p>
-                <p className="text-gray-800 font-semibold">Price: ₹{item.price}</p>
-              </div>
-            </div>
-          ))}
+        <div className='p-6' data-aos="zoom-in">
+         <Categories/>
         </div>
       </div>
     </div>
