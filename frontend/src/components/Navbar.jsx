@@ -23,7 +23,6 @@ const Navbar = () => {
     overflow: 'hidden',
     zIndex: 1,
     width: '100%',
-    opacity:'0.8',
     backgroundColor:"#0073e6",
     marginBottom: '20px',
     top: 0,
