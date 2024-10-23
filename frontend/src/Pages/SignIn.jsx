@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
 import { setUser } from "../redux/authSlice";
+import { toast, ToastContainer } from "react-toastify";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 const SignIn = () => {
@@ -44,7 +45,9 @@ useEffect(() => {
       console.log(res);
 
       if (res?.data?.success) {
-
+        console.log(res?.data?.message);
+        
+        toast.success(res?.data?.message);
         dispatch(setUser(res?.data?.user));
         navigate('/');
       }
@@ -61,6 +64,7 @@ useEffect(() => {
 
   return (
     <>
+        <ToastContainer position="top-right" />
       <div className="flex items-center h-[600px]	justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-lg w-1/2 flex flex-col md:flex-row">
          <div className="w-full" data-aos='fade-left'><iframe className="w-full h-full" src="https://lottie.host/embed/59a0afa1-8c51-4675-bece-2247b6b89beb/SOkDiL958B.json"></iframe></div>

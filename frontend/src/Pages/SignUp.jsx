@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/constant';
 const SignUp = () => {
     useEffect(() => {
     Aos.init({ duration: 3000 });
@@ -23,7 +25,7 @@ const SignUp = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         setError('');
         e.preventDefault();
         const { email, password, confirmPassword, name, phone } = input;
@@ -36,7 +38,26 @@ const SignUp = () => {
             return;
         }
 
-        console.log(input);
+        try {
+            const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
+                withCredentials : true,
+            })
+            console.log(res);
+            
+
+            if(res?.data?.success){
+                console.log(res?.data?.success);
+                
+                navigate('/sign-in');
+            }
+            
+        } catch (error) {
+            console.log(error);
+            
+            setError(error.response.data.message);
+        }
+
+        // console.log(input);
         // Add your sign-up logic here, e.g., API calls
         // navigate('/'); // Redirect after successful sign-up
     };

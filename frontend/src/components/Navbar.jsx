@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
+import { useSelector } from 'react-redux';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeButton, setActiveButton] = useState('Home');
@@ -12,6 +13,10 @@ const Navbar = () => {
     setActiveButton(buttonName);
     closeMenu();
   };
+
+  const {user} = useSelector(store=>store.auth);
+  console.log(user);
+  
 
   const navStyles = {
     position: 'fixed',

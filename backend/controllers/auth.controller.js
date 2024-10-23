@@ -20,6 +20,7 @@ export const signup = async (req, res) => {
     // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     const user = await User.findOne({ email });
+    
 
     if (user) {
       return res.status(400).json({
