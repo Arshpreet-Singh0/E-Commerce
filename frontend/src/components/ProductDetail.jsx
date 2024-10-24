@@ -33,7 +33,7 @@ const ProductDetail = () => {
   return (
     <div className="container mx-auto px-4 py-6">
       {product ? (
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col gap-10 md:flex-row">
           <div className="md:w-1/2">
             <Carousel data={product.images} />
           </div>

@@ -1,5 +1,5 @@
 #input {
-    width: 100%;
+    width: 60%;
     height: 2.5rem;
     border: 10px rgba(8, 130, 243, 0.742);
     border-radius: 10px;
@@ -8,6 +8,7 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    margin-left: 20%;
 }
 
 input {
