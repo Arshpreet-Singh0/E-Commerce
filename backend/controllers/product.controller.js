@@ -13,7 +13,6 @@ export const listProduct = async (req, res, next) => {
       !images ||
       images.length === 0 ||
       !brand ||
-      !subcategory ||
       !stock
     ) {
         return res.status(400).json({
