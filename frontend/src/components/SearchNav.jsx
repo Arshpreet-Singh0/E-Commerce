@@ -55,7 +55,7 @@ const SearchNav = () => {
   };
 
   return (
-    <div className="relative bg-[#E4E0E1] p-2 flex flex-row gap-8 items-center justify-between">
+    <div className="relative bg-[#E4E0E1] p-2 flex flex-row gap-8 items-center justify-between align-middle">
       <div id="input" onBlur={handleBlur} className="relative">
         <FaSearch id="search-icon" />
         <input
@@ -67,7 +67,7 @@ const SearchNav = () => {
         
         {/* Suggestions Section */}
         {loading ? (
-          <div className="absolute z-20">Loading...</div>
+          <div className="absolute top-3 z-20">Loading...</div>
         ) : (
           showSuggestions && ( // Render suggestions only if showSuggestions is true
             <div className="absolute z-20 suggestions left-0 right-0 top-full bg-white shadow-lg max-h-60 overflow-y-auto">

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'
-import log from '../assets/shopping-basket-svgrepo-com.svg'
-import { useSelector } from 'react-redux';
+import './Navbar.css';
+import log from '../assets/shopping-basket-svgrepo-com.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../redux/authSlice'; // Import the action
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeButton, setActiveButton] = useState('Home');
@@ -15,9 +17,13 @@ const Navbar = () => {
     closeMenu();
   };
 
-  const {user} = useSelector(store=>store.auth);
-  console.log(user);
-  
+  const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    // Dispatch action to set user to null
+    dispatch(setUser(null));
+  };
 
   const navStyles = {
     position: 'fixed',
@@ -28,7 +34,7 @@ const Navbar = () => {
     overflow: 'hidden',
     zIndex: 1,
     width: '100%',
-    backgroundColor:"#0073e6",
+    backgroundColor: '#0073e6',
     marginBottom: '20px',
     top: 0,
     borderBottom: '5px solid blue',
@@ -36,38 +42,26 @@ const Navbar = () => {
 
   return (
     <div className="bg-blue-500">
-      <nav id='nav' style={navStyles}>
-        <div className='flex flex-row justify-center align-middle gap-3 text-center'> 
-        <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff',fontStyle:'italic' }}>
+      <nav id="nav" style={navStyles}>
+        <div className="flex flex-row justify-center align-middle gap-3 text-center">
+          <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff', fontStyle: 'italic' }}>
             ShopIt
-        </Link>
-        <img className="w-full h-9"/>
-        <img className="w-full h-9" src={log}/>
+          </Link>
+          <img className="w-full h-9" src={log} alt="logo" />
         </div>
         <div className="lg:hidden">
-          <button
-            className="navbar-burger flex items-center text-blue-600 p-3"
-            onClick={toggleMenu}
-          >
-            <svg
-              className="block h-4 w-4 fill-current"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={toggleMenu}>
+            <svg className="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
           </button>
         </div>
-        <ul
-          className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ${isMenuOpen ? 'block' : 'hidden'
-            }`}
-        >
+        <ul className={`hidden lg:flex lg:items-center lg:w-auto lg:space-x-6 ${isMenuOpen ? 'block' : 'hidden'}`}>
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-white font-bold ' : 'text-gray-400 hover:text-gray-500'
-                } transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Home')}
             >
               Home
@@ -76,8 +70,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
-                } transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
             >
               Products
@@ -86,8 +79,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Services' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
-                } transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Services' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Services')}
             >
               About
@@ -96,8 +88,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Pricing' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
-                } transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Pricing' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Pricing')}
             >
               Contact
@@ -106,33 +97,48 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'
-                } transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Contact')}
             >
               Help
             </Link>
           </li>
         </ul>
-        <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200 ease-in-out"
-          to="/sign-in"
-        >
-          Sign In
-        </Link>
-        <Link
-          className="hidden lg:inline-block py-2 px-6 bg-[#FF0000] hover:bg-[#FFA27F] text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
-          to="sign-up"
-        >
-          Sign Up
-        </Link>
+        {user ? (
+          <div className="flex items-center gap-3">
+            <button
+              className="py-2 px-6 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition duration-200 ease-in-out"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+             <img
+              src="https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png" // Assuming user object has a 'profilePhoto' field
+              alt="Profile"
+              className="w-10 h-10 rounded-full mr-4"
+            />
+          </div>
+        ) : (
+          <div>
+            <Link
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200 ease-in-out"
+              to="/sign-in"
+            >
+              Sign In
+            </Link>
+            <Link
+              className="hidden lg:inline-block py-2 px-6 bg-[#FF0000] hover:bg-[#FFA27F] text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
+              to="sign-up"
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
       </nav>
+
       {isMenuOpen && (
         <div className="navbar-menu relative z-50 transition duration-200 ease-in-out">
-          <div
-            className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"
-            onClick={toggleMenu}
-          ></div>
+          <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25" onClick={toggleMenu}></div>
           <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
             <div className="flex items-center mb-8">
               <Link className="mr-auto text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
@@ -210,17 +216,17 @@ const Navbar = () => {
                   className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl transition duration-200 ease-in-out"
                   to="/sign-in"
                 >
-                  Sign in
+                  Sign In
                 </Link>
                 <Link
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl transition duration-200 ease-in-out"
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-red-500 hover:bg-red-600 rounded-xl transition duration-200 ease-in-out"
                   to="/sign-up"
                 >
                   Sign Up
                 </Link>
               </div>
               <p className="my-4 text-xs text-center text-gray-400">
-                <span>Copyright © {new Date().getFullYear()}</span>
+                <span>Copyright © 2024</span>
               </p>
             </div>
           </nav>
