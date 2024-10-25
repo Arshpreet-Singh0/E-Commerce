@@ -22,6 +22,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     // Dispatch action to set user to null
+
+    console.log(user);
     dispatch(setUser(null));
   };
 
