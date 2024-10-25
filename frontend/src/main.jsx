@@ -1,4 +1,5 @@
 import { render } from 'preact'
+import 'antd/dist/reset.css'; // Import Ant Design styles
 import App from './app.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -8,7 +9,7 @@ import SignUp from './Pages/SignUp.jsx'
 import NotFound from './Pages/NotFound.jsx'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
-import ProductDetail from './components/ProductDetail.jsx'
+import ProductDetail from './Pages/ProductDetail.jsx'
 
 const routes = createBrowserRouter([
      {

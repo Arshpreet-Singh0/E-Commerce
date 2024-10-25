@@ -4,6 +4,7 @@ import './Navbar.css';
 import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice'; // Import the action
+import Profile from './profileDrop';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -108,17 +109,7 @@ const Navbar = () => {
         </ul>
         {user ? (
           <div className="flex items-center gap-3">
-            <button
-              className="py-2 px-6 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition duration-200 ease-in-out"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-             <img
-              src="https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png" // Assuming user object has a 'profilePhoto' field
-              alt="Profile"
-              className="w-10 h-10 rounded-full mr-4"
-            />
+            <Profile/>
           </div>
         ) : (
           <div>

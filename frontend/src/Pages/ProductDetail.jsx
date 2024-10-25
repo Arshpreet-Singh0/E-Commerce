@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loder from '../components/Loder'; // Assuming you have a Loader component
-import Carousel from './Cursol';
+import Carousel from '../components/Cursol';
+import Star from '../components/Star';
+import { Button } from 'antd';
+import ReviewComponent from '../components/review';
+
 
 const ProductDetail = () => {
   const { id } = useParams(); // Getting product ID from the URL
@@ -33,12 +37,14 @@ const ProductDetail = () => {
   return (
     <div className="container mx-auto px-4 py-6">
       {product ? (
+        <div>
         <div className="flex flex-col gap-10 md:flex-row">
           <div className="md:w-1/2">
             <Carousel data={product.images} />
           </div>
           <div className="md:w-1/2 px-4">
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+            <Star stars={product.rating} reviews={product.reviews}/>
             <p className="text-lg text-gray-700 mb-4">{product.description}</p>
             <p className="text-2xl font-semibold text-gray-800 mb-6">
               ${product.price}
@@ -47,6 +53,8 @@ const ProductDetail = () => {
               Add to Cart
             </button>
           </div>
+        </div>
+        <ReviewComponent reviews={product.reviews}/>
         </div>
       ) : (
         <p>Product not found.</p>
