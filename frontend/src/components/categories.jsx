@@ -83,7 +83,7 @@ function Categories() {
         alt={product.name || 'Product'}
         className="w-full h-32 object-contain rounded-lg mb-2"
       />
-      <Star stars={product.rating} reviews={product.reviews}/>
+      <Star stars={product.ratings} reviews={product.reviews}/>
       <h2 className="text-lg font-semibold">{product.name}</h2>
       <p className="text-gray-600">${product.price}</p>
       <button className="bg-black text-white px-4 py-2 hover:bg-green-600 mt-2" onClick={()=>navigate(`/product/${product._id}`)}>
