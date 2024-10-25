@@ -116,7 +116,7 @@ export const getProductById = async(req, res)=>{
         }).populate({
             path : 'reviews'
         });
-        console.log(product);
+        // console.log(product);
         
 
         if(!product){
