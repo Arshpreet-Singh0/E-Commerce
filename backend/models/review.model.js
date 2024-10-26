@@ -21,7 +21,7 @@ const reviewSchema = moongoose.Schema({
         min : 1,
         required : true,
     }
-})
+},{ timestamps: true })
 
 const Review = moongoose.model("Review", reviewSchema);
 

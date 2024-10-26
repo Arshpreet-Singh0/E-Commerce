@@ -20,7 +20,7 @@ function Categories() {
     Furniture: 'http://localhost:8080/api/v1/product/get/category/671623f1b02279f37dbed5b6',
     HomeKitchen: 'http://localhost:8080/api/v1/product/get/category/67162461b02279f37dbed5ba',
   };
-
+  
   const fetchCategories = async () => {
     try {
       const categoryPromises = Object.keys(apiUrls).map(async (key) => {
