@@ -65,7 +65,8 @@ const ProductDetail = () => {
             </div>
             <div className="md:w-1/2 px-4">
               <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-              <Star stars={product.ratings} reviews={product.reviews} />
+            <Star stars={product.ratings} reviews={product.reviews.length} />
+
               <p className="text-lg text-gray-700 mb-4">{product.description}</p>
               <p className="text-2xl font-semibold text-gray-800 mb-6">
                 ${product.price}

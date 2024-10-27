@@ -25,7 +25,7 @@ function Categories() {
     try {
       const categoryPromises = Object.keys(apiUrls).map(async (key) => {
         const response = await axios.get(apiUrls[key]);
-        console.log(response.data)
+        console.log(response.data.products)
         return {
           name: key,
           products: response.data.products || [],

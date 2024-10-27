@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import Star from './Star';
 const ReviewComponent = ({ reviews }) => {
   const [reviewList, setReviewList] = useState(reviews || []);
   const [newReview, setNewReview] = useState("");
@@ -28,11 +28,11 @@ const ReviewComponent = ({ reviews }) => {
                 <div key={index} className="mt-4">
                   <div className="flex mt-2">
                     {/* Star icons for rating */}
-                    <span className="text-yellow-400">★★★★☆</span>
+                    <span className="text-yellow-400"><Star stars={review.rating} reviews={review.review}/></span>
                   </div>
-                  <p className="mt-2 text-md text-gray-600">{review.text}</p>
+                  <p className="mt-2 text-md text-gray-600">{review.review}</p>
                   <div className="flex justify-between items-center mt-4">
-                    <div className="text-sm font-semibold">User • <span className="font-normal">Just Now</span></div>
+                    <div className="text-sm font-semibold">User • <span className="font-normal">{review.createdAt}</span></div>
                   </div>
                 </div>
               ))

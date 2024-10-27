@@ -10,6 +10,7 @@ function CategoriesPage() {
     const fetchCategoryProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/v1/product/get/category/${categoryName}`);
+        console.log("hello",response.data);
         setProducts(response.data.products || []);
       } catch (error) {
         console.error('Error fetching category products:', error);
