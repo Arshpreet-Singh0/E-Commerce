@@ -10,6 +10,7 @@ import NotFound from './Pages/NotFound.jsx'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
 import ProductDetail from './Pages/ProductDetail.jsx'
+import Categories from './components/categories.jsx';
 
 const routes = createBrowserRouter([
      {
@@ -18,6 +19,7 @@ const routes = createBrowserRouter([
                { path: '/sign-in', element: <SignIn /> },
                { path: '/sign-up', element: <SignUp /> },
                {path:'/product/:id',element:<ProductDetail/>},
+               {path:'/categories/:id',element:<Categories/>},
                { path: '*', element: <NotFound /> }
           ]
      }
