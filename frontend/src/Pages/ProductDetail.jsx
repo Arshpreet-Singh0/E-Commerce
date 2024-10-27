@@ -19,7 +19,7 @@ const ProductDetail = () => {
         console.log(id);
         const res = await axios.get(`http://localhost:8080/api/v1/product/get/${id}`);
         console.log(res.data.product);
-        setProduct(res.data.product);
+        setProduct(res?.data?.product);
         setImgUrl(res.data.product?.images?.[0]?.url || ''); // Set initial image URL if available
       } catch (error) {
         console.error('Error fetching product details:', error);
@@ -65,8 +65,7 @@ const ProductDetail = () => {
             </div>
             <div className="md:w-1/2 px-4">
               <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-            <Star stars={product.ratings} reviews={product.reviews.length} />
-
+              <Star stars={product?.ratings} />
               <p className="text-lg text-gray-700 mb-4">{product.description}</p>
               <p className="text-2xl font-semibold text-gray-800 mb-6">
                 ${product.price}
@@ -77,7 +76,7 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className='mt-[30vh]'>
-          <ReviewComponent reviews={product.reviews} />
+          <ReviewComponent reviews={product?.reviews} />
           </div>
         </div>
       ) : (

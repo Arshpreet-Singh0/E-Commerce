@@ -114,7 +114,10 @@ export const getProductById = async(req, res)=>{
             path : 'category',
             // strictpopulate : false,
         }).populate({
-            path : 'reviews'
+            path : 'reviews',
+            populate : {
+                path : 'user'
+            }
         });
         // console.log(product);
         

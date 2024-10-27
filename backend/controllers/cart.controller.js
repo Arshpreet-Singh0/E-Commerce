@@ -1,28 +1,29 @@
-import Cart from "../models/cart.model";
+import Cart from "../models/cart.model.js";
 
 export const addProductToCart = async(req, res)=>{
     try {
         const {products} = req.body;
         const user = req.id;
 
-        const cart = await Cart.findOne({user});
+        let cart = await Cart.findOne({user});
 
         if(!cart){
             const newCart = Cart.create({
                 user,
                 products
             })
+        }
+        else{
+            cart.products = products;
+            
+            await cart.save();
 
-            return res.status(200).json({
-                message: "Product added to cart successfully",
-                cart : newCart,
-                success : true,
-            })
         }
         
-        cart.products = products;
 
-        await cart.save();
+        cart = await Cart.findOne({user}).populate({
+            path : "products"
+        });
 
         res.status(200).json({
             message : "Cart updated successfully",
@@ -34,17 +35,20 @@ export const addProductToCart = async(req, res)=>{
     }
 }
 
-export const updateCart = async(req, res)=>{
+export const getCart = async(req, res)=>{
     try {
-        const {products} = req.body;
         const user = req.id;
-        
-        const res = await Cart.findOneAndUpdate({user},{products});
-
-        res.status(200).json({
-            message : "Cart updated successfully",
-            success : true,
+        const cart = await Cart.findOne({user}).populate({
+            path : "products",
+            populate : {
+                path : 'product'
+            }
         });
+
+        return res.status(200).json({
+            cart,
+            success : true,
+        })
     } catch (error) {
         console.log(error);
     }
