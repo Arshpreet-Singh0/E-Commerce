@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 // import getDataUri from "../utils/dataURI.js";
 // import cloudinary from "../utils/claudinary.js";
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   try {
     const { name, email, phone, password, role } = req.body;
 
@@ -40,11 +40,8 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       role,
     });
-    console.log(response);
+    // console.log(response);
     
-    //create empty cart
-
-    await Cart.create({user:response._id});
 
     return res.status(200).json({
       message: "Account created successfully",
@@ -52,14 +49,11 @@ export const signup = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
-      message: "Internal server error",
-      success: false,
-    });
+    next(error);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -103,12 +97,7 @@ export const login = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
-    const cart = await Cart.findOne({user:user._id}).populate({
-      path : "products",
-      populate : {
-        path : "product"
-      }
-    });
+    const cart = await Cart.find({user:user._id});
 
     return res
       .status(200)
@@ -125,15 +114,11 @@ export const login = async (req, res) => {
         success: true,
       });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({
-      message: "Internal server error",
-      success: false,
-    });
+    next(error);
   }
 };
 
-export const logout = async (req, res) => {
+export const logout = async (req, res, next) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
       message: "Logout successfully",
@@ -141,14 +126,11 @@ export const logout = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
-      message: "Internal server error",
-      success: false,
-    });
+    next(error);
   }
 };
 
-export const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res, next) => {
   try {
     const { fullname, email, phoneNumber, address} = req.body;
 
@@ -187,10 +169,7 @@ export const updateProfile = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
-      message: "Internal server error",
-      success: false,
-    });
+    next(error);
   }
 };
 export const updatePassword = async(req, res)=>{
@@ -232,6 +211,7 @@ export const updatePassword = async(req, res)=>{
 
   } catch (error) {
     console.log(error);
+    next(error);
   }
 }
 
