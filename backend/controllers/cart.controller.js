@@ -2,7 +2,8 @@ import Cart from "../models/cart.model.js";
 
 export const addProductToCart = async(req, res)=>{
     try {
-        const {products} = req.body;
+        const {product, quantity} = req.body;
+        
         const user = req.id;
 
         let cart = await Cart.findOne({user});
@@ -10,11 +11,17 @@ export const addProductToCart = async(req, res)=>{
         if(!cart){
             const newCart = Cart.create({
                 user,
-                products
+                products : [{
+                    product,
+                    quantity
+                }],
             })
         }
         else{
-            cart.products = products;
+            cart.products.push({
+                product,
+                quantity
+            });            
             
             await cart.save();
 
@@ -22,7 +29,10 @@ export const addProductToCart = async(req, res)=>{
         
 
         cart = await Cart.findOne({user}).populate({
-            path : "products"
+            path : "products",
+            populate : {
+                path : 'product'
+            }
         });
 
         res.status(200).json({
@@ -31,7 +41,7 @@ export const addProductToCart = async(req, res)=>{
             cart,
         });
     } catch (error) {
-        console.log(error);
+        next(error);   
     }
 }
 
@@ -50,6 +60,28 @@ export const getCart = async(req, res)=>{
             success : true,
         })
     } catch (error) {
-        console.log(error);
+        next(error);   
+    }
+}
+
+export const removeProductFromCart = async(req, res, next)=>{
+    try {
+        const {productid} = req.params;
+        const user = req.id;
+
+        const cart = await Cart.findOneAndUpdate({user},{$pull : {products: { product: productid }}},{new : true}).populate({
+            path : "products",
+            populate : {
+                path : 'product'
+            }
+        });;
+
+        return res.status(200).json({
+            message : "Product removed from cart successfully",
+            success : true,
+            cart,
+        })
+    } catch (error) {
+        next(error);        
     }
 }

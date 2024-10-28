@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import Cart from "../models/cart.model.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 // import getDataUri from "../utils/dataURI.js";
@@ -21,6 +22,7 @@ export const signup = async (req, res) => {
 
     const user = await User.findOne({ email });
     
+    
 
     if (user) {
       return res.status(400).json({
@@ -31,13 +33,18 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({
+    const response =  await User.create({
       name,
       email,
       phone,
       password: hashedPassword,
       role,
     });
+    console.log(response);
+    
+    //create empty cart
+
+    await Cart.create({user:response._id});
 
     return res.status(200).json({
       message: "Account created successfully",
@@ -96,6 +103,12 @@ export const login = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
+    const cart = await Cart.findOne({user:user._id}).populate({
+      path : "products",
+      populate : {
+        path : "product"
+      }
+    });
 
     return res
       .status(200)
@@ -108,6 +121,7 @@ export const login = async (req, res) => {
       .json({
         message: `Welcome back ${user.name}`,
         user,
+        cart,
         success: true,
       });
   } catch (err) {

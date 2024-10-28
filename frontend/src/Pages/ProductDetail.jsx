@@ -31,6 +31,14 @@ const ProductDetail = () => {
     fetchProductDetail();
   }, [id]);
 
+  const handleAddToCart = async()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
   if (loading) {
     return <Loder />;
   }
