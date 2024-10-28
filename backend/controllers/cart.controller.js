@@ -1,59 +1,36 @@
 import Cart from "../models/cart.model.js";
+import Product from '../models/product.model.js'
 
-export const addProductToCart = async(req, res)=>{
+export const addProductToCart = async(req, res, next)=>{
     try {
-        const {product, quantity} = req.body;
+        const {productid, quantity} = req.body;
         
         const user = req.id;
-
-        let cart = await Cart.findOne({user});
-
-        if(!cart){
-            const newCart = Cart.create({
-                user,
-                products : [{
-                    product,
-                    quantity
-                }],
-            })
-        }
-        else{
-            cart.products.push({
-                product,
-                quantity
-            });            
-            
-            await cart.save();
-
-        }
+        const product = await Product.findOne({_id : productid});
         
 
-        cart = await Cart.findOne({user}).populate({
-            path : "products",
-            populate : {
-                path : 'product'
-            }
-        });
+        const cart = await Cart.create({
+            user,
+            product : productid,
+            name : product.name,
+            quantity,
+            price : (quantity*product.price),
+            image : product.images[0].url,
+        })
 
-        res.status(200).json({
-            message : "Cart updated successfully",
+        return res.status(200).json({
+            message : "Product added to cart",
             success : true,
-            cart,
-        });
+        })
     } catch (error) {
         next(error);   
     }
 }
 
-export const getCart = async(req, res)=>{
+export const getCart = async(req, res, next)=>{
     try {
         const user = req.id;
-        const cart = await Cart.findOne({user}).populate({
-            path : "products",
-            populate : {
-                path : 'product'
-            }
-        });
+        const cart = await Cart.find({user});
 
         return res.status(200).json({
             cart,
@@ -69,19 +46,35 @@ export const removeProductFromCart = async(req, res, next)=>{
         const {productid} = req.params;
         const user = req.id;
 
-        const cart = await Cart.findOneAndUpdate({user},{$pull : {products: { product: productid }}},{new : true}).populate({
-            path : "products",
-            populate : {
-                path : 'product'
-            }
-        });;
+        await Cart.findOneAndDelete({user, product : productid});
+        const cart = await Cart.find({user});
 
         return res.status(200).json({
-            message : "Product removed from cart successfully",
+            message : "Product removed from cart",
             success : true,
-            cart,
+            cart
         })
     } catch (error) {
         next(error);        
+    }
+}
+
+export const updateQuantity = async(req, res, next)=>{
+    try {
+        const {productid} = req.params;
+        const user =  req.id;
+        const {quantity} = req.body;
+        const product = await Product.findOne({_id : productid});
+
+        await Cart.findOneAndUpdate({user, product : productid}, {quantity, price : (product.price*quantity)});
+        const cart = await Cart.find({user});
+
+        return res.status(200).json({
+            message : "Quantity updated",
+            success : true,
+            cart
+        })
+    } catch (error) {
+        next(error);
     }
 }
