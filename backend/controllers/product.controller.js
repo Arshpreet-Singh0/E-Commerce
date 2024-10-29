@@ -1,3 +1,4 @@
+import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 
 export const listProduct = async (req, res, next) => {
@@ -141,11 +142,10 @@ export const getProductById = async(req, res)=>{
 
 export const getCategoryProducts = async(req, res)=>{
     try {
-        const {category} = req.params;
-
-        const products = await Product.find({category}).populate({
-            path : 'category'
-        });;
+        const {name} = req.params;
+        const category = await Category.findOne({name});
+        
+        const products = await Product.find({category:category._id});        
 
         return res.status(200).json({
             products,

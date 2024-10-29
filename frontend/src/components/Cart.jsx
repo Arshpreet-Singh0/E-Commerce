@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { CART_API_END_POINT } from '../utils/constant';
 import {setCartItems} from '../redux/cartSlice.js'
+import { Link } from 'react-router-dom';
 
 const App = () => {
   const {user} = useSelector(store=>store.auth);
@@ -36,26 +37,51 @@ const App = () => {
     fetchCart();
   },[])
 
-  return(
-  <Space size="middle">
-    <Badge count={5}>
-      <Avatar shape="square" size="large" />
-    </Badge>
-    <Badge count={0} showZero>
-      <Avatar shape="square" size="large" />
-    </Badge>
-    <Badge
-      count={
-        <ClockCircleOutlined
-          style={{
-            color: '#f5222d',
-          }}
-        />
+  return (
+    <div className='flex justify-center'>
+      <div className='w-[80%] '>
+      {
+        cartItems && cartItems.length!=0 ? 
+        <>
+          {
+            cartItems.map((item, index)=>(
+              <Link to={`/product/${item.product}`}>
+              <div key={item._id} className='flex h-56 p-2'>
+                <div>
+                  <img src={item.image} alt="" className='w-44 h-full object-contain rounded-lg' />
+                </div>
+                <div className='flex-1 border border-black p-2'>
+                    <h1 className='text-xl font-bold'>{item?.name}</h1>
+                    <p className='text-lg'>Quantity : {item?.quantity}</p>
+                </div>
+              </div></Link>
+            ))
+          }
+        </> : (
+          <p>No items in cart.</p>
+        )
       }
-    >
-      <Avatar shape="square" size="large" />
-    </Badge>
-  </Space>
+      </div>
+    </div>
+  // <Space size="middle">
+  //   <Badge count={5}>
+  //     <Avatar shape="square" size="large" />
+  //   </Badge>
+  //   <Badge count={0} showZero>
+  //     <Avatar shape="square" size="large" />
+  //   </Badge>
+  //   <Badge
+  //     count={
+  //       <ClockCircleOutlined
+  //         style={{
+  //           color: '#f5222d',
+  //         }}
+  //       />
+  //     }
+  //   >
+  //     <Avatar shape="square" size="large" />
+  //   </Badge>
+  // </Space>
   )
 };
 export default App;
