@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Space } from 'antd';
-const App = () => (
+const Cart = () => (
   <Space size="middle">
     <Badge count={5}>
       <Avatar shape="square" size="large" />
@@ -22,4 +22,4 @@ const App = () => (
     </Badge>
   </Space>
 );
-export default App;
+export default Cart;

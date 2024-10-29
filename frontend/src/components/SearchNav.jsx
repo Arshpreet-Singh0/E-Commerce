@@ -3,6 +3,8 @@ import { FaSearch } from "react-icons/fa";
 import cart from '../assets/shopping-cart-6-svgrepo-com.svg';
 import "./SearchNav.css";
 import DropDown from "./DropDown";
+import Cart from "./Cart";
+
 
 const SearchNav = () => {
   const [input, setInput] = useState("");
@@ -94,7 +96,7 @@ const SearchNav = () => {
           <DropDown />
         </div>
         <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300">
-          <img className="w-10 h-6 md:w-12 md:h-8" src={cart} alt="cart icon" />
+          <Cart/>
         </button>
       </div>
     </div>

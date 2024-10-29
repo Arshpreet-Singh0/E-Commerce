@@ -10,7 +10,15 @@ function Categories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
-
+  const categoryIds = {
+    Electronics: '67135c0d050b49202e0c81c5',
+    TVsAppliances: '67161d29b14c947dc6a64029',
+    Grocery: '67135d1d050b49202e0c81cb',
+    Fashion: '67162393b02279f37dbed5b0',
+    Beauty: '671623afb02279f37dbed5b3',
+    Furniture: '671623f1b02279f37dbed5b6',
+    HomeKitchen: '67162461b02279f37dbed5ba'
+  };
   const apiUrls = {
     Electronics: 'http://localhost:8080/api/v1/product/get/category/67135c0d050b49202e0c81c5',
     TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/67161d29b14c947dc6a64029',
@@ -51,7 +59,10 @@ function Categories() {
 
   // Handle product click to navigate to the product detail page
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`);
+   navigate(`/product/${productId}`);
+  };
+  const handleCategory = () =>{
+     navigate("/categories");
   };
 
   const renderCategoryRow = (category) => {
@@ -65,7 +76,7 @@ function Categories() {
           <h1 className="text-4xl font-bold text-black">{category.name}</h1>
           <button
             className="bg-black text-white px-4 py-2 hover:bg-green-600"
-            onClick={() => navigate(`/categories/${category._id}`)} // Navigate to Categories page with category name
+            onClick={handleCategory} // Navigate to Categories page with category name
           >
             More
           </button>
