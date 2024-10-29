@@ -4,7 +4,7 @@ import { Avatar, Badge, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import { CART_API_END_POINT } from '../utils/constant';
+import { CART_API_END_POINT } from '../utils/constant.js';
 import {setCartItems} from '../redux/cartSlice.js'
 
 const App = () => {
@@ -37,25 +37,9 @@ const App = () => {
   },[])
 
   return(
-  <Space size="middle">
-    <Badge count={5}>
-      <Avatar shape="square" size="large" />
-    </Badge>
-    <Badge count={0} showZero>
-      <Avatar shape="square" size="large" />
-    </Badge>
-    <Badge
-      count={
-        <ClockCircleOutlined
-          style={{
-            color: '#f5222d',
-          }}
-        />
-      }
-    >
-      <Avatar shape="square" size="large" />
-    </Badge>
-  </Space>
+  <>
+    
+  </>
   )
 };
 export default App;
