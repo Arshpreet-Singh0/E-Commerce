@@ -21,7 +21,7 @@ function Categories() {
   };
   const apiUrls = {
     Electronics: 'http://localhost:8080/api/v1/product/get/category/Electronics',
-    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/TVs & Appliances',
+    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/TVsAppliances',
     Grocery: 'http://localhost:8080/api/v1/product/get/category/Grocery',
     Fashion: 'http://localhost:8080/api/v1/product/get/category/Fashion',
     Beauty: 'http://localhost:8080/api/v1/product/get/category/Beauty',

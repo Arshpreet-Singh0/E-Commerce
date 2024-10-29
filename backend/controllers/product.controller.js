@@ -144,7 +144,7 @@ export const getCategoryProducts = async(req, res)=>{
     try {
         const {name} = req.params;
         const category = await Category.findOne({name});
-        
+         
         const products = await Product.find({category:category._id});        
 
         return res.status(200).json({
