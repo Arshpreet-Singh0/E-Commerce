@@ -6,6 +6,7 @@ import Carousel from '../components/Cursol'; // Correct the import name if neces
 import Star from '../components/Star';
 import { Button } from 'antd';
 import ReviewComponent from '../components/review';
+import { CART_API_END_POINT } from '../utils/constant';
 
 const ProductDetail = () => {
   const { id } = useParams(); // Getting product ID from the URL
@@ -31,10 +32,17 @@ const ProductDetail = () => {
     fetchProductDetail();
   }, [id]);
 
-  const handleAddToCart = async()=>{
+  const handleAddToCart = async(productid)=>{
     try {
-      
+      const res = await axios.post(`${CART_API_END_POINT}/addproduct`,{productid},{
+        withCredentials : true,
+      })
+
+      console.log(res);
+      if(res?.data?.success){
+      }
     } catch (error) {
+      console.log(error);
       
     }
   }
@@ -78,7 +86,7 @@ const ProductDetail = () => {
               <p className="text-2xl font-semibold text-gray-800 mb-6">
                 ${product.price}
               </p>
-              <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600">
+              <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={()=>handleAddToCart(product?._id)}>
                 Add to Cart
               </Button>
             </div>

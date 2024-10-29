@@ -3,8 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import cart from '../assets/shopping-cart-6-svgrepo-com.svg';
 import "./SearchNav.css";
 import DropDown from "./DropDown";
-import Cart from "./Cart";
-
+import { useNavigate } from "react-router";
 
 const SearchNav = () => {
   const [input, setInput] = useState("");
@@ -12,6 +11,7 @@ const SearchNav = () => {
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [timer, setTimer] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (value) => {
     setInput(value);
@@ -95,8 +95,8 @@ const SearchNav = () => {
         <div className="w-full md:w-auto">
           <DropDown />
         </div>
-        <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300">
-          <Cart/>
+        <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300" onClick={()=>navigate("/cart")}>
+          <img className="w-10 h-6 md:w-12 md:h-8" src={cart} alt="cart icon" />
         </button>
       </div>
     </div>
