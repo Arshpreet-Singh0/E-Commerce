@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaRegUserCircle } from "react-icons/fa";
 import { REVIEW_API_END_POINT } from "../utils/constant";
+import Star from "./Star";
 
 const ReviewComponent = ({ reviews }) => {
   const [reviewList, setReviewList] = useState(reviews || []);
@@ -43,7 +44,7 @@ const ReviewComponent = ({ reviews }) => {
               >
                 <div className="flex mt-2 ">
                   {/* Star icons for rating */}
-                  <span className="text-yellow-400">★★★★☆</span>
+                  <span className="text-yellow-400"><Star stars={review.rating}/></span>
                 </div>
                 <p className="mt-2 text-md text-gray-600">{review.review}</p>
                 <div className="flex justify-between items-center mt-4">

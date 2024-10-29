@@ -12,6 +12,7 @@ import store from './redux/store.js'
 import ProductDetail from './Pages/ProductDetail.jsx'
 import Catergoies from './Pages/Catergoies.jsx';
 import Cart from './components/Cart.jsx'
+// import Cart from './components/Cart.jsx'
 
 const routes = createBrowserRouter([
      {
