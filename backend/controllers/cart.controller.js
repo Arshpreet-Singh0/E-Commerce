@@ -3,24 +3,26 @@ import Product from '../models/product.model.js'
 
 export const addProductToCart = async(req, res, next)=>{
     try {
-        const {productid, quantity} = req.body;
+        const {productid, quantity=1} = req.body;
         
         const user = req.id;
         const product = await Product.findOne({_id : productid});
         
 
-        const cart = await Cart.create({
+        await Cart.create({
             user,
             product : productid,
             name : product.name,
             quantity,
             price : (quantity*product.price),
             image : product.images[0].url,
-        })
+        });
+        const cart = await Cart.find({user});
 
         return res.status(200).json({
             message : "Product added to cart",
             success : true,
+            cart,
         })
     } catch (error) {
         next(error);   
@@ -53,7 +55,7 @@ export const removeProductFromCart = async(req, res, next)=>{
             message : "Product removed from cart",
             success : true,
             cart
-        })
+        });
     } catch (error) {
         next(error);        
     }
