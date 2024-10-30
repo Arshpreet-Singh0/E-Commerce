@@ -24,7 +24,8 @@ const routes = createBrowserRouter([
                {path:'/categories/:id',element:<Catergoies/>},
                {path:'/cart', element : <Cart />},
                { path: '*', element: <NotFound /> },
-               {path : '/admin/sign-in', element : <SignIn />}
+               {path : '/admin/sign-in', element : <SignIn />},
+               {path : '/admin/sign-up', element : <SignUp />}
           ],
      },
 ])

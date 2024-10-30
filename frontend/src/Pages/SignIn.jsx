@@ -7,7 +7,6 @@ import { setUser } from "../redux/authSlice";
 import { toast, ToastContainer } from "react-toastify";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useLocation } from 'react-router-dom';
 
 const SignIn = () => {
  // const navigate = useNavigate();
