@@ -3,27 +3,26 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function CategoriesPage() {
-  const { categoryName } = useParams(); // Extract category name from URL
+  const { id } = useParams(); // Extract category id from URL
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       try {
-        //  console.log("hello",categoryName);
-       // const response = await axios.get(`http://localhost:8080/api/v1/product/get/category/67135c0d050b49202e0c81c5`);
-      
+        const response = await axios.get(`http://localhost:8080/api/v1/product/get/category/${id}`);
+        console.log("hello",response.data);
         setProducts(response.data.products || []);
       } catch (error) {
         console.error('Error fetching category products:', error);
       }
     };
 
-    if (categoryName) fetchCategoryProducts();
-  }, [categoryName]);
+    if (id) fetchCategoryProducts();
+  }, [id]);
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">{categoryName} Products</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div key={product._id} className="border rounded-lg p-4 shadow-md">

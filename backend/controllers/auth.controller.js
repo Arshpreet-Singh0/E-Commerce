@@ -55,7 +55,7 @@ export const signup = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({
@@ -80,6 +80,12 @@ export const login = async (req, res, next) => {
         message: "Incorrect email or password",
         success: false,
       });
+    }
+    if(user.role && user.role!=role){
+      return res.status(400).json({
+        message : 'Account does not exist with correct role',
+        success : false,
+      })
     }
 
     const tokenData = {

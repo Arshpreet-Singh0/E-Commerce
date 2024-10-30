@@ -20,26 +20,27 @@ function Categories() {
     HomeKitchen: '67162461b02279f37dbed5ba'
   };
   const apiUrls = {
-    Electronics: 'http://localhost:8080/api/v1/product/get/category/67135c0d050b49202e0c81c5',
-    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/67161d29b14c947dc6a64029',
-    Grocery: 'http://localhost:8080/api/v1/product/get/category/67135d1d050b49202e0c81cb',
-    Fashion: 'http://localhost:8080/api/v1/product/get/category/67162393b02279f37dbed5b0',
-    Beauty: 'http://localhost:8080/api/v1/product/get/category/671623afb02279f37dbed5b3',
-    Furniture: 'http://localhost:8080/api/v1/product/get/category/671623f1b02279f37dbed5b6',
-    HomeKitchen: 'http://localhost:8080/api/v1/product/get/category/67162461b02279f37dbed5ba',
+    Electronics: 'http://localhost:8080/api/v1/product/get/category/Electronics',
+    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/TVsAppliances',
+    Grocery: 'http://localhost:8080/api/v1/product/get/category/Grocery',
+    Fashion: 'http://localhost:8080/api/v1/product/get/category/Fashion',
+    Beauty: 'http://localhost:8080/api/v1/product/get/category/Beauty',
+    Furniture: 'http://localhost:8080/api/v1/product/get/category/Furniture',
   };
   
   const fetchCategories = async () => {
     try {
       const categoryPromises = Object.keys(apiUrls).map(async (key) => {
         const response = await axios.get(apiUrls[key]);
-        console.log(response.data.products)
+        // console.log("res" ,response.data.products)
         return {
           name: key,
           products: response.data.products || [],
         };
       });
       const categoriesData = await Promise.all(categoryPromises);
+      console.log(categoriesData);
+      
       setCategories(categoriesData);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -52,7 +53,7 @@ function Categories() {
     Aos.init({ duration: 2000 });
     fetchCategories();
   }, []);
-
+  // console.log(categories);
   if (loading) {
     return <Loder />;
   }
@@ -66,6 +67,8 @@ function Categories() {
   };
 
   const renderCategoryRow = (category) => {
+    console.log("category " , category);
+    
     return (
       <div
         key={category.name}
@@ -73,10 +76,11 @@ function Categories() {
         data-aos="fade-up"
       >
         <div className="flex justify-between items-center mb-4">
+
           <h1 className="text-4xl font-bold text-black">{category.name}</h1>
           <button
             className="bg-black text-white px-4 py-2 hover:bg-green-600"
-            onClick={handleCategory} // Navigate to Categories page with category name
+            onClick={() => navigate(`/categories/${category.name}`)} // Navigate to Categories page with category name
           >
             More
           </button>
@@ -107,7 +111,10 @@ function Categories() {
     );
   };
 
+  console.log(categories);
+  
   return (
+    
     <div className="flex flex-col flex-grow w-full">
       <div className="mx-auto flex flex-col gap-7 px-4 w-full">
         <h1 className="text-3xl font-bold mb-8 text-center">Shop by Categories</h1>

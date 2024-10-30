@@ -11,7 +11,7 @@ router.route('/get').get(getAllProduct);
 
 router.route('/get/:id').get(getProductById);
 
-router.route('/get/category/:category').get(getCategoryProducts);
+router.route('/get/category/:name').get(getCategoryProducts);
 
 router.route('/get/brand/:brand').get(getProductByBrand);
 

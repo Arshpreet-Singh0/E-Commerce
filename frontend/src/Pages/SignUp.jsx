@@ -1,165 +1,197 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import Aos from 'aos';
-import 'aos/dist/aos.css';
-import axios from 'axios';
-import { USER_API_END_POINT } from '../utils/constant';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constant";
 const SignUp = () => {
-    useEffect(() => {
+    const path = location.pathname;
+    const isAdminSignup = path==='/admin/sign-up'
+  useEffect(() => {
     Aos.init({ duration: 3000 });
-  },[]);
-    const [input, setInput] = useState({
-        email: "",
-        name: "",
-        phone: "",
-        password: "",
-        confirmPassword: "",
-    });
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  }, []);
+  const [input, setInput] = useState({
+    email: "",
+    name: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    role : isAdminSignup ? "admin" : "",
+  });
+  
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
-        setInput((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
-    };
+  const handleInputChange = (e) => {
+    setInput((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const handleSubmit = async(e) => {
-        setError('');
-        e.preventDefault();
-        const { email, password, confirmPassword, name, phone } = input;
-        if (!email || !password || !confirmPassword || !name || !phone) {
-            setError('Please fill in all fields');
-            return;
-        }
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
+  const handleSubmit = async (e) => {
+    setError("");
+    e.preventDefault();
+    const { email, password, confirmPassword, name, phone } = input;
+    if (!email || !password || !confirmPassword || !name || !phone) {
+      setError("Please fill in all fields");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-        try {
-            const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
-                withCredentials : true,
-            })
-            console.log(res);
-            
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
+        withCredentials: true,
+      });
+      console.log(res);
 
-            if(res?.data?.success){
-                console.log(res?.data?.success);
-                
-                navigate('/sign-in');
-            }
-            
-        } catch (error) {
-            console.log(error);
-            
-            setError(error.response.data.message);
-        }
+      if (res?.data?.success) {
+        console.log(res?.data?.success);
 
-        // console.log(input);
-        // Add your sign-up logic here, e.g., API calls
-        // navigate('/'); // Redirect after successful sign-up
-    };
+        navigate("/sign-in");
+      }
+    } catch (error) {
+      console.log(error);
 
-    return (
-        <>
-            <div className="flex flex-col lg:flex-row items-center justify-center w-full h-screen bg-gray-100 gap-5 p-6 lg:p-0" data-aos="fade-in">
-                
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-                    <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Sign Up</h1>
-                    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                            <input
-                                id='name'
-                                type="text"
-                                name='name'
-                                placeholder="Name"
-                                value={input.name}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                            <input
-                                id='email'
-                                type="email"
-                                name='email'
-                                placeholder="Email"
-                                value={input.email}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input
-                                id='phone'
-                                type="text"
-                                name='phone'
-                                placeholder="Phone Number"
-                                value={input.phone}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                            <input
-                                id='password'
-                                type="password"
-                                name='password'
-                                placeholder="Password"
-                                value={input.password}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                            <input
-                                id='confirmPassword'
-                                type="password"
-                                placeholder="Confirm Password"
-                                value={input.confirmPassword}
-                                name='confirmPassword'
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
-                                required
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-                        >
-                            Sign Up
-                        </button>
-                    </form>
-                    <p className="text-center text-gray-600 mt-4">
-                        Already have an account?{' '}
-                        <button 
-                            onClick={() => navigate('/sign-in')} 
-                            className="text-blue-500 hover:underline"
-                        >
-                            Sign In
-                        </button>
-                    </p>
-                </div>
-                <img 
-                    className="w-full lg:w-1/2 rounded-lg shadow-lg" 
-                    src='https://res.cloudinary.com/dowkt7fcc/image/upload/v1729624031/freepik-export-202410221900570zSJ_onuvtr.jpg' 
-                    alt="Sign Up Visual" 
-                />
+      setError(error.response.data.message);
+    }
+};
+    const handleRoleChange = (e)=>{
+        setInput((prev) =>(
+        {...prev, role:e.target.value}
+        ));
+    }
+
+  return (
+    <>
+      <div
+        className="flex flex-col lg:flex-row items-center justify-center w-full h-screen bg-gray-100 gap-5 p-6 lg:p-0"
+        data-aos="fade-in"
+      >
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+            Sign Up
+          </h1>
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={input.name}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                required
+              />
             </div>
-        </>
-    );
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={input.email}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Phone Number
+              </label>
+              <input
+                id="phone"
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={input.phone}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={input.password}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                value={input.confirmPassword}
+                name="confirmPassword"
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-gray-300 focus:border-blue-500 focus:outline-none py-2"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              Sign Up
+            </button>
+          </form>
+          <p className="text-center text-gray-600 mt-4">
+            Already have an account?{" "}
+            <button
+              onClick={() => navigate("/sign-in")}
+              className="text-blue-500 hover:underline"
+            >
+              Sign In
+            </button>
+          </p>
+        </div>
+        <img
+          className="w-full lg:w-1/2 rounded-lg shadow-lg"
+          src={isAdminSignup ? 'https://framerusercontent.com/images/03p8SmPBNaVBFUbGHpqciSf8zY.jpeg' : "https://res.cloudinary.com/dowkt7fcc/image/upload/v1729624031/freepik-export-202410221900570zSJ_onuvtr.jpg"}
+          alt="Sign Up Visual"
+        />
+      </div>
+    </>
+  );
 };
 
 export default SignUp;
@@ -168,9 +200,9 @@ export default SignUp;
 //         <div className='flex flex-row w-full h-[70vh] gap-5'>
 //   {/* First Product Section */}
 //   <div className='flex flex-col h-full w-full gap-4 rounded-2xl bg-blueGray-200 hover:scale-105 transition-transform duration-1000 ease-in-out p-5' data-aos="fade-in">
-//     <img 
+//     <img
 //       src=""
-//       alt="Electronics" 
+//       alt="Electronics"
 //       className="w-full h-2/3 object-cover rounded-lg mb-4"
 //     />
 //     <h1 className='text-4xl text-black font-bold'>Electronics</h1>
@@ -195,9 +227,9 @@ export default SignUp;
 
 //     {/* Third Product Section */}
 //     <div className='flex flex-col gap-5 h-1/2 rounded-2xl bg-blueGray-200 hover:scale-105 transition-transform duration-1000 ease-in-out p-5' data-aos="fade-in">
-//       <img 
-//         src="https://example.com/furniture-image.jpg" 
-//         alt="Furniture" 
+//       <img
+//         src="https://example.com/furniture-image.jpg"
+//         alt="Furniture"
 //         className="w-full h-2/3 object-cover rounded-lg mb-4"
 //       />
 //       <h1 className='text-4xl text-black font-bold'>Furniture</h1>
