@@ -7,17 +7,25 @@ import { setUser } from "../redux/authSlice";
 import { toast, ToastContainer } from "react-toastify";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import { useLocation } from 'react-router-dom';
+
 const SignIn = () => {
  // const navigate = useNavigate();
+ const path = location.pathname;
+ const isAdminSignin = path === '/admin/sign-in'
+ 
 useEffect(() => {
     Aos.init({ duration: 3000 });
   },[]);
   const [input, setInput] = useState({
     email: "",
     password: "",
+    role : ""
   });
-  const navigate = useNavigate(); // Hook for navigation
+  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const handleInputChange = (e) => {
     setInput((prev) => ({
@@ -28,14 +36,11 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple validation for empty fields
     const { email, password } = input;
     if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
-    // API call to authenticate user
-    // console.log(input);
 
     try {
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
@@ -56,8 +61,12 @@ useEffect(() => {
 
     }
 
-    // After successful sign in, navigate to Home page
   };
+  const handleRoleChange = (e)=>{
+    setInput((prev) =>(
+      {...prev, role:e.target.value}
+    ))
+  }
   const handleclick = ()=>{
     navigate('/sign-up');
   }
@@ -103,6 +112,35 @@ useEffect(() => {
                 required
               />
             </div>
+            {isAdminSignin && (
+        <div className="flex gap-5">
+        <div className="flex items-center">
+            <input
+              type="radio"
+              name="role"
+              value="admin"
+              id="admin"
+              checked={input.role === "admin"}
+              onChange={handleRoleChange}
+            />
+          <label htmlFor="admin" className="ml-2">
+            Admin
+          </label></div>
+            <div className="flex items-center">
+            <input
+              type="radio"
+              name="role"
+              value="superadmin"
+              id="superadmin"
+              checked={input.role === "superadmin"}
+              onChange={handleRoleChange}
+            />
+          <label htmlFor="superadmin" className="ml-2">
+            Super Admin
+          </label>
+            </div>
+        </div>
+      )}
             <button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"

@@ -23,9 +23,10 @@ const routes = createBrowserRouter([
                {path:'/product/:id',element:<ProductDetail/>},
                {path:'/categories/:id',element:<Catergoies/>},
                {path:'/cart', element : <Cart />},
-               { path: '*', element: <NotFound /> }
-          ]
-     }
+               { path: '*', element: <NotFound /> },
+               {path : '/admin/sign-in', element : <SignIn />}
+          ],
+     },
 ])
 
 render(
