@@ -7,7 +7,7 @@ import axios from 'axios';
 import { CART_API_END_POINT } from '../utils/constant.js';
 import {setCartItems} from '../redux/cartSlice.js'
 
-const App = () => {
+const Cart = () => {
   const {user} = useSelector(store=>store.auth);
   const {cartItems} = useSelector(store=>store.cart);
   console.log(cartItems);
@@ -42,4 +42,4 @@ const App = () => {
   </>
   )
 };
-export default App;
+export default Cart;

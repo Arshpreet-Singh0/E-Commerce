@@ -4,6 +4,7 @@ import cart from '../assets/shopping-cart-6-svgrepo-com.svg';
 import "./SearchNav.css";
 import DropDown from "./DropDown";
 import { useNavigate } from "react-router";
+import CartLogo from "./CartLogo";
 
 const SearchNav = () => {
   const [input, setInput] = useState("");
@@ -12,6 +13,8 @@ const SearchNav = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [timer, setTimer] = useState(null);
   const navigate = useNavigate();
+  const {user} = useSelector(store=>store.auth);
+  const {cartItems} = useSelector(store=>store.cart);
 
   const handleChange = (value) => {
     setInput(value);
@@ -96,7 +99,7 @@ const SearchNav = () => {
           <DropDown />
         </div>
         <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300" onClick={()=>navigate("/cart")}>
-          <img className="w-10 h-6 md:w-12 md:h-8" src={cart} alt="cart icon" />
+          <CartLogo/>
         </button>
       </div>
     </div>

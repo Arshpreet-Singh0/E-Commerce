@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loder from '../components/Loder'; // Assuming you have a Loader component
 import Carousel from '../components/Cursol'; // Correct the import name if necessary
@@ -13,6 +13,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -33,6 +34,9 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = async(productid)=>{
+    if(!user){
+      navigate('/sign-in');
+    }
     try {
       const res = await axios.post(`${CART_API_END_POINT}/addproduct`,{productid},{
         withCredentials : true,
