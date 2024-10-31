@@ -5,6 +5,7 @@ import "./SearchNav.css";
 import DropDown from "./DropDown";
 import { useNavigate } from "react-router";
 import CartLogo from "./CartLogo";
+import { useSelector } from "react-redux";
 
 const SearchNav = () => {
   const [input, setInput] = useState("");
