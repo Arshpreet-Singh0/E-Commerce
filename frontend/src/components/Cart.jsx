@@ -1,87 +1,105 @@
 import React, { useEffect } from 'react';
-import { ClockCircleOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Space } from 'antd';
+import { ClockCircleOutlined, DeleteOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Button, Card, Space, Typography, List, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import { CART_API_END_POINT } from '../utils/constant';
-import {setCartItems} from '../redux/cartSlice.js'
-import { Link } from 'react-router-dom';
+import { CART_API_END_POINT } from '../utils/constant.js';
+import { setCartItems } from '../redux/cartSlice.js';
 
-const App = () => {
-  const {user} = useSelector(store=>store.auth);
-  const {cartItems} = useSelector(store=>store.cart);
-  console.log(cartItems);
+const { Text, Title } = Typography;
+
+const Cart = () => {
+  const { user } = useSelector((store) => store.auth);
+  const { cartItems } = useSelector((store) => store.cart);
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(!user){
+
+  useEffect(() => {
+    if (!user) {
       navigate('/sign-in');
     }
 
-    const fetchCart = async()=>{
+    const fetchCart = async () => {
       try {
-        const res = await axios.get(`${CART_API_END_POINT}/get`,{
-          withCredentials : true,
+        const res = await axios.get(`${CART_API_END_POINT}/get`, {
+          withCredentials: true,
         });
 
-        if(res?.data?.success){
+        if (res?.data?.success) {
           dispatch(setCartItems(res?.data?.cart));
         }
       } catch (error) {
-        console.log(error);        
+        console.log(error);
       }
     };
 
     fetchCart();
-  },[])
+  }, [user, dispatch, navigate]);
+
+  const deleteItem = async (itemId) => {
+    try {
+      const res = await axios.delete(`${CART_API_END_POINT}/delete/${itemId}`, {
+        withCredentials: true,
+      });
+
+      if (res?.data?.success) {
+        message.success('Item removed from cart');
+        dispatch(setCartItems(res?.data?.cart));
+      }
+    } catch (error) {
+      console.log(error);
+      message.error('Failed to remove item');
+    }
+  };
+
+  const buyItem = (item) => {
+    message.success(`Purchased ${item.name}`);
+    // Implement buy functionality as needed
+  };
 
   return (
-    <div className='flex justify-center'>
-      <div className='w-[80%] '>
-      {
-        cartItems && cartItems.length!=0 ? 
-        <>
-          {
-            cartItems.map((item, index)=>(
-              <Link to={`/product/${item.product}`}>
-              <div key={item._id} className='flex h-56 p-2'>
-                <div>
-                  <img src={item.image} alt="" className='w-44 h-full object-contain rounded-lg' />
-                </div>
-                <div className='flex-1 border border-black p-2'>
-                    <h1 className='text-xl font-bold'>{item?.name}</h1>
-                    <p className='text-lg'>Quantity : {item?.quantity}</p>
-                </div>
-              </div></Link>
-            ))
-          }
-        </> : (
-          <p>No items in cart.</p>
-        )
-      }
-      </div>
+    <div style={{ padding: '20px' }}>
+      <Title level={2}>Your Cart</Title>
+      {cartItems.length === 0 ? (
+        <Text>Your cart is empty</Text>
+      ) : (
+        <List
+          itemLayout="horizontal"
+          dataSource={cartItems}
+          renderItem={(item) => (
+            <Card style={{ marginBottom: '16px' }}>
+              <List.Item
+                actions={[
+                  <Button 
+                    type="primary" 
+                    icon={<ShoppingCartOutlined />} 
+                    onClick={() => buyItem(item)}
+                  >
+                    Buy
+                  </Button>,
+                  <Button 
+                    danger 
+                    icon={<DeleteOutlined />} 
+                    onClick={() => deleteItem(item._id)}
+                  >
+                    Delete
+                  </Button>,
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src={item.image} />}
+                  title={item.name}
+                  description={<Text>Price: ${item.price}</Text>}
+                />
+              </List.Item>
+            </Card>
+          )}
+        />
+      )}
     </div>
-  // <Space size="middle">
-  //   <Badge count={5}>
-  //     <Avatar shape="square" size="large" />
-  //   </Badge>
-  //   <Badge count={0} showZero>
-  //     <Avatar shape="square" size="large" />
-  //   </Badge>
-  //   <Badge
-  //     count={
-  //       <ClockCircleOutlined
-  //         style={{
-  //           color: '#f5222d',
-  //         }}
-  //       />
-  //     }
-  //   >
-  //     <Avatar shape="square" size="large" />
-  //   </Badge>
-  // </Space>
-  )
+  );
 };
-export default App;
+
+export default Cart;

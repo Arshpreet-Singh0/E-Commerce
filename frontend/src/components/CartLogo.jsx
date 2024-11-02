@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 function CartLogo() {
   const { user } = useSelector((store) => store.auth);
   const { cartItems, loading } = useSelector((store) => store.cart); // assuming `loading` indicates if cart data is being fetched
-
+  
   return (
     <Space size="middle">
       <Badge count={user ? cartItems.length : 0} showZero>

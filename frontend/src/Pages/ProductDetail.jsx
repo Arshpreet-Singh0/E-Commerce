@@ -7,12 +7,16 @@ import Star from '../components/Star';
 import { Button } from 'antd';
 import ReviewComponent from '../components/review';
 import { CART_API_END_POINT } from '../utils/constant';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProductDetail = () => {
   const { id } = useParams(); // Getting product ID from the URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
+  const {user} = useSelector(store=>store.auth);
+  const {cartItems} = useSelector(store=>store.cart);
+   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
