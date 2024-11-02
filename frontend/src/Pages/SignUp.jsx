@@ -4,6 +4,9 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 const SignUp = () => {
     const path = location.pathname;
     const isAdminSignup = path==='/admin/sign-up'
@@ -49,14 +52,17 @@ const SignUp = () => {
       console.log(res);
 
       if (res?.data?.success) {
+        toast.success(res?.data?.message);
         console.log(res?.data?.success);
 
-        navigate("/sign-in");
+        setTimeout(() => {
+          navigate("/sign-in");
+        }, 800);
       }
     } catch (error) {
       console.log(error);
 
-      setError(error.response.data.message);
+      toast.error(error?.response?.data?.message || "An error occurred!");
     }
 };
     const handleRoleChange = (e)=>{
@@ -67,6 +73,7 @@ const SignUp = () => {
 
   return (
     <>
+      <ToastContainer position="top-right" />
       <div
         className="flex flex-col lg:flex-row items-center justify-center w-full h-screen bg-gray-100 gap-5 p-6 lg:p-0"
         data-aos="fade-in"

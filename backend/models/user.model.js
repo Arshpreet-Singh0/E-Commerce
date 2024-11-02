@@ -47,7 +47,7 @@ const userSchema = Schema({
     address : [addressSchema],
     role : {
       type : String,
-      enum : ['admin','superadmin'],
+      enum : ['user','admin','superadmin'],
     }
 },{ timestamps: true })
 

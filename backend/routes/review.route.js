@@ -3,6 +3,7 @@ import { isAuthenticated } from '../middlewares/isAuthenticated.js';
 import { deleteReview, postReview, updateReview } from '../controllers/review.controller.js';
 const router = express.Router();
 
+
 router.route('/create/:product').post(isAuthenticated, postReview);
 
 router.route('/update/:id').post(isAuthenticated, updateReview);

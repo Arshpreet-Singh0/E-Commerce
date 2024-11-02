@@ -3,15 +3,28 @@ import { DownOutlined, SettingOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/constant';
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     // Clear any authentication tokens, local storage, or session data here
-    dispatch(setUser(null));
-    console.log("User logged out"); // For debugging
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`, {}, {
+        withCredentials : true,
+      })
+  
+      if(res?.data?.success){
+        dispatch(setUser(null));
+      }
+      
+    } catch (error) {
+    }
   };
 
   const items = [

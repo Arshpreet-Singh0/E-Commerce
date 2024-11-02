@@ -5,9 +5,33 @@ import jwt from "jsonwebtoken";
 // import getDataUri from "../utils/dataURI.js";
 // import cloudinary from "../utils/claudinary.js";
 
+export const getUser = async(req, res, next)=>{
+  try {
+    const id = req.id;
+
+    const user = await User.findById(id);
+    
+    if(!user){
+      return res.status(404).json({
+        success : false,
+      })
+    }
+
+    return res.status(200).json({
+      success : true,
+      user,
+    })
+  } catch (error) {
+    next(error);
+  }
+}
+
 export const signup = async (req, res, next) => {
   try {
-    const { name, email, phone, password, role } = req.body;
+    let { name, email, phone, password, role } = req.body;
+    
+    if(!role) role='user';
+    
 
     if (!name || !email || !phone || !password) {
       
@@ -120,7 +144,7 @@ export const login = async (req, res, next) => {
         success: true,
       });
   } catch (err) {
-    next(error);
+    next(err);
   }
 };
 
