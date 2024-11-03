@@ -5,11 +5,13 @@ import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice'; // Import the action
 import Profile from './profileDrop';
+import { Menu, Dropdown, Button, Layout, Avatar, Drawer } from 'antd';
+import { UserOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [activeButton, setActiveButton] = useState('Home');
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -18,13 +20,30 @@ const Navbar = () => {
     closeMenu();
   };
 
+  const menuItems = (
+    <Menu>
+      <Menu.Item key="home">
+        <Link to="/" onClick={() => handleButtonClick('Home')}>Home</Link>
+      </Menu.Item>
+      <Menu.Item key="products">
+        <Link to="/products" onClick={() => handleButtonClick('Products')}>Products</Link>
+      </Menu.Item>
+      <Menu.Item key="about">
+        <Link to="/about" onClick={() => handleButtonClick('About')}>About</Link>
+      </Menu.Item>
+      <Menu.Item key="contact">
+        <Link to="/contact" onClick={() => handleButtonClick('Contact')}>Contact</Link>
+      </Menu.Item>
+      <Menu.Item key="help">
+        <Link to="/help" onClick={() => handleButtonClick('Help')}>Help</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // Dispatch action to set user to null
-
-    console.log(user);
     dispatch(setUser(null));
   };
 
@@ -43,6 +62,10 @@ const Navbar = () => {
     borderBottom: '5px solid blue',
   };
 
+  const toggleDrawer = () => {
+    setIsDrawerVisible(!isDrawerVisible);
+  };
+
   return (
     <div className="bg-blue-500">
       <nav id="nav" style={navStyles}>
@@ -53,8 +76,8 @@ const Navbar = () => {
           <img className="w-full h-9" src={log} alt="logo" />
         </div>
         <div className="lg:hidden">
-          <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={toggleMenu}>
-            <svg className="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={toggleDrawer}>
+            <svg className="block h-4 w-4 fill-current col-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
@@ -72,44 +95,44 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/"
-              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
-              onClick={() => handleButtonClick('About')}
+              to="/products"
+              className={`text-sm ${activeButton === 'Products' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('Products')}
             >
               Products
             </Link>
           </li>
           <li>
             <Link
-              to="/"
-              className={`text-sm ${activeButton === 'Services' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
-              onClick={() => handleButtonClick('Services')}
+              to="/about"
+              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('About')}
             >
               About
             </Link>
           </li>
           <li>
             <Link
-              to="/"
-              className={`text-sm ${activeButton === 'Pricing' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
-              onClick={() => handleButtonClick('Pricing')}
+              to="/contact"
+              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('Contact')}
             >
               Contact
             </Link>
           </li>
           <li>
             <Link
-              to="/"
-              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
-              onClick={() => handleButtonClick('Contact')}
+              to="/help"
+              className={`text-sm ${activeButton === 'Help' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('Help')}
             >
               Help
             </Link>
           </li>
         </ul>
         {user ? (
-          <div className="flex items-center gap-3">
-            <Profile/>
+          <div className="hidden lg:flex items-center gap-3">
+            <Profile />
           </div>
         ) : (
           <div>
@@ -121,110 +144,59 @@ const Navbar = () => {
             </Link>
             <Link
               className="hidden lg:inline-block py-2 px-6 bg-[#FF0000] hover:bg-[#FFA27F] text-sm text-white font-bold rounded-xl transition duration-200 ease-in-out"
-              to="sign-up"
+              to="/sign-up"
             >
               Sign Up
             </Link>
           </div>
         )}
       </nav>
+      {/* Drawer for Mobile Menu */}
+      <Drawer
+        title={
+          <div className="flex justify-between items-center">
+            <span>ShopIt</span>
+            <Button type="text" icon={<CloseOutlined />} onClick={toggleDrawer} />
+          </div>
+        }
+        placement="right"
+        closable={false}
+        onClose={toggleDrawer}
+        visible={isDrawerVisible}
+      >
+        <Menu
+          mode="vertical"
+          selectedKeys={[activeButton]}
+          onClick={({ key }) => handleButtonClick(key)}
+          className="text-blue-600"
+        >
+          {menuItems.props.children}
+        </Menu>
 
-      {isMenuOpen && (
-        <div className="navbar-menu relative z-50 transition duration-200 ease-in-out">
-          <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25" onClick={toggleMenu}></div>
-          <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
-            <div className="flex items-center mb-8">
-              <Link className="mr-auto text-3xl font-bold leading-none" to="/" style={{ color: '#0073e6' }}>
-                ShopIt
+        <div className="mt-4">
+          {user ? (
+            <Dropdown overlay={
+              <Menu>
+                <Menu.Item key="profile">Profile</Menu.Item>
+                <Menu.Item key="logout" onClick={handleLogout}>Logout</Menu.Item>
+              </Menu>
+            }>
+              <Button type="text" icon={<UserOutlined />} className="text-blue-600">
+                {user.name || 'Profile'}
+              </Button>
+            </Dropdown>
+          ) : (
+            <div className="flex space-x-2">
+              <Link to="/sign-in">
+                <Button type="primary">Sign In</Button>
               </Link>
-              <button className="navbar-close" onClick={toggleMenu}>
-                <svg
-                  className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500 transition duration-200 ease-in-out"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-              </button>
+              <Link to="/sign-up">
+                <Button type="danger">Sign Up</Button>
+              </Link>
             </div>
-            <nav>
-              <ul>
-                <li>
-                  <Link
-                    to="/"
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
-                    onClick={() => handleButtonClick('Instructors')}
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
-                    onClick={() => handleButtonClick('Courses')}
-                  >
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/accommodations"
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
-                    onClick={() => handleButtonClick('Accommodations')}
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
-                    onClick={() => handleButtonClick('Food')}
-                  >
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded transition duration-200 ease-in-out"
-                    onClick={() => handleButtonClick('Contact')}
-                  >
-                    Help
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-            <div className="mt-auto">
-              <div className="pt-6">
-                <Link
-                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl transition duration-200 ease-in-out"
-                  to="/sign-in"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-red-500 hover:bg-red-600 rounded-xl transition duration-200 ease-in-out"
-                  to="/sign-up"
-                >
-                  Sign Up
-                </Link>
-              </div>
-              <p className="my-4 text-xs text-center text-gray-400">
-                <span>Copyright © 2024</span>
-              </p>
-            </div>
-          </nav>
+          )}
         </div>
-      )}
+      </Drawer>
     </div>
   );
 };

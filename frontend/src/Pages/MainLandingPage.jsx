@@ -6,10 +6,30 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Category from '../../../backend/models/category.model';
 import Categories from '../components/categories';
+import { useSelector, useDispatch } from 'react-redux';
 function MainLandingPage() {
+  const { user } = useSelector((store) => store.auth);
   useEffect(() => {
     Aos.init({ duration: 3000 });
-  }, []);
+    if (user) {
+    const fetchCart = async () => {
+      try {
+        const res = await axios.get(`${CART_API_END_POINT}/get`, {
+          withCredentials: true,
+        });
+        
+        if (res?.data?.success) {
+          console.log(res)
+          dispatch(setCartItems(res?.data?.cart));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCart();
+  }
+  }, [user]);
 
   return (
     <div className="flex flex-col flex-grow w-full">

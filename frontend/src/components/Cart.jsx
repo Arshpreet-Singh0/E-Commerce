@@ -26,8 +26,9 @@ const Cart = () => {
         const res = await axios.get(`${CART_API_END_POINT}/get`, {
           withCredentials: true,
         });
-
+        
         if (res?.data?.success) {
+          console.log(res.data.cart)
           dispatch(setCartItems(res?.data?.cart));
         }
       } catch (error) {
@@ -39,7 +40,9 @@ const Cart = () => {
   }, [user, dispatch, navigate]);
 
   const deleteItem = async (itemId) => {
+    console.log(itemId)
     try {
+      
       const res = await axios.delete(`${CART_API_END_POINT}/delete/${itemId}`, {
         withCredentials: true,
       });
