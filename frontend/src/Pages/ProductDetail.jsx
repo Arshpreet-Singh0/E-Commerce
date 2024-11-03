@@ -37,6 +37,22 @@ const ProductDetail = () => {
     fetchProductDetail();
   }, [id]);
 
+  
+  const fetchCart = async () => {
+      try {
+        const res = await axios.get(`${CART_API_END_POINT}/get`, {
+          withCredentials: true,
+        });
+        
+        if (res?.data?.success) {
+          console.log(res.data.cart)
+          dispatch(setCartItems(res?.data?.cart));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
   const handleAddToCart = async(productid)=>{
     if(!user){
       navigate('/sign-in');
@@ -45,8 +61,8 @@ const ProductDetail = () => {
       const res = await axios.post(`${CART_API_END_POINT}/addproduct`,{productid},{
         withCredentials : true,
       })
-
-      console.log(res);
+      
+        fetchCart();
       if(res?.data?.success){
       }
     } catch (error) {
