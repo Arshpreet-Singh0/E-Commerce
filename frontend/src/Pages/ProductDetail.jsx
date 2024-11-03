@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import ReviewComponent from '../components/review';
 import { CART_API_END_POINT } from '../utils/constant';
 import { useSelector, useDispatch } from 'react-redux';
+import { setCartItems } from '../redux/cartSlice.js';
 
 const ProductDetail = () => {
   const { id } = useParams(); // Getting product ID from the URL
@@ -37,7 +38,7 @@ const ProductDetail = () => {
     fetchProductDetail();
   }, [id]);
 
-  
+
   const fetchCart = async () => {
       try {
         const res = await axios.get(`${CART_API_END_POINT}/get`, {
@@ -62,9 +63,7 @@ const ProductDetail = () => {
         withCredentials : true,
       })
       
-        fetchCart();
-      if(res?.data?.success){
-      }
+      fetchCart();
     } catch (error) {
       console.log(error);
       

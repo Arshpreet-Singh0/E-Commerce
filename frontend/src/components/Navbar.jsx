@@ -104,7 +104,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/about"
+              to="/About"
               className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
             >

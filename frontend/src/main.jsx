@@ -12,6 +12,7 @@ import store from './redux/store.js'
 import ProductDetail from './Pages/ProductDetail.jsx'
 import Catergoies from './Pages/Catergoies.jsx';
 import Cart from './components/Cart.jsx'
+import AboutPage from './Pages/About.jsx';
 // import Cart from './components/Cart.jsx'
 
 const routes = createBrowserRouter([
@@ -25,7 +26,8 @@ const routes = createBrowserRouter([
                {path:'/cart', element : <Cart />},
                { path: '*', element: <NotFound /> },
                {path : '/admin/sign-in', element : <SignIn />},
-               {path : '/admin/sign-up', element : <SignUp />}
+               {path : '/admin/sign-up', element : <SignUp />},
+               {path:'/About',element:<AboutPage/>}
           ],
      },
 ])
