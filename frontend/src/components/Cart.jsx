@@ -17,9 +17,9 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/sign-in');
-    }
+    // if (!user) {
+    //   navigate('/sign-in');
+    // }
 
     const fetchCart = async () => {
       try {
@@ -42,9 +42,8 @@ const Cart = () => {
   const deleteItem = async (itemId) => {
     console.log(itemId)
     try {
-      
-      const res = await axios.delete(`${CART_API_END_POINT}/delete/${itemId}`, {
-        withCredentials: true,
+      const res = await axios.post(`${CART_API_END_POINT}/delete/${itemId}`, {}, {
+        withCredentials : true,
       });
 
       if (res?.data?.success) {
@@ -85,7 +84,7 @@ const Cart = () => {
                   <Button 
                     danger 
                     icon={<DeleteOutlined />} 
-                    onClick={() => deleteItem(item._id)}
+                    onClick={() => deleteItem(item.product)}
                   >
                     Delete
                   </Button>,
