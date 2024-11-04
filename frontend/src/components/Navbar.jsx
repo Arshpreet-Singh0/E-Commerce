@@ -25,14 +25,11 @@ const Navbar = () => {
       <Menu.Item key="home">
         <Link to="/" onClick={() => handleButtonClick('Home')}>Home</Link>
       </Menu.Item>
-      <Menu.Item key="products">
-        <Link to="/products" onClick={() => handleButtonClick('Products')}>Products</Link>
-      </Menu.Item>
       <Menu.Item key="about">
         <Link to="/about" onClick={() => handleButtonClick('About')}>About</Link>
       </Menu.Item>
       <Menu.Item key="contact">
-        <Link to="/contact" onClick={() => handleButtonClick('Contact')}>Contact</Link>
+        <Link to="/Contact" onClick={() => handleButtonClick('Contact')}>Contact</Link>
       </Menu.Item>
       <Menu.Item key="help">
         <Link to="/help" onClick={() => handleButtonClick('Help')}>Help</Link>
@@ -95,15 +92,6 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/products"
-              className={`text-sm ${activeButton === 'Products' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
-              onClick={() => handleButtonClick('Products')}
-            >
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link
               to="/About"
               className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
@@ -113,7 +101,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/contact"
+              to="/Contact"
               className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Contact')}
             >

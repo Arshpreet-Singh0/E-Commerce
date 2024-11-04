@@ -13,6 +13,8 @@ import ProductDetail from './Pages/ProductDetail.jsx'
 import Catergoies from './Pages/Catergoies.jsx';
 import Cart from './components/Cart.jsx'
 import AboutPage from './Pages/About.jsx';
+import ContactPage from './Pages/ContactPage.jsx';
+import HelpPage from './Pages/HelpPage.jsx';
 // import Cart from './components/Cart.jsx'
 
 const routes = createBrowserRouter([
@@ -27,7 +29,9 @@ const routes = createBrowserRouter([
                { path: '*', element: <NotFound /> },
                {path : '/admin/sign-in', element : <SignIn />},
                {path : '/admin/sign-up', element : <SignUp />},
-               {path:'/About',element:<AboutPage/>}
+               {path:'/About',element:<AboutPage/>},
+               {path:'/Contact',element:<ContactPage/>},
+               {path:'/help',element:<HelpPage/>}
           ],
      },
 ])
