@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
-
+  const navigate = useNavigate()
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
     closeMenu();
@@ -41,7 +41,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    navigate('/home')
     dispatch(setUser(null));
+    
   };
 
   const navStyles = {

@@ -8,19 +8,21 @@ import { USER_API_END_POINT } from '../utils/constant';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { setCartItems } from '../redux/cartSlice';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleLogout = async() => {
     // Clear any authentication tokens, local storage, or session data here
     try {
       const res = await axios.post(`${USER_API_END_POINT}/logout`, {}, {
         withCredentials : true,
       })
-  
+      
       if(res?.data?.success){
+        navigate('/')
         dispatch(setUser(null));
         dispatch(setCartItems(null));
       }
