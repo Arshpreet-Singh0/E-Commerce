@@ -20,8 +20,6 @@ function App() {
         const res = await axios.post(`${USER_API_END_POINT}`, {}, {
           withCredentials: true
         })
-        console.log(res);
-        
 
         if(res?.data?.success){
             dispatch(setUser(res?.data?.user));

@@ -7,28 +7,18 @@ import Category from '../../../backend/models/category.model';
 import Categories from '../components/categories';
 import { useSelector, useDispatch } from 'react-redux';
 import MyProductComponent from '../components/ProductSection';
+import { useNavigate } from 'react-router';
 function MainLandingPage() {
   const { user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
   useEffect(() => {
     Aos.init({ duration: 3000 });
-    if (user) {
-    const fetchCart = async () => {
-      try {
-        const res = await axios.get(`${CART_API_END_POINT}/get`, {
-          withCredentials: true,
-        });
-        
-        if (res?.data?.success) {
-          console.log(res)
-          dispatch(setCartItems(res?.data?.cart));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchCart();
-  }
+    console.log(user);
+    
+    if(user && user?.role=='admin'){
+      navigate('/admin');
+    }
   }, [user]);
 
   return (

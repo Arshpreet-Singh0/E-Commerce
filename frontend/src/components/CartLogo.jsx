@@ -10,7 +10,7 @@ function CartLogo() {
   
   return (
     <Space size="middle">
-      <Badge count={user ? cartItems.length : 0} showZero>
+      <Badge count={user ? cartItems?.length : 0} showZero>
         {loading ? (
           <Spin indicator={<ClockCircleOutlined style={{ fontSize: 24 }} spin />} />
         ) : (

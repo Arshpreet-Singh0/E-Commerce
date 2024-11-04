@@ -64,7 +64,7 @@ const Cart = () => {
   return (
     <div style={{ padding: '20px' }}>
       <Title level={2}>Your Cart</Title>
-      {cartItems.length === 0 ? (
+      {cartItems?.length === 0 ? (
         <Text>Your cart is empty</Text>
       ) : (
         <List

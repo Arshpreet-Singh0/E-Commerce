@@ -213,3 +213,16 @@ export const deleteProduct = async(req, res)=>{
     }
 }
 
+export const getAdminProducts = async(req, res, next)=>{
+    try {
+        const created_by = req.id;
+        const products = await Product.find({created_by});
+
+        return res.status(200).json({
+            products,
+            success : true,
+        })
+    } catch (error) {
+        next(error);
+    }
+}

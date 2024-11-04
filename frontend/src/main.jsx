@@ -15,6 +15,7 @@ import Cart from './components/Cart.jsx'
 import AboutPage from './Pages/About.jsx';
 import ContactPage from './Pages/ContactPage.jsx';
 import HelpPage from './Pages/HelpPage.jsx';
+import AdminProducts from './Pages/admin/AdminProducts.jsx';
 // import Cart from './components/Cart.jsx'
 
 const routes = createBrowserRouter([
@@ -31,7 +32,8 @@ const routes = createBrowserRouter([
                {path : '/admin/sign-up', element : <SignUp />},
                {path:'/About',element:<AboutPage/>},
                {path:'/Contact',element:<ContactPage/>},
-               {path:'/help',element:<HelpPage/>}
+               {path:'/help',element:<HelpPage/>},
+               {path:'/admin',element:<AdminProducts/>}
           ],
      },
 ])

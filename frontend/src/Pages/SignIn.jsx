@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { setCartItems } from "../redux/cartSlice";
 
 const SignIn = () => {
  // const navigate = useNavigate();
@@ -47,7 +48,7 @@ useEffect(() => {
         withCredentials: true,
       });
 
-      console.log(res);
+      // console.log(res);
 
       if (res?.data?.success) {
         toast.success(res?.data?.message)
@@ -55,6 +56,7 @@ useEffect(() => {
         
         toast.success(res?.data?.message);
         dispatch(setUser(res?.data?.user));
+        dispatch(setCartItems(res?.data?.cart));
         setTimeout(() => {
           navigate('/');
           

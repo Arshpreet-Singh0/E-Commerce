@@ -7,6 +7,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constant';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { setCartItems } from '../redux/cartSlice';
 
 const Profile = () => {
   const { user } = useSelector((store) => store.auth);
@@ -21,6 +22,7 @@ const Profile = () => {
   
       if(res?.data?.success){
         dispatch(setUser(null));
+        dispatch(setCartItems(null));
       }
       
     } catch (error) {
