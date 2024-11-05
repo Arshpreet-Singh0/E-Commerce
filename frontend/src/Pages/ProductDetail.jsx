@@ -25,7 +25,6 @@ const ProductDetail = () => {
       try {
         console.log(id);
         const res = await axios.get(`http://localhost:8080/api/v1/product/get/${id}`);
-        console.log(res.data.product);
         setProduct(res?.data?.product);
         setImgUrl(res.data.product?.images?.[0]?.url || ''); // Set initial image URL if available
       } catch (error) {
