@@ -1,7 +1,7 @@
 import Order from "../models/order.model.js";
 import Product from "../models/product.model.js";
 
-export const createOrder = async(req, res)=>{
+export const createOrder = async(req, res, next)=>{
     try {
         const user = req.id;
         const {product, name, taxprice,shippingAddress, shippingPrice,totalPrice, quantity} = req.body;
@@ -50,11 +50,11 @@ export const createOrder = async(req, res)=>{
             success : true,
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 
-export const getOrders = async(req, res)=>{
+export const getOrders = async(req, res, next)=>{
     try {
         const user = req.id;
         const orders = await Order.find({user}).populate('product')
@@ -64,11 +64,11 @@ export const getOrders = async(req, res)=>{
             success : true,
         });
     } catch (error) {
-        console.log(error); 
+        next(error);
     }
 }
 
-export const updateOrder = async(req,res)=>{
+export const updateOrder = async(req,res, next)=>{
     try {
         const {status, isPaid} = req.body;
         
@@ -94,6 +94,6 @@ export const updateOrder = async(req,res)=>{
         })
 
     } catch (error) {
-        
+        next(error);
     }
 }

@@ -72,7 +72,6 @@ export const signup = async (req, res, next) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -155,7 +154,6 @@ export const logout = async (req, res, next) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -198,7 +196,6 @@ export const updateProfile = async (req, res, next) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -240,7 +237,6 @@ export const updatePassword = async(req, res)=>{
 
 
   } catch (error) {
-    console.log(error);
     next(error);
   }
 }

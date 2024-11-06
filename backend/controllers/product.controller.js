@@ -43,11 +43,11 @@ export const listProduct = async (req, res, next) => {
     })
   } catch (error) {
     console.log(error);
-    
+    next(error);
   }
 };
 
-export const updateProductInfo = async(req, res)=>{
+export const updateProductInfo = async(req, res, next)=>{
     try {
         const { name, description, price, category, stock, images, brand } = req.body;
         const {id} = req.params;
@@ -79,10 +79,11 @@ export const updateProductInfo = async(req, res)=>{
         
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const getAllProduct = async(req, res)=>{
+export const getAllProduct = async(req, res, next)=>{
     try {
         const keyword = req.query.keyword || "";
         const query = {
@@ -103,11 +104,11 @@ export const getAllProduct = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
-export const getProductById = async(req, res)=>{
+export const getProductById = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -136,11 +137,11 @@ export const getProductById = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
-export const getCategoryProducts = async(req, res)=>{
+export const getCategoryProducts = async(req, res, next)=>{
     try {
         const {name} = req.params;
         const category = await Category.findOne({name});
@@ -153,7 +154,7 @@ export const getCategoryProducts = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
@@ -169,10 +170,11 @@ export const getProductByBrand = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const getProductBySubCategory = async(req, res)=>{
+export const getProductBySubCategory = async(req, res, next)=>{
     try {
         const {subcategory} = req.params;
 
@@ -186,10 +188,11 @@ export const getProductBySubCategory = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const deleteProduct = async(req, res)=>{
+export const deleteProduct = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -209,7 +212,7 @@ export const deleteProduct = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 

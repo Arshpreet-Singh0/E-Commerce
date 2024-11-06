@@ -1,6 +1,6 @@
 import Category from "../models/category.model.js";
 
-export const cretaeCategory = async(req, res) => {
+export const cretaeCategory = async(req, res, next) => {
   try {
     const {name, parentCategory, image} = req.body;
 
@@ -32,11 +32,11 @@ export const cretaeCategory = async(req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
-export const getAllParentCategories = async(req, res) => {
+export const getAllParentCategories = async(req, res, next) => {
     try {
         
         const categories = await Category.find({parentCategory : null});
@@ -45,12 +45,11 @@ export const getAllParentCategories = async(req, res) => {
             categories,
         })
     } catch (error) {
-        console.log(error);
-        
+      next(error);        
     }
 }
 
-export const  getSubCategories = async(req, res) => {
+export const  getSubCategories = async(req, res, next) => {
     try {
         const {parentCategory}  = req.params;
 
@@ -60,6 +59,6 @@ export const  getSubCategories = async(req, res) => {
             subCategories,
         })
     } catch (error) {
-        console.log(error);
+      next(error);
     }
 }
