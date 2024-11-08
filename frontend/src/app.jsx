@@ -7,6 +7,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from "./utils/constant.js"
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/authSlice';
+import { setCartItems } from './redux/cartSlice.js';
 
 function App() {
   const content = {
@@ -19,10 +20,12 @@ function App() {
       try {
         const res = await axios.post(`${USER_API_END_POINT}`, {}, {
           withCredentials: true
-        })
+        });
 
         if(res?.data?.success){
             dispatch(setUser(res?.data?.user));
+            
+            dispatch(setCartItems(res?.data?.cart));
         }
       } catch (error) {
         console.log(error);

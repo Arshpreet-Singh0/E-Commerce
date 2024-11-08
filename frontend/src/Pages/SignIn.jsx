@@ -42,6 +42,8 @@ useEffect(() => {
       setError("Please fill in all fields");
       return;
     }
+    console.log(input);
+    
 
     try {
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {

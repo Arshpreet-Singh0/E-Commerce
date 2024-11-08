@@ -16,10 +16,12 @@ export const getUser = async(req, res, next)=>{
         success : false,
       })
     }
+    const cart = await Cart.find({user:user._id});
 
     return res.status(200).json({
       success : true,
       user,
+      cart
     })
   } catch (error) {
     next(error);
@@ -78,7 +80,7 @@ export const signup = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password, role } = req.body;
+    let { email, password, role } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({
