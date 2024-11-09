@@ -64,11 +64,12 @@ const ProductDetail = () => {
   }
 
   return (
+    <>
     <div className="container mx-auto px-4 py-6">
       {product ? (
-        <div>
-          <div className="pt-11 grid grid-cols-1 h-[50vh] md:grid-cols-2 gap-10 w-auto">
-            <div className="flex flex-start gap-10">
+        <div className=''>
+          <div className="pt-11 grid grid-cols-1 md:grid-cols-2 gap-10 w-auto h-auto">
+            <div className="flex flex-start gap-10 ">
               <div>
                 {/* Display images if available */}
                 {product.images && product.images.length > 0 ? (
@@ -88,15 +89,14 @@ const ProductDetail = () => {
                 )}
               </div>
               <div className='w-full h-full	flex flex-col'>
-                <img src={imgUrl} alt="Selected Product" className="object-contain h-60" />
+                <img src={imgUrl} alt="Selected Product" className="object-contain" />
               </div>
             </div>
-            <div className="md:w-1/2 px-4 flex-1">
+            <div className="px-4 flex-1 h-auto">
               <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
               <Star stars={product?.ratings} />
-              <p className="text-lg text-gray-700 mb-4">{product?.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam exercitationem illo sed, nesciunt veniam incidunt vero rerum dolor explicabo perspiciatis nulla nobis voluptates libero sint autem doloribus atque non! Quod amet ad eum qui cupiditate exercitationem velit facilis ut nam deserunt perspiciatis illo possimus, earum unde nobis necessitatibus reprehenderit recusandae fuga nulla consectetur! Qui, totam tempora ducimus ipsa iure, corporis aut fugiat dolor error cum animi sequi debitis vel quasi architecto quidem ab rem atque minus numquam tempore. Aliquid alias corrupti ullam saepe ipsum quos sint quidem numquam minus, quaerat non hic, exercitationem sed quis consequatur eaque? Veritatis, at. Doloremque explicabo soluta quaerat ad officia enim modi libero. Similique quisquam dolorum cum delectus maxime esse debitis molestias quis culpa, repellendus temporibus dolores quos nostrum sequi, corporis provident omnis libero quam quibusdam dolorem obcaecati harum nam? Reprehenderit, ullam blanditiis harum quo dolore sit eaque, repellendus et nesciunt at provident, aliquam omnis similique porro ducimus nobis iure labore suscipit deleniti voluptatibus tenetur praesentium fuga consequuntur? Eligendi consequatur quas quam eum ullam est aperiam inventore ea hic sit! Enim impedit debitis iste? Quod sit fugit odio culpa ab possimus, tempora illum aliquam, vero aspernatur quae id! Sapiente vel praesentium ipsam similique pariatur!</p>
-              <p className="text-2xl font-semibold text-gray-800 mb-6">
-              &#8377;{product?.price}
+              <p className="text-2xl font-semibold text-gray-800 mb-2 mt-2">
+              &#8377;{product?.price} <span className='text-gray-500 text-sm line-through'>&#8377; {(product?.price+(product?.price/10))}</span> <span className='text-green-600 text-md'>10% off</span>
               </p>
               { isAdmin ? (
                 <div className='flex justify-between'>
@@ -110,9 +110,11 @@ const ProductDetail = () => {
               ) : <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={()=>handleAddToCart(product?._id)}>
                 Add to Cart
               </Button>}
+              <p className="text-lg text-gray-700 mb-4 text-justify">{product?.description}!</p>
             </div>
           </div>
-          <div className='mt-[30vh]'>
+          
+        <div className=''>
           {!isAdmin && <ReviewComponent reviews={product?.reviews} productId={product?._id} />}
           </div>
         </div>
@@ -120,6 +122,7 @@ const ProductDetail = () => {
         <p>Product not found.</p>
       )}
     </div>
+    </>
   );
 };
 
