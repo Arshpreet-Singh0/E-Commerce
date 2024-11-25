@@ -120,6 +120,9 @@ export const getProductById = async(req, res, next)=>{
             populate : {
                 path : 'user'
             }
+        }).populate({
+            path : 'subcategory',
+            strictpopulate : false,
         });
         // console.log(product);
         

@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import axios from 'axios'; // Assuming you're using axios to make API requests
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategories } from '../redux/CategorySlice';
 
 export default function DropDown() {
-  const [categories, setCategories] = useState([]);
+  const {categories} = useSelector(store=>store.category);
+  const dispatch = useDispatch();
 
   // Fetch categories from the API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/v1/category/get'); // Replace with your actual API URL
-        console.log(response.data)
-        setCategories(response.data.categories); // Assuming the response contains an array of categories
+        // console.log(response.data)
+        dispatch(setCategories(response?.data?.categories));
       } catch (error) {
         console.error('Error fetching categories:', error);
       }

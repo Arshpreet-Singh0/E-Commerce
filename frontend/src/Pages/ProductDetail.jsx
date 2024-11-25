@@ -22,6 +22,10 @@ const ProductDetail = () => {
 
   const isAdmin = user?._id===product?.created_by;
   console.log(isAdmin);
+
+  const handleEditButtonClick = ()=>{
+    navigate(`/admin/product/${id}/edit`);
+  }
   
   
 
@@ -99,8 +103,8 @@ const ProductDetail = () => {
               &#8377;{product?.price} <span className='text-gray-500 text-sm line-through'>&#8377; {(product?.price+(product?.price/10))}</span> <span className='text-green-600 text-md'>10% off</span>
               </p>
               { isAdmin ? (
-                <div className='flex justify-between'>
-                <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600">
+                <div className='flex gap-10'>
+                <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={handleEditButtonClick}>
                 Edit 
               </Button>
                 <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600">
@@ -110,7 +114,11 @@ const ProductDetail = () => {
               ) : <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={()=>handleAddToCart(product?._id)}>
                 Add to Cart
               </Button>}
-              <p className="text-lg text-gray-700 mb-4 text-justify">{product?.description}!</p>
+              <div className='mt-8'>
+              <h1 className='text-lg text-gray-700'>Description : </h1>
+              <p className="text-lg text-gray-700 mb-4 md:text-justify">{product?.description}!</p>
+
+              </div>
             </div>
           </div>
           
