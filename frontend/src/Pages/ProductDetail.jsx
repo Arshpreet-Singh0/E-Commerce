@@ -4,11 +4,13 @@ import axios from 'axios';
 import Loder from '../components/Loder';
 import Carousel from '../components/Cursol';
 import Star from '../components/Star';
-import { Button } from 'antd';
+import { Button, Modal, message } from 'antd';
+const { confirm } = Modal;
 import ReviewComponent from '../components/review';
-import { CART_API_END_POINT } from '../utils/constant';
+import { CART_API_END_POINT, PRODUCT_API_END_POINT } from '../utils/constant';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCartItems } from '../redux/cartSlice.js';
+
 
 const ProductDetail = () => {
   const { id } = useParams(); 
@@ -16,7 +18,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
   const {user} = useSelector(store=>store.auth);
-  const {cartItems} = useSelector(store=>store.cart);
+  // const {cartItems} = useSelector(store=>store.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/v1/product/get/${id}`);
+        const res = await axios.get(`${PRODUCT_API_END_POINT}/get/${id}`);
         setProduct(res?.data?.product);
         setImgUrl(res.data.product?.images?.[0]?.url || ''); // Set initial image URL if available
       } catch (error) {
@@ -60,6 +62,34 @@ const ProductDetail = () => {
       console.log(error);
     }
   }
+
+  const handleDeleteProductButtonClick = () => {
+    confirm({
+      title: "Are you sure you want to delete this Product?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: async () => {
+        try {
+          setLoading(true);
+          const response = await axios.post(`${PRODUCT_API_END_POINT}/delete/${id}`,{},{
+            withCredentials : true
+          });
+          if(response?.data?.success){
+            message.success(response?.data?.message);
+            navigate('/admin')
+          }
+        } catch (error) {
+          message.error(error?.response?.data?.message || "An error occurred!");
+        } finally {
+          setLoading(false);
+        }
+      },
+      onCancel: () => {
+        message.info("Action canceled.");
+      },
+    });
+  };
 
   if (loading) {
     return <Loder />;
@@ -105,7 +135,7 @@ const ProductDetail = () => {
                 <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={handleEditButtonClick}>
                 Edit 
               </Button>
-                <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600">
+                <Button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-green-600" onClick={handleDeleteProductButtonClick}>
                 Delete Product
               </Button>
                 </div>
