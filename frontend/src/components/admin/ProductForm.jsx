@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, Upload } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { CATEGORIES_API_END_POINT } from "../../utils/constant";
 import { ToastContainer } from "react-toastify";
 const { TextArea } = Input;
 
-const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setSelectedCategory , selectedSubCategory, setSelectedSubCategory, loading, handleFormSubmit, editForm}) => {
+const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setSelectedCategory , selectedSubCategory, setSelectedSubCategory, loading, handleFormSubmit, editForm, handleFileUpload, files}) => {
   const [subCategories, setSubCategories] = useState([]);
   const { categories } = useSelector((store) => store.category);
 
   // console.log(categories);
 
   const handleCategoryChange = (value) => {
-    console.log(value);
+    // console.log(value);
     setSubCategories([]);
     setSelectedSubCategory(null);
     
@@ -26,7 +27,7 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
     fetchSubCategories(value);
   };
   const handleSubCategoryChange = (value) => {
-    console.log(value);
+    // console.log(value);
     setProduct((p)=>(
       {...p, subcategory: value}
     ))
@@ -38,8 +39,6 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
     const response = await axios.get(`${CATEGORIES_API_END_POINT}/get/${id}`);
     setSubCategories(response?.data?.subCategories);
   };
-
-  fetchSubCategories(product?.category?._id);
 
   return (
     <div className="w-[600px] mx-auto mt-5">
@@ -87,6 +86,9 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
           </Select>
         </Form.Item>
         </div>
+        <Form.Item label="Upload Images : " valuePropName="files" layout="vertical">
+            <input type="file" accept="images/*" onChange={handleFileUpload} multiple/>
+      </Form.Item>
         <div className="flex gap-4">
         <Form.Item
           label="Price : "
@@ -144,7 +146,7 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
           />
         </Form.Item>
 
-        <Button type="primary" className="w-24" loading={loading} htmlType="submit">Edit</Button>
+        <Button type="primary" className="w-full py-4 " loading={loading} htmlType="submit">{editForm ? 'Edit' : 'Add Product'}</Button>
       </form>
     </div>
   );
