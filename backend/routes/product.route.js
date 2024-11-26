@@ -1,9 +1,10 @@
 import express from 'express'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js';
 import { deleteProduct, getAdminProducts, getAllProduct, getCategoryProducts, getProductByBrand, getProductById, getProductBySubCategory, listProduct, updateProductInfo } from '../controllers/product.controller.js';
+import { upload } from '../middlewares/multer.js';
 const router = express.Router();
 
-router.route('/create').post(isAuthenticated, listProduct);
+router.route('/create').post(isAuthenticated, upload, listProduct);
 
 router.route('/update/:id').post(isAuthenticated, updateProductInfo);
 

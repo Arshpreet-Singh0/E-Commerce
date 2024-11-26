@@ -1,26 +1,45 @@
 import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
+import getDataUri from "../utils/dataURI.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const listProduct = async (req, res, next) => {
   try {
-    const { name, description, price, category, stock, images, brand, subcategory } = req.body;
-    const id = req.id;
-    
+    const { name, description, price, category, stock, brand, subcategory } = req.body;
     if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !images ||
-      images.length === 0 ||
-      !brand ||
-      !stock
-    ) {
-        return res.status(400).json({
-            message: "All fields are required",
-            success : false, 
-            });
-    }
+          !name ||
+          !description ||
+          !price ||
+          !category ||
+          !brand ||
+          !stock ||
+          !req.files ||
+          req.files.length===0
+        ) {
+            return res.status(400).json({
+                message: "All fields are required",
+                success : false, 
+                });
+        }
+        const id = req.id;
+        const filesDataUri = req.files.map((file)=>{
+            return getDataUri(file)
+        })
+    
+    const uploadPromises = filesDataUri.map((dataUri) =>
+        cloudinary.uploader.upload(dataUri.content, { folder: 'E-Commerce' })
+      );
+  
+      // Wait for all uploads to complete
+      const uploadedFiles = await Promise.all(uploadPromises);
+      
+      const images = uploadedFiles.map((data)=>{
+        return {url:data.secure_url, public_id:data.public_id};
+      })
+
+    //   console.log('images : ', images);
+      
+      
 
     const product = await Product.create({
         created_by : id,
@@ -33,9 +52,6 @@ export const listProduct = async (req, res, next) => {
         images,
         brand,
     });
-
-    // console.log(product);
-    
 
     return res.status(200).json({
         message : 'Product created succfully',
