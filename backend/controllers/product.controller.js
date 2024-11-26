@@ -49,7 +49,7 @@ export const listProduct = async (req, res, next) => {
 
 export const updateProductInfo = async(req, res, next)=>{
     try {
-        const { name, description, price, category, stock, images, brand } = req.body;
+        const { name, description, price, category, stock, images, brand , subcategory} = req.body;
         const {id} = req.params;
 
         const product = await Product.findById(id);
@@ -68,9 +68,9 @@ export const updateProductInfo = async(req, res, next)=>{
         if(stock)  product.stock = stock;
         if(images)  product.images = images;
         if(brand)  product.brand = brand;
+        if(subcategory) product.subcategory = subcategory;
 
-        const response = await  product.save();
-        console.log(response);
+        await product.save();
 
         return res.status(200).json({
             message : 'Product updated successfully.',

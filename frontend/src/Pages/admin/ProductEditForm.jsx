@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import EditForm from "../../components/admin/EditForm";
 import axios from "axios";
-import { useParams } from "react-router";
+import ProductForm from '../../components/admin/ProductForm.jsx'
+import { useNavigate, useParams } from "react-router";
+import { PRODUCT_API_END_POINT } from "../../utils/constant";
+import { toast, ToastContainer } from "react-toastify";
 
 export const ProductEditForm = () => {
   const [product, setProduct] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
@@ -31,11 +35,47 @@ export const ProductEditForm = () => {
     setProduct((p) => ({ ...p, [e.target.name]: e.target.value }));
   };
 
-  console.log(product);
+  
+  const handleFormSubmit = async(e)=>{
+    e.preventDefault();
+    const productDeatils = {};
+    productDeatils.name = product?.name;
+    productDeatils.description = product?.description;
+    if(product?.price) productDeatils.price = product?.price
+    productDeatils.stock = product?.stock;
+    productDeatils.brand = product?.brand;
+    if(product?.category?.name !== selectedCategory) productDeatils.category = product?.category;
+    if(product?.subcategory?.name !== selectedSubCategory) productDeatils.subcategory = product?.subcategory;
+    
+    console.log(productDeatils);
+    
+    try {
+      setLoading(true);
 
+      const response = await axios.post(`${PRODUCT_API_END_POINT}/update/${id}`, productDeatils, {
+        withCredentials : true,
+      })
+
+      console.log(response);
+      if(response?.data?.success){
+        toast.success(response?.data?.message);
+
+        setTimeout(()=>{
+          navigate(`/product/${id}`);
+        },1000)
+      }
+      
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "An error occurred!");
+    }finally{
+      setLoading(false);
+    }
+  }
+  
   return (
     <div className="">
-      <EditForm
+      
+      <ProductForm
         product={product}
         handleChange={handleChange}
         setProduct={setProduct}
@@ -43,6 +83,9 @@ export const ProductEditForm = () => {
         setSelectedCategory={setSelectedCategory}
         selectedSubCategory={selectedSubCategory}
         setSelectedSubCategory={setSelectedSubCategory}
+        loading={loading}
+        handleFormSubmit={handleFormSubmit}
+        editForm={true}
       />
     </div>
   );

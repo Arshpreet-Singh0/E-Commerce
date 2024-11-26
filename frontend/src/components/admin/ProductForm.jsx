@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { CATEGORIES_API_END_POINT } from "../../utils/constant";
+import { ToastContainer } from "react-toastify";
 const { TextArea } = Input;
 
-const EditForm = ({ product, handleChange, setProduct, selectedCategory, setSelectedCategory , selectedSubCategory, setSelectedSubCategory}) => {
+const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setSelectedCategory , selectedSubCategory, setSelectedSubCategory, loading, handleFormSubmit, editForm}) => {
   const [subCategories, setSubCategories] = useState([]);
   const { categories } = useSelector((store) => store.category);
 
@@ -42,9 +43,10 @@ const EditForm = ({ product, handleChange, setProduct, selectedCategory, setSele
 
   return (
     <div className="w-[600px] mx-auto mt-5">
-      <h1 className="text-2xl font-bold">Edit Product Details: </h1>
+       <ToastContainer position="top-right"/>
+      <h1 className="text-2xl font-bold">{editForm==true ? 'Edit Product Details : ' : 'List New Product'}</h1>
 
-      <form action="" className="mt-5">
+      <form className="mt-5 mb-10" onSubmit={handleFormSubmit}>
         <Form.Item label="Product Name :" layout="vertical">
           <Input
             placeholder="Product Name"
@@ -123,9 +125,29 @@ const EditForm = ({ product, handleChange, setProduct, selectedCategory, setSele
           />
         </Form.Item>
         </div>
+        <Form.Item
+          label="Brand : "
+          layout="vertical"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          className="flex-1"
+        >
+          <Input
+            placeholder="Brand"
+            className="w-full p-2 rounded "
+            name="brand"
+            onChange={handleChange}
+            value={product?.brand}
+          />
+        </Form.Item>
+
+        <Button type="primary" className="w-24" loading={loading} htmlType="submit">Edit</Button>
       </form>
     </div>
   );
 };
 
-export default EditForm;
+export default ProductForm;

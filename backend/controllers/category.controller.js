@@ -40,6 +40,7 @@ export const getAllParentCategories = async(req, res, next) => {
     try {
         
         const categories = await Category.find({parentCategory : null});
+        
 
         return  res.status(200).json({
             categories,

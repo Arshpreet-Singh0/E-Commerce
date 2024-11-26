@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Loder from '../components/Loder'; // Assuming you have a Loader component
-import Carousel from '../components/Cursol'; // Correct the import name if necessary
+import Loder from '../components/Loder';
+import Carousel from '../components/Cursol';
 import Star from '../components/Star';
 import { Button } from 'antd';
 import ReviewComponent from '../components/review';
@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCartItems } from '../redux/cartSlice.js';
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Getting product ID from the URL
+  const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
@@ -21,8 +21,6 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   const isAdmin = user?._id===product?.created_by;
-  console.log(isAdmin);
-
   const handleEditButtonClick = ()=>{
     navigate(`/admin/product/${id}/edit`);
   }

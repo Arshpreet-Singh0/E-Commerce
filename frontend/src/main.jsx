@@ -16,8 +16,8 @@ import AboutPage from './Pages/About.jsx';
 import ContactPage from './Pages/ContactPage.jsx';
 import HelpPage from './Pages/HelpPage.jsx';
 import AdminProducts from './Pages/admin/AdminProducts.jsx';
-import EditForm from './components/admin/EditForm.jsx';
 import { ProductEditForm } from './Pages/admin/ProductEditForm.jsx';
+import NewProductForm from './Pages/admin/NewProductForm.jsx';
 // import Cart from './components/Cart.jsx'
 
 const routes = createBrowserRouter([
@@ -36,7 +36,8 @@ const routes = createBrowserRouter([
                {path:'/Contact',element:<ContactPage/>},
                {path:'/help',element:<HelpPage/>},
                {path:'/admin',element:<AdminProducts/>},
-               {path:'/admin/product/:id/edit', element: <ProductEditForm />}
+               {path:'/admin/product/:id/edit', element: <ProductEditForm />},
+               {path:'/admin/product/new', element:<NewProductForm />}
           ],
      },
 ])

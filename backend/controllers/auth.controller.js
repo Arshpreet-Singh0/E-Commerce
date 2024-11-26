@@ -9,7 +9,7 @@ export const getUser = async(req, res, next)=>{
   try {
     const id = req.id;
 
-    const user = await User.findById(id);
+    let user = await User.findById(id);
     
     if(!user){
       return res.status(404).json({
@@ -17,6 +17,15 @@ export const getUser = async(req, res, next)=>{
       })
     }
     const cart = await Cart.find({user:user._id});
+    user = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phone,
+      role: user.role,
+      profile: user.profile,
+    };
+    
 
     return res.status(200).json({
       success : true,
@@ -126,11 +135,11 @@ export const login = async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      phoneNumber: user.phoneNumber,
+      phoneNumber: user.phone,
       role: user.role,
-      profile: user.profile,
     };
     const cart = await Cart.find({user:user._id});
+    
 
     return res
       .status(200)
