@@ -18,7 +18,7 @@ import HelpPage from "./Pages/HelpPage.jsx";
 import AdminProducts from "./Pages/admin/AdminProducts.jsx";
 import { ProductEditForm } from "./Pages/admin/ProductEditForm.jsx";
 import NewProductForm from "./Pages/admin/NewProductForm.jsx";
-import BuyPage from "./Pages/BuyPage.jsx";
+import CheckoutPage from "./Pages/CheckoutPage.jsx";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 // import Cart from './components/Cart.jsx'
@@ -45,7 +45,7 @@ const routes = createBrowserRouter([
           { path: "/admin", element: <AdminProducts /> },
           { path: "/admin/product/:id/edit", element: <ProductEditForm /> },
           { path: "/admin/product/new", element: <NewProductForm /> },
-          { path: "/buy/:id", element: <BuyPage /> },
+          { path: "/buy/:id", element: <CheckoutPage /> },
     ],
   },
 ]);

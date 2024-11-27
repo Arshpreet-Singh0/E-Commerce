@@ -9,9 +9,15 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { setCartItems } from "../redux/cartSlice";
+import { useSearchParams } from "react-router-dom";
+import { message } from "antd";
 
 const SignIn = () => {
- // const navigate = useNavigate();
+ const [searchParams, setSearchParams] = useSearchParams();
+ const next = searchParams.get("next");
+//  console.log(next);
+ 
+ 
  const path = location.pathname;
  const isAdminSignin = path === '/admin/sign-in'
  
@@ -42,7 +48,6 @@ useEffect(() => {
       setError("Please fill in all fields");
       return;
     }
-    console.log(input);
     
 
     try {
@@ -54,19 +59,19 @@ useEffect(() => {
 
       if (res?.data?.success) {
         toast.success(res?.data?.message)
-        console.log(res?.data?.message);
+        // console.log(res?.data?.message);
         
-        toast.success(res?.data?.message);
+        message.success(res?.data?.message);
         dispatch(setUser(res?.data?.user));
         dispatch(setCartItems(res?.data?.cart));
-        setTimeout(() => {
-          navigate('/');
-          
-        }, 800);
+        
+        if(next) navigate(next);
+        else navigate('/')
+
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "An error occurred!");
+      message.error(error.response?.data?.message || "An error occurred!");
 
     }
 

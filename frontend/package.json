@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@headlessui/react": "^2.1.10",
@@ -27,6 +28,7 @@
     "react-router": "^6.27.0",
     "react-router-dom": "^6.27.0",
     "react-toastify": "^10.0.6",
+    "redux-persist": "^6.0.0",
     "swiper": "^11.1.14"
   },
   "peerDependencies": {
