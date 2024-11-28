@@ -55,7 +55,7 @@ export const paymentVerification = async (req, res, next) => {
     }
 
     
-    res.redirect(`http://localhost:5173/payment/success?key=${razorpay_payment_id}`)
+    res.redirect(`http://localhost:5173/payment-success?key=${razorpay_payment_id}`)
   } catch (error) {
     console.log(error);
     next(error);

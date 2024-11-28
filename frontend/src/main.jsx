@@ -21,6 +21,7 @@ import NewProductForm from "./Pages/admin/NewProductForm.jsx";
 import CheckoutPage from "./Pages/CheckoutPage.jsx";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import PaymentSuccess from "./components/PaymentSuccess.jsx";
 // import Cart from './components/Cart.jsx'
 
 const persistor = persistStore(store);
@@ -46,6 +47,7 @@ const routes = createBrowserRouter([
           { path: "/admin/product/:id/edit", element: <ProductEditForm /> },
           { path: "/admin/product/new", element: <NewProductForm /> },
           { path: "/buy/:id", element: <CheckoutPage /> },
+          { path:"/payment-success", element: <PaymentSuccess />}
     ],
   },
 ]);
