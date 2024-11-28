@@ -6,6 +6,7 @@ import DropDown from "./DropDown";
 import { useNavigate } from "react-router";
 import CartLogo from "./CartLogo";
 import { useSelector } from "react-redux";
+import { Button } from "antd";
 const SearchNav = () => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -13,8 +14,8 @@ const SearchNav = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [timer, setTimer] = useState(null);
   const navigate = useNavigate();
-  const {user} = useSelector(store=>store.auth);
-  const {cartItems} = useSelector(store=>store.cart);
+  // const {user} = useSelector(store=>store.auth);
+  // const {cartItems} = useSelector(store=>store.cart);
 
   const handleChange = (value) => {
     setInput(value);
@@ -59,6 +60,11 @@ const SearchNav = () => {
     setTimeout(() => setShowSuggestions(false), 200); // Delay to allow click events on suggestions
   };
 
+  const handleSearchButtonClick = ()=>{
+    if(!input) return;
+    navigate(`/search?search=${input}`);
+  }
+
   return (
     <div className="relative bg-[#E4E0E1] p-2 flex flex-row gap-8 items-center justify-between align-middle">
       <div id="input" onBlur={handleBlur} className="relative">
@@ -69,6 +75,7 @@ const SearchNav = () => {
           onChange={(e) => handleChange(e.target.value)} // Update input on change
           // className="border border-gray-300 rounded-md p-2" // Add some basic styles
         />
+        <Button type="primary" onClick={handleSearchButtonClick}>Search</Button>
         
         {/* Suggestions Section */}
         {loading ? (
