@@ -45,7 +45,7 @@ const CheckoutPage = () => {
       </div>
 
       {/* Right Section */}
-      <PriceDetails quantity={quantity} product={product} shippingAddress={address}/>
+      <PriceDetails quantity={quantity} product={product} shippingAddress={address} user={user}/>
     </div>
   );
 };

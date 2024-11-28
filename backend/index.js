@@ -12,6 +12,7 @@ import productRouter from './routes/product.route.js'
 import orderRouter from './routes/order.route.js'
 import reviewRouter from './routes/review.route.js'
 import cartRouter from './routes/cart.route.js'
+import paymentRouter from './routes/payment.route.js'
 
 
 const app = express();
@@ -40,9 +41,15 @@ app.use('/api/v1/product', productRouter);
 app.use('/api/v1/order', orderRouter);
 app.use('/api/v1/review', reviewRouter);
 app.use('/api/v1/cart', cartRouter);
+app.use('/api/v1/payment', paymentRouter);
 
 app.get('/',(req,res)=>{
     res.send('working');
+});
+
+//to get razor pay keuy at frontend
+app.get('/getkey', (req,res)=>{
+    return res.json({key:process.env.RAZORPAY_KEY_ID});
 })
 app.get('*',(req,res)=>{
     res.json("not found");

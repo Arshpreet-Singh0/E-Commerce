@@ -4,10 +4,12 @@ import Product from "../models/product.model.js";
 export const createOrder = async(req, res, next)=>{
     try {
         const user = req.id;
-        const {product, name, taxprice,shippingAddress, shippingPrice,totalPrice, quantity} = req.body;
+        const {product, name, shippingAddress, totalPrice, quantity, orderid} = req.body;
+        // console.log(product, name, shippingAddress, totalPrice, quantity, orderid);
+        
         
 
-        if(!product || !name || !shippingAddress || !totalPrice || !quantity){
+        if(!product || !name || !shippingAddress || !totalPrice || !quantity || !orderid){
             return res.status(400).json({
                 message: "Please fill all the fields",
                 success : false,
@@ -15,7 +17,7 @@ export const createOrder = async(req, res, next)=>{
         }
 
         const prod = await Product.findById(product);
-        console.log(prod);
+        // console.log(prod);
         
 
         if(!prod){
@@ -31,19 +33,18 @@ export const createOrder = async(req, res, next)=>{
             user,
             product,
             name,
+            orderid,
             admin : prod.created_by,
             shippingAddress,
             quantity,
-            taxprice,
-            shippingPrice,
             totalPrice,
         })
 
-        console.log(order);
+        // console.log(order);
         
-        prod.stock = prod.stock-quantity;
+        // prod.stock = prod.stock-quantity;
 
-        await prod.save();
+        // await prod.save();
 
         return res.status(200).json({
             message: "Order created successfully",
@@ -70,7 +71,7 @@ export const getOrders = async(req, res, next)=>{
 
 export const updateOrder = async(req,res, next)=>{
     try {
-        const {status, isPaid} = req.body;
+        const {status} = req.body;
         
         
         const order = await Order.findById(req.params.id);
@@ -83,7 +84,6 @@ export const updateOrder = async(req,res, next)=>{
             })
         }
 
-        if(isPaid!=null) order.isPaid = isPaid;
         if(status) order.status = status;
 
         await order.save();

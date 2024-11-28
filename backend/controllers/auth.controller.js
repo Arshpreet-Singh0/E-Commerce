@@ -24,6 +24,7 @@ export const getUser = async(req, res, next)=>{
       phoneNumber: user.phone,
       role: user.role,
       profile: user.profile,
+      address : user.address
     };
     
 
@@ -137,6 +138,7 @@ export const login = async (req, res, next) => {
       email: user.email,
       phoneNumber: user.phone,
       role: user.role,
+      address : user.address
     };
     const cart = await Cart.find({user:user._id});
     
@@ -174,7 +176,6 @@ export const logout = async (req, res, next) => {
 export const updateProfile = async (req, res, next) => {
   try {
     const { fullname, email, phoneNumber, address} = req.body;
-
   
     const userId = req.id;
 
@@ -189,7 +190,7 @@ export const updateProfile = async (req, res, next) => {
 
     if (fullname) user.fullname = fullname;
     if (email) user.email = email;
-    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (phoneNumber) user.phone = phone;
     if (address) user.address = address;
 
 
@@ -199,7 +200,7 @@ export const updateProfile = async (req, res, next) => {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
-      phoneNumber: user.phoneNumber,
+      phoneNumber: user.phone,
       address : address,
     };
 

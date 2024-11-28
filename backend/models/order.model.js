@@ -17,12 +17,9 @@ const orderSchema = mongoose.Schema({
     ref: "Product",
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
   shippingAddress: {
-    addressSchema,
+    type : addressSchema,
+    required : true,
   },
   quantity: {
     type: Number,
@@ -33,26 +30,22 @@ const orderSchema = mongoose.Schema({
     enum: ["pending", "confirmed", "dispatched", "delivered", "Cancelled"],
     default: "pending",
   },
-  taxprice: {
-    type: Number,
-    required: true,
-    default: 0.0,
-  },
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0.0,
-  },
   totalPrice: {
     type: Number,
     required: true,
     default: 0.0,
   },
-  isPaid: {
-    type: Boolean,
-    required: true,
-    default: false,
+  paymentid : {
+    type : String,
   },
+  paymentstatus : {
+    type: String,
+    enum: ["pending", "confirmed"],
+    default: "pending",
+  },
+  orderid: {
+    type: String,
+  }
 },{timestamps : true});
 
 const Order = new mongoose.model("Order", orderSchema);
