@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import SearchPageCard from '../components/SearchPageCard';
 
 function CategoriesPage() {
   const { id } = useParams(); // Extract category id from URL
@@ -21,17 +22,13 @@ function CategoriesPage() {
   }, [id]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">Products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <div key={product._id} className="border rounded-lg p-4 shadow-md">
-            <img src={product.images[0].url} alt={product.name} className="w-full h-32 object-contain rounded-md mb-2" />
-            <h2 className="text-lg font-semibold">{product.name}</h2>
-            <p className="text-gray-700">&#8377;{product.price}</p>
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col gap-5 mt-10 mb-10">
+      <h1 className="text-3xl font-bold mb-8 text-center">All {id} Products</h1>
+      {
+        products?.map((product,idx)=>(
+            <SearchPageCard product={product} key={product._id}/>
+        ))
+    }
     </div>
   );
 }

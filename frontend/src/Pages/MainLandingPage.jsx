@@ -14,7 +14,7 @@ function MainLandingPage() {
   useEffect(() => {
     Aos.init({ duration: 3000 });
 
-    console.log(user);
+    // console.log(user);
     
     if(user && user?.role=='admin'){
       navigate('/admin');
@@ -28,7 +28,7 @@ function MainLandingPage() {
         <h1 className="text-3xl font-bold mb-8 text-center">Items</h1>
         <MyProductComponent/>
 
-        <div className='p-6' data-aos="zoom-in">
+        <div className='p-6'>
          <Categories/>
         </div>
       </div>
