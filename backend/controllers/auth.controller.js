@@ -75,7 +75,7 @@ export const signup = async (req, res, next) => {
       { id: user._id },
       process.env.SECRET_KEY,
       {
-        expiresIn: "1d",
+        expiresIn: "7d",
       }
     );
     //generate verification url and send email to user
@@ -299,3 +299,50 @@ export const updatePassword = async (req, res) => {
     next(error);
   }
 };
+
+export const resendEmail = async (req, res, next)=>{
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({email});
+    if(!user){
+      return res.status(400).json({
+        message: "User not found",
+        success: false,
+      })
+    }
+
+    if(user.verified){
+      return res.status(400).json({
+        message: "Email already verified",
+        success: false,
+      })
+    }
+    const verificationToken = jwt.sign({id:user._id}, process.env.SECRET_KEY, {
+      expiresIn : "7d",
+    });
+
+    //generate verification url and send email to user
+    const url = `http://localhost:5173/user/verify/${verificationToken}`;
+    const htmlContent = await ejs.renderFile(templatePath, {
+      username: user.name,
+      verifyUrl: url,
+    });
+
+    await transporter.sendMail({
+      from: `"ShopIt" <${process.env.NODE_MAILER_USER}>`,
+      to: email,
+      subject: "Verify your email",
+      text: `Please click on this link to verify your email: `,
+      html: htmlContent,
+    });
+
+    res.status(200).json({
+      message: "Email sent successfully",
+      success: true,
+    })
+
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
