@@ -162,6 +162,7 @@ useEffect(() => {
               Sign In
             </button>
             <div className="h-full text-center w-full">New User ? <button className="text-blue-600" onClick={handleclick}>Register Now</button></div>
+            <div className="h-full text-center w-full">Admin Login ? <button className="text-blue-600" onClick={()=>navigate('/admin/sign-in')}>Admin Login</button></div>
           </form>
           </div>
         </div>

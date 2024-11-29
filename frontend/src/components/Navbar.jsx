@@ -94,6 +94,15 @@ const Navbar = () => {
           </li>
           <li>
             <Link
+              to={user?.role==='admin' ? '/admin/orders' : '/orders'}
+              className={`text-sm ${activeButton === 'myorders' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('myorders')}
+            >
+              Orders
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/About"
               className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}

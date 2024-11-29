@@ -45,7 +45,13 @@ const orderSchema = mongoose.Schema({
   },
   orderid: {
     type: String,
-  }
+  },
+  trackingNumber : {
+    type : String,
+  },
+  courierService : {
+    type : String,
+  },
 },{timestamps : true});
 
 const Order = new mongoose.model("Order", orderSchema);

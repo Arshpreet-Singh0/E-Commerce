@@ -46,9 +46,10 @@ const Profile = () => {
       extra: '⌘P',
     },
     {
-      key: '3',
-      label: 'Billing',
-      extra: '⌘B',
+      key : '3',
+      label : 'My Orders',
+      onClick : ()=>navigate('/myorders'),
+      extra: '⌘O',
     },
     {
       key: '4',
@@ -73,7 +74,7 @@ const Profile = () => {
       <a onClick={(e) => e.preventDefault()}>
         <Space>
           <img
-            src={user?.profilePhoto || "https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png"}
+            src={"https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png"}
             alt="Profile"
             className='w-8 h-8'
           />

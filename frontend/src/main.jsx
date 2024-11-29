@@ -25,6 +25,8 @@ import SignIn from "./Pages/auth/SignIn.jsx";
 import SignUp from "./Pages/auth/SignUp.jsx";
 import EmailVerification from "./Pages/auth/EmailVerification.jsx";
 import ResendVerificationEmail from "./Pages/auth/ResendVerificationEmail.jsx";
+import Orders from "./Pages/Orders.jsx";
+import AdminOrderPage from "./Pages/admin/AdminOrderPage.jsx";
 // import Cart from './components/Cart.jsx'
 
 const persistor = persistStore(store);
@@ -53,7 +55,9 @@ const routes = createBrowserRouter([
           { path: "/payment-success", element: <PaymentSuccess />},
           { path: "/search", element: <SearchPage />},
           { path: "/user/verify/:token", element : <EmailVerification />},
-          { path: "/resend-verification-email", element : <ResendVerificationEmail />}
+          { path: "/resend-verification-email", element : <ResendVerificationEmail />},
+          { path: "/myorders", element : <Orders />},
+          { path: "/admin/orders", element : <AdminOrderPage />},
     ],
   },
 ]);

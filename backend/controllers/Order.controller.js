@@ -27,8 +27,6 @@ export const createOrder = async(req, res, next)=>{
             });
         }
         
-
-
         const order = await Order.create({
             user,
             product,
@@ -58,7 +56,20 @@ export const createOrder = async(req, res, next)=>{
 export const getOrders = async(req, res, next)=>{
     try {
         const user = req.id;
-        const orders = await Order.find({user}).populate('product')
+        const orders = await Order.find({user}).populate('product').sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            orders,
+            success : true,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+export const getAdminOrders = async(req, res, next)=>{
+    try {
+        const user = req.id;
+        const orders = await Order.find({admin:user}).populate('product').sort({ createdAt: -1 });;
 
         return res.status(200).json({
             orders,
@@ -71,11 +82,11 @@ export const getOrders = async(req, res, next)=>{
 
 export const updateOrder = async(req,res, next)=>{
     try {
-        const {status} = req.body;
+        const {status, trackingNumber, courierService} = req.body;
         
+        const admin = req.id;
         
-        const order = await Order.findById(req.params.id);
-        console.log(order);
+        const order = await Order.findOne({_id:req.params.id,admin});
         
         if(!order){
             return res.status(404).json({
@@ -85,6 +96,8 @@ export const updateOrder = async(req,res, next)=>{
         }
 
         if(status) order.status = status;
+        if(trackingNumber) order.trackingNumber = trackingNumber;
+        if(courierService) order.courierService = courierService;
 
         await order.save();
 
