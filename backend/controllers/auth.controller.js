@@ -1,22 +1,28 @@
 import User from "../models/user.model.js";
-import Cart from "../models/cart.model.js"
+import Cart from "../models/cart.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-// import getDataUri from "../utils/dataURI.js";
-// import cloudinary from "../utils/claudinary.js";
+import ejs from 'ejs';
+import { transporter } from "../utils/nodemailer.js";
+import { fileURLToPath } from 'url';
+import path from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const templatePath = path.join(__dirname, '../templates/emailVerification.ejs');
+// console.log('Template Path:', templatePath);
 
-export const getUser = async(req, res, next)=>{
+export const getUser = async (req, res, next) => {
   try {
     const id = req.id;
 
     let user = await User.findById(id);
-    
-    if(!user){
+
+    if (!user) {
       return res.status(404).json({
-        success : false,
-      })
+        success: false,
+      });
     }
-    const cart = await Cart.find({user:user._id});
+    const cart = await Cart.find({ user: user._id });
     user = {
       _id: user._id,
       name: user.name,
@@ -24,41 +30,30 @@ export const getUser = async(req, res, next)=>{
       phoneNumber: user.phone,
       role: user.role,
       profile: user.profile,
-      address : user.address
+      address: user.address,
     };
-    
 
     return res.status(200).json({
-      success : true,
+      success: true,
       user,
-      cart
-    })
+      cart,
+    });
   } catch (error) {
     next(error);
   }
-}
+};
 
 export const signup = async (req, res, next) => {
   try {
     let { name, email, phone, password, role } = req.body;
-    
-    if(!role) role='user';
-    
+
+    if (!role) role = "user";
 
     if (!name || !email || !phone || !password) {
-      
       return res.status(400).json({ message: "Please fill in all fields" });
     }
 
-    // const file = req.file;
-
-    // const fileUri = getDataUri(file);
-
-    // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
-    const user = await User.findOne({ email });
-    
-    
+    let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({
@@ -69,18 +64,37 @@ export const signup = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const response =  await User.create({
+    user = await User.create({
       name,
       email,
       phone,
       password: hashedPassword,
       role,
     });
-    // console.log(response);
-    
+    const verificationToken = jwt.sign(
+      { id: user._id },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
+    //generate verification url and send email to user
+    const url = `http://localhost:5173/user/verify/${verificationToken}`;
+    const htmlContent = await ejs.renderFile(templatePath, {
+      username: user.name,
+      verifyUrl: url,
+    });
+
+    await transporter.sendMail({
+      from: `"ShopIt" <${process.env.NODE_MAILER_USER}>`,
+      to: user.email,
+      subject: "Verify your email",
+      text: `Please click on this link to verify your email: `,
+      html: htmlContent,
+    });
 
     return res.status(200).json({
-      message: "Account created successfully",
+      message: "Account created successfully, verify you email before login.",
       success: true,
     });
   } catch (error) {
@@ -92,7 +106,7 @@ export const login = async (req, res, next) => {
   try {
     let { email, password, role } = req.body;
 
-    if(!role) role='user';
+    if (!role) role = "user";
 
     if (!email || !password) {
       return res.status(400).json({
@@ -109,6 +123,12 @@ export const login = async (req, res, next) => {
         success: false,
       });
     }
+    if (!user.verified) {
+      return res.status(400).json({
+        message: "Please verify your email first",
+        success: false,
+      });
+    }
 
     const isPassMatched = await bcrypt.compare(password, user.password);
 
@@ -118,11 +138,11 @@ export const login = async (req, res, next) => {
         success: false,
       });
     }
-    if(user.role && user.role!=role){
+    if (user.role && user.role != role) {
       return res.status(400).json({
-        message : 'Account does not exist with correct role',
-        success : false,
-      })
+        message: "Account does not exist with correct role",
+        success: false,
+      });
     }
 
     const tokenData = {
@@ -138,10 +158,9 @@ export const login = async (req, res, next) => {
       email: user.email,
       phoneNumber: user.phone,
       role: user.role,
-      address : user.address
+      address: user.address,
     };
-    const cart = await Cart.find({user:user._id});
-    
+    const cart = await Cart.find({ user: user._id });
 
     return res
       .status(200)
@@ -162,6 +181,37 @@ export const login = async (req, res, next) => {
   }
 };
 
+export const verifyEmail = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    if (!decoded) {
+      return res.status(400).json({
+        message: "Invalid token",
+        success: false,
+      });
+    }
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    user.verified = true;
+    await user.save();
+    return res.status(200).json({
+      message: "Email verified successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const logout = async (req, res, next) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
@@ -175,8 +225,8 @@ export const logout = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   try {
-    const { fullname, email, phoneNumber, address} = req.body;
-  
+    const { fullname, email, phoneNumber, address } = req.body;
+
     const userId = req.id;
 
     let user = await User.findById(userId);
@@ -193,7 +243,6 @@ export const updateProfile = async (req, res, next) => {
     if (phoneNumber) user.phone = phone;
     if (address) user.address = address;
 
-
     await user.save();
 
     user = {
@@ -201,7 +250,7 @@ export const updateProfile = async (req, res, next) => {
       fullname: user.fullname,
       email: user.email,
       phoneNumber: user.phone,
-      address : address,
+      address: address,
     };
 
     return res.status(200).json({
@@ -213,13 +262,13 @@ export const updateProfile = async (req, res, next) => {
     next(error);
   }
 };
-export const updatePassword = async(req, res)=>{
+export const updatePassword = async (req, res) => {
   try {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
-  const user = await UserModel.findOne({email});
+    const user = await UserModel.findOne({ email });
 
-  const isPassMatched = await bcrypt.compare(password, user.password);
+    const isPassMatched = await bcrypt.compare(password, user.password);
 
     if (!isPassMatched) {
       return res.status(400).json({
@@ -228,9 +277,9 @@ export const updatePassword = async(req, res)=>{
       });
     }
 
-    const {newpassword} = req.body;
+    const { newpassword } = req.body;
 
-    if(!newpassword){
+    if (!newpassword) {
       return res.status(400).json({
         message: "Please Enter new Password to update",
         success: false,
@@ -242,16 +291,11 @@ export const updatePassword = async(req, res)=>{
     user.password = hashedPassword;
     const response = await user.save();
 
-
     return res.status(200).json({
       message: "Password Changed successfully",
       success: true,
     });
-
-
-
   } catch (error) {
     next(error);
   }
-}
-
+};

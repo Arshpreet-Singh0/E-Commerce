@@ -21,7 +21,6 @@ export const checkOut = async (req, res, next) => {
 };
 export const paymentVerification = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
       req.body;
 

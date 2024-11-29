@@ -25,6 +25,10 @@ export const postReview = async(req, res, next)=>{
             review,
             rating,
         });
+        const allReviews = await Review.find({product});
+        const totalRatings = allReviews.reduce((sum, r) => sum + r.rating, 0);
+        const averageRating = totalRatings / allReviews.length;
+        prod.ratings = averageRating;
 
         prod.reviews.push(respone._id);
 
