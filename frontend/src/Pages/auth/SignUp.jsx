@@ -3,9 +3,8 @@ import { useNavigate } from "react-router";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-import { USER_API_END_POINT } from "../utils/constant";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { USER_API_END_POINT } from "../../utils/constant";
+import {message} from 'antd';
 
 const SignUp = () => {
     const path = location.pathname;
@@ -49,11 +48,9 @@ const SignUp = () => {
       const res = await axios.post(`${USER_API_END_POINT}/signup`, input, {
         withCredentials: true,
       });
-      console.log(res);
 
       if (res?.data?.success) {
-        toast.success(res?.data?.message);
-        console.log(res?.data?.success);
+        message.success(res?.data?.message);
 
         setTimeout(() => {
           navigate("/sign-in");
@@ -62,7 +59,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
 
-      toast.error(error?.response?.data?.message || "An error occurred!");
+      message.error(error?.response?.data?.message || "An error occurred!");
     }
 };
     const handleRoleChange = (e)=>{
@@ -73,7 +70,6 @@ const SignUp = () => {
 
   return (
     <>
-      <ToastContainer position="top-right" />
       <div
         className="flex flex-col lg:flex-row items-center justify-center w-full h-screen bg-gray-100 gap-5 p-6 lg:p-0"
         data-aos="fade-in"

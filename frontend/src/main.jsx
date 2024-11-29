@@ -4,8 +4,6 @@ import App from "./app.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLandingPage from "./Pages/MainLandingPage.jsx";
-import SignIn from "./Pages/SignIn.jsx";
-import SignUp from "./Pages/SignUp.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
@@ -23,6 +21,10 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import SearchPage from "./Pages/SearchPage.jsx";
+import SignIn from "./Pages/auth/SignIn.jsx";
+import SignUp from "./Pages/auth/SignUp.jsx";
+import EmailVerification from "./Pages/auth/EmailVerification.jsx";
+import ResendVerificationEmail from "./Pages/auth/ResendVerificationEmail.jsx";
 // import Cart from './components/Cart.jsx'
 
 const persistor = persistStore(store);
@@ -49,7 +51,9 @@ const routes = createBrowserRouter([
           { path: "/admin/product/new", element: <NewProductForm /> },
           { path: "/buy/:id", element: <CheckoutPage /> },
           { path: "/payment-success", element: <PaymentSuccess />},
-          { path: "/search", element: <SearchPage />}
+          { path: "/search", element: <SearchPage />},
+          { path: "/user/verify/:token", element : <EmailVerification />},
+          { path: "/resend-verification-email", element : <ResendVerificationEmail />}
     ],
   },
 ]);

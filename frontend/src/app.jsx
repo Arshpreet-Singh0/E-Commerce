@@ -21,7 +21,7 @@ function App() {
         const res = await axios.post(`${USER_API_END_POINT}`, {}, {
           withCredentials: true
         });
-        console.log(res);
+        // console.log(res);
         
 
         if(res?.data?.success){

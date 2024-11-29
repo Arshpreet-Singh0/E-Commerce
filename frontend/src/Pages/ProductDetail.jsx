@@ -204,6 +204,7 @@ const ProductDetail = () => {
                 <ReviewComponent
                   reviews={product?.reviews}
                   productId={product?._id}
+                  setProduct={setProduct}
                 />
               )}
             </div>

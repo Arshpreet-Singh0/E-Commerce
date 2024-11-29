@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { USER_API_END_POINT } from "../utils/constant";
-import { setUser } from "../redux/authSlice";
+import { USER_API_END_POINT } from "../../utils/constant";
+import { setUser } from "../../redux/authSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { setCartItems } from "../redux/cartSlice";
+import { setCartItems } from "../../redux/cartSlice";
 import { useSearchParams } from "react-router-dom";
 import { message } from "antd";
 

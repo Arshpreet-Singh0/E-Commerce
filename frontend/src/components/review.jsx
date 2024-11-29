@@ -94,7 +94,7 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice';
 
-const ReviewComponent = ({ reviews, productId }) => {
+const ReviewComponent = ({ reviews, productId ,setProduct}) => {
   const [reviewList, setReviewList] = useState(reviews || []);
   const [newReview, setNewReview] = useState("");
   const [newRating, setNewRating] = useState(0);
@@ -106,7 +106,7 @@ const ReviewComponent = ({ reviews, productId }) => {
   const fetch = async () =>{
     console.log("hello")
     const res = await axios.get(`http://localhost:8080/api/v1/product/get/${productId}`);
-    setReviewList(res.data.product.reviews)
+    setProduct(res?.data?.product);
 
   }
   const handleSubmit = async () => {
@@ -116,7 +116,7 @@ const ReviewComponent = ({ reviews, productId }) => {
   }
   if (newReview.trim() && newRating > 0) {
     try {
-      console.log(productId);
+      // console.log(productId);
       const response = await axios.post(
         `${REVIEW_API_END_POINT}/create/${productId}`,
         {
