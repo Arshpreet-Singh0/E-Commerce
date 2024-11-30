@@ -68,7 +68,7 @@ const Navbar = () => {
     overflow: 'hidden',
     zIndex: 1,
     width: '100%',
-    backgroundColor: '#0073e6',
+    backgroundColor: '',
     marginBottom: '20px',
     top: 0,
     borderBottom: '5px solid blue',
@@ -82,8 +82,8 @@ const Navbar = () => {
     <div className="bg-blue-500">
       <nav id="nav" style={navStyles}>
         <div className="flex flex-row justify-center align-middle gap-3 text-center">
-          <Link className="text-3xl font-bold leading-none mt-1" to="/" style={{ color: '#fff', fontStyle: 'italic' }}>
-            ShopIt
+          <Link className="text-3xl font-bold leading-none mt-1 flex flex-row" to="/" style={{ color: '#000', fontStyle: '' }}>
+            Shop<div className='text-[red]'>It</div>
           </Link>
           <img className="w-full h-9" src={log} alt="logo" />
         </div>
@@ -99,7 +99,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Home')}
             >
               Home
@@ -117,7 +117,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/About"
-              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'About' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
             >
               About
@@ -126,7 +126,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/Contact"
-              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Contact')}
             >
               Contact
@@ -135,7 +135,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/help"
-              className={`text-sm ${activeButton === 'Help' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Help' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Help')}
             >
               Help
