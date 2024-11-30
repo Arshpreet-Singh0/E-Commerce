@@ -22,7 +22,7 @@ connectDatabase();
 const PORT = process.env.PORT || 8080;
 
 const corsOptions = {
-    origin: [process.env.FRONTEND_URL, 'http://localhost:5173'], 
+    origin: [process.env.APP_URL, 'http://localhost:5173'], 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -51,16 +51,16 @@ app.get('/',(req,res)=>{
 app.get('/getkey', (req,res)=>{
     return res.json({key:process.env.RAZORPAY_KEY_ID});
 })
-app.get('*',(req,res)=>{
-    res.json("not found");
-})
 
 app.use((err, req, res, next) => {
     // console.error(err.stack);
     res.status(err.status || 500).json({
-      message: err.message || 'Internal Server Error',
+        message: err.message || 'Internal Server Error',
     });
-  });
+});
+app.use('*',(req,res)=>{
+    res.json("not found");
+})
 app.listen(PORT,()=>{
     console.log(`App Listining to port ${PORT}`);
     

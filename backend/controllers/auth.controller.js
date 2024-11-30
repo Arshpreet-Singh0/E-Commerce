@@ -79,7 +79,7 @@ export const signup = async (req, res, next) => {
       }
     );
     //generate verification url and send email to user
-    const url = `http://localhost:5173/user/verify/${verificationToken}`;
+    const url = `${process.env.APP_URL}/user/verify/${verificationToken}`;
     const htmlContent = await ejs.renderFile(templatePath, {
       username: user.name,
       verifyUrl: url,
@@ -322,7 +322,7 @@ export const resendEmail = async (req, res, next)=>{
     });
 
     //generate verification url and send email to user
-    const url = `http://localhost:5173/user/verify/${verificationToken}`;
+    const url = `${process.env.APP_URL}/user/verify/${verificationToken}`;
     const htmlContent = await ejs.renderFile(templatePath, {
       username: user.name,
       verifyUrl: url,
