@@ -94,7 +94,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to={user?.role==='admin' ? '/admin/orders' : '/orders'}
+              to={user?.role==='admin' ? '/admin/orders' : '/myorders'}
               className={`text-sm ${activeButton === 'myorders' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('myorders')}
             >

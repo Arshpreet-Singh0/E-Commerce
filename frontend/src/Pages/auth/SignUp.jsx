@@ -5,12 +5,17 @@ import "aos/dist/aos.css";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constant";
 import {message} from 'antd';
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
     const path = location.pathname;
     const isAdminSignup = path==='/admin/sign-up'
+    const {user} = useSelector(store=>store.auth);
   useEffect(() => {
     Aos.init({ duration: 3000 });
+    if(user){
+      navigate("/");
+    }
   }, []);
   const [input, setInput] = useState({
     email: "",

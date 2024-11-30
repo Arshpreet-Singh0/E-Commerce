@@ -27,6 +27,7 @@ import EmailVerification from "./Pages/auth/EmailVerification.jsx";
 import ResendVerificationEmail from "./Pages/auth/ResendVerificationEmail.jsx";
 import Orders from "./Pages/Orders.jsx";
 import AdminOrderPage from "./Pages/admin/AdminOrderPage.jsx";
+import ProtectedRoute from "./Pages/admin/ProtectedRoute.jsx";
 // import Cart from './components/Cart.jsx'
 
 const persistor = persistStore(store);
@@ -42,22 +43,22 @@ const routes = createBrowserRouter([
           { path: "/product/:id", element: <ProductDetail /> },
           { path: "/categories/:id", element: <Catergoies /> },
           { path: "/cart", element: <Cart /> },
-          { path: "*", element: <NotFound /> },
-          { path: "/admin/sign-in", element: <SignIn /> },
-          { path: "/admin/sign-up", element: <SignUp /> },
           { path: "/About", element: <AboutPage /> },
           { path: "/Contact", element: <ContactPage /> },
           { path: "/help", element: <HelpPage /> },
-          { path: "/admin", element: <AdminProducts /> },
-          { path: "/admin/product/:id/edit", element: <ProductEditForm /> },
-          { path: "/admin/product/new", element: <NewProductForm /> },
           { path: "/buy/:id", element: <CheckoutPage /> },
           { path: "/payment-success", element: <PaymentSuccess />},
           { path: "/search", element: <SearchPage />},
           { path: "/user/verify/:token", element : <EmailVerification />},
           { path: "/resend-verification-email", element : <ResendVerificationEmail />},
           { path: "/myorders", element : <Orders />},
-          { path: "/admin/orders", element : <AdminOrderPage />},
+          { path: "/admin/sign-in", element: <SignIn /> },
+          { path: "/admin/sign-up", element: <SignUp /> },
+          { path: "/admin", element: <ProtectedRoute><AdminProducts /></ProtectedRoute> },
+          { path: "/admin/product/new", element: <ProtectedRoute><NewProductForm /></ProtectedRoute> },
+          { path: "/admin/product/:id/edit", element: <ProtectedRoute><ProductEditForm /></ProtectedRoute> },
+          { path: "/admin/orders", element : <ProtectedRoute><AdminOrderPage /></ProtectedRoute>},
+          { path: "*", element: <NotFound /> },
     ],
   },
 ]);

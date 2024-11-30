@@ -41,7 +41,7 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
   };
 
   return (
-    <div className="w-[600px] mx-auto mt-5">
+    <div className="w-[95%] md:w-[600px] mx-auto mt-5">
        <ToastContainer position="top-right"/>
       <h1 className="text-2xl font-bold">{editForm==true ? 'Edit Product Details : ' : 'List New Product'}</h1>
 

@@ -54,17 +54,17 @@ const OrderCard = ({ order, admin}) => {
     setInput((prev) => ({ ...prev, status: value }));
   }
 
-  // useEffect(() => {
-  //   if (order) {
-  //     setInput((prevInput) => ({
-  //       ...prevInput,
-  //       trackingNumber: order.trackingNumber,
-  //       courierService: order.courierService,
-  //       status: order.status,
-  //     }));
-  //   }
+  useEffect(() => {
+    if (order) {
+      setInput((prevInput) => ({
+        ...prevInput,
+        trackingNumber: order.trackingNumber,
+        courierService: order.courierService,
+        status: order.status,
+      }));
+    }
     
-  // }, [order]);
+  }, [order]);
   console.log(input);
     
   return (

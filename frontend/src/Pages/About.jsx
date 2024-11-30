@@ -22,7 +22,7 @@ const AboutPage = () => {
             <Title level={2} className="text-gray-700">Our Story</Title>
             <Divider />
             <Paragraph className="text-gray-600">
-              Established in [Year], [Company Name] started with a simple mission: to provide high-quality products to everyone, everywhere. Over the years, we've grown from a small operation to a trusted brand in the industry, delivering [specialty] to countless satisfied customers.
+              Established in 2024, ShopIt started with a simple mission: to provide high-quality products to everyone, everywhere. Over the years, we've grown from a small operation to a trusted brand in the industry, delivering [specialty] to countless satisfied customers.
             </Paragraph>
           </section>
 
@@ -31,7 +31,7 @@ const AboutPage = () => {
             <Title level={2} className="text-gray-700">Our Mission & Values</Title>
             <Divider />
             <Paragraph className="text-gray-600">
-              At [Company Name], we believe in quality, integrity, and exceptional customer service. Our mission is to continually exceed our customers' expectations by offering products that combine quality and affordability.
+              At ShopIt, we believe in quality, integrity, and exceptional customer service. Our mission is to continually exceed our customers' expectations by offering products that combine quality and affordability.
             </Paragraph>
             <div className="flex flex-wrap gap-6 mt-4">
               <Card className="flex-1 bg-gray-50 shadow-md hover:shadow-lg transition duration-300">
