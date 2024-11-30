@@ -19,7 +19,7 @@ import NewProductForm from "./Pages/admin/NewProductForm.jsx";
 import CheckoutPage from "./Pages/CheckoutPage.jsx";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import PaymentSuccess from "./pages/PaymentSuccess.jsx";
+import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 import SearchPage from "./Pages/SearchPage.jsx";
 import SignIn from "./Pages/auth/SignIn.jsx";
 import SignUp from "./Pages/auth/SignUp.jsx";
