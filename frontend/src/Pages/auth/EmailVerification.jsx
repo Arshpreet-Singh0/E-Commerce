@@ -9,7 +9,7 @@ const EmailVerification = () => {
     const [isVerified, setVerified] = useState(false);
     const [loading, setLoading] = useState(false);
     const {token} = useParams();
-    console.log(token);
+    // console.log(token);
 
     useEffect(()=>{
         const verifyEmail = async () => {

@@ -62,7 +62,7 @@ const SignUp = () => {
         }, 800);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       message.error(error?.response?.data?.message || "An error occurred!");
     }

@@ -63,7 +63,7 @@ const ProductDetail = () => {
         dispatch(setCartItems(res?.data?.cart));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -60,7 +60,7 @@ const PriceDetails = ({quantity, product, shippingAddress,user}) => {
         razor.open();
           
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           message.error(error?.response?.data?.message || 'An Error Occured');
         }
         

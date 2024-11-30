@@ -14,7 +14,6 @@ const SignIn = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useSelector((state) => state.auth);
   const next = searchParams.get("next");
-  //  console.log(next);
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -60,9 +59,6 @@ const SignIn = () => {
 
       if (res?.data?.success) {
         message.success(res?.data?.message);
-        // console.log(res?.data?.message);
-
-        message.success(res?.data?.message);
         dispatch(setUser(res?.data?.user));
         dispatch(setCartItems(res?.data?.cart));
 
@@ -70,7 +66,7 @@ const SignIn = () => {
         else navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       message.error(error.response?.data?.message || "An error occurred!");
     }
   };

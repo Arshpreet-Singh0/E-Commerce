@@ -27,7 +27,7 @@ const OrderCard = ({ order, admin}) => {
       const res = await axios.post(`${ORDER_API_END_POINT}/update/${order?._id}`,input,{
         withCredentials : true,
       });
-      console.log(res);
+      // console.log(res);
       
       if(res?.data?.success){
         message.success(res?.data?.message);
@@ -35,7 +35,7 @@ const OrderCard = ({ order, admin}) => {
       }
     } catch (error) {
       message.error(error?.response?.data?.message);
-      console.log(error);
+      // console.log(error);
     }finally{
       setLoading(false);
     }
@@ -65,7 +65,7 @@ const OrderCard = ({ order, admin}) => {
     }
     
   }, [order]);
-  console.log(input);
+  // console.log(input);
     
   return (
     <div className="w-[95%] lg:w-[90%] xl:w-[80%] mx-auto ">

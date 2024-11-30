@@ -9,7 +9,6 @@ const SearchPage = () => {
 
   const queryParams = new URLSearchParams(location.search);
   const searchValue = queryParams.get('search') || 'N/A';
-  console.log(searchValue);
   
 
     useEffect(()=>{
@@ -18,7 +17,7 @@ const SearchPage = () => {
                 const res = await axios.get(`http://localhost:8080/api/v1/product/get?keyword=${searchValue}`);
                 setproducts(res?.data?.products);
             } catch (error) {
-                console.error("Error fetching suggestions:", error);
+                // console.error("Error fetching suggestions:", error);
                 setSuggestions([]);
             }
         };

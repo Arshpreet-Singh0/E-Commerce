@@ -20,7 +20,7 @@ const ResendVerificationEmail = () => {
                 message.success(res?.data?.message);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             message.error(error?.response?.data?.message)
         }finally{
             setLoading(false);

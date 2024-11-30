@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import ProductDetail from "./Pages/ProductDetail.jsx";
 import Catergoies from "./Pages/Catergoies.jsx";
-import Cart from "./components/Cart.jsx";
+import Cart from "./Pages/Cart.jsx";
 import AboutPage from "./Pages/About.jsx";
 import ContactPage from "./Pages/ContactPage.jsx";
 import HelpPage from "./Pages/HelpPage.jsx";

@@ -2,33 +2,42 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { ORDER_API_END_POINT } from '../utils/constant';
 import OrderCard from '../components/OrderCard';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { message } from 'antd';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const {user} = useSelector(store=>store.auth);
+  const navigate = useNavigate();
 
   useEffect(()=>{
+    if(!user){
+      navigate('/sign-in?next=/myorders');
+      return;
+    }
     const getOrders = async()=>{
       setLoading(true);
       try {
         const res = await axios.get(`${ORDER_API_END_POINT}/get`,{
           withCredentials : true,
         });
-        console.log(res);
         
         if(res?.data?.success){
           setOrders(res?.data?.orders);
         }
 
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        message.error(error?.response?.data?.message);
       }finally{
         setLoading(false);
       }
     };
     getOrders();
-  },[])
-  console.log(orders);
+  },[]);
+  
   return (
     <div className='flex flex-col gap-5 mt-10 mb-10'>
       {

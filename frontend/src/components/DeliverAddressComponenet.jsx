@@ -33,15 +33,13 @@ const DeliverAddressComponenet = ({address, setAddress}) => {
             const res = await axios.post(`${USER_API_END_POINT}/update`, {address:newAddress}, {
                 withCredentials : true,
             });
-            console.log(res);
-            
             if(res?.data?.success){
                 message.success("Address saved successfully");
                 dispatch(setUser(res?.data?.user));
                 setShowAddressForm(false);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             message.error( error?.response?.data?.message || "Failed to save address");
         }finally{
             setLoading(false);
