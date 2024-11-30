@@ -4,9 +4,10 @@ import SearchNav from './components/SearchNav';
 import Footer from './components/Footer';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { USER_API_END_POINT } from "./utils/constant.js"
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/authSlice';
+import { setCartItems } from './redux/cartSlice.js';
 
 function App() {
   const content = {
@@ -19,13 +20,17 @@ function App() {
       try {
         const res = await axios.post(`${USER_API_END_POINT}`, {}, {
           withCredentials: true
-        })
+        });
+        // console.log(res);
+        
 
         if(res?.data?.success){
             dispatch(setUser(res?.data?.user));
+            
+            dispatch(setCartItems(res?.data?.cart));
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         
       }
     };

@@ -5,42 +5,32 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Loder from '../components/Loder'; 
 import Star from './Star';
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
 
 function Categories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
-  const categoryIds = {
-    Electronics: '67135c0d050b49202e0c81c5',
-    TVsAppliances: '67161d29b14c947dc6a64029',
-    Grocery: '67135d1d050b49202e0c81cb',
-    Fashion: '67162393b02279f37dbed5b0',
-    Beauty: '671623afb02279f37dbed5b3',
-    Furniture: '671623f1b02279f37dbed5b6',
-    HomeKitchen: '67162461b02279f37dbed5ba'
-  };
+
   const apiUrls = {
-    Electronics: 'http://localhost:8080/api/v1/product/get/category/Electronics',
-    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/TVsAppliances',
-    Grocery: 'http://localhost:8080/api/v1/product/get/category/Grocery',
-    Fashion: 'http://localhost:8080/api/v1/product/get/category/Fashion',
-    Beauty: 'http://localhost:8080/api/v1/product/get/category/Beauty',
-    Furniture: 'http://localhost:8080/api/v1/product/get/category/Furniture',
+    Electronics: `${PRODUCT_API_END_POINT}/get/category/Electronics`,
+    TVsAppliances: `${PRODUCT_API_END_POINT}/get/category/TVsAppliances`,
+    Grocery: `${PRODUCT_API_END_POINT}/get/category/Grocery`,
+    Fashion: `${PRODUCT_API_END_POINT}/get/category/Fashion`,
+    Beauty: `${PRODUCT_API_END_POINT}/category/Beauty`,
+    Furniture: `${PRODUCT_API_END_POINT}/get/category/Furniture`,
   };
-  
+
   const fetchCategories = async () => {
     try {
       const categoryPromises = Object.keys(apiUrls).map(async (key) => {
         const response = await axios.get(apiUrls[key]);
-        // console.log("res" ,response.data.products)
         return {
           name: key,
           products: response.data.products || [],
         };
       });
       const categoriesData = await Promise.all(categoryPromises);
-      console.log(categoriesData);
-      
       setCategories(categoriesData);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -53,73 +43,59 @@ function Categories() {
     Aos.init({ duration: 2000 });
     fetchCategories();
   }, []);
-  // console.log(categories);
+
   if (loading) {
     return <Loder />;
   }
 
-  // Handle product click to navigate to the product detail page
   const handleProductClick = (productId) => {
-   navigate(`/product/${productId}`);
-  };
-  const handleCategory = () =>{
-     navigate("/categories");
+    navigate(`/product/${productId}`);
   };
 
-  const renderCategoryRow = (category) => {
-    console.log("category " , category);
-    
-    return (
-      <div
-        key={category.name}
-        className="flex flex-col w-full mb-8 bg-blueGray-500 rounded-2xl p-5"
-        data-aos="fade-up"
-      >
-        <div className="flex justify-between items-center mb-4">
+  const renderCategoryRow = (category) => (
+    <div
+      key={category.name}
+      className="flex flex-col w-full mb-12 bg-gray-100 rounded-2xl p-6 shadow-md"
+      data-aos="fade-up"
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold text-gray-800">{category.name}</h1>
+        <button
+          className="bg-gray-800 text-white px-4 py-2 hover:bg-green-600 rounded-md"
+          onClick={() => navigate(`/categories/${category.name}`)}
+        >
+          More
+        </button>
+      </div>
 
-          <h1 className="text-4xl font-bold text-black">{category.name}</h1>
-          <button
-            className="bg-black text-white px-4 py-2 hover:bg-green-600"
-            onClick={() => navigate(`/categories/${category.name}`)} // Navigate to Categories page with category name
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {category.products.slice(0, 4).map((product) => (
+          <div
+            key={product._id}
+            className="bg-white rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition"
+            onClick={() => handleProductClick(product._id)}
           >
-            More
-          </button>
-        </div>
-
-        <div className="container relative flex overflow-auto scroll-snap-x-mandatory">
-          {category.products.map((product) => (
-            <div
-              onClick={() => handleProductClick(product._id)} 
-              key={product._id}
-              className="box flex-shrink-0 w-full sm:w-1/2 md:w-full lg:w-1/4 h-auto bg-white rounded-lg shadow-md scroll-snap-start p-4"
-            >
-              <img
-                src={product.images[0].url || '/path/to/fallback-image.jpg'}
-                alt={product.name || 'Product'}
-                className="w-full h-32 object-contain rounded-lg mb-2"
-              />
-              <Star stars={product.ratings} reviews={product.reviews}/>
-              <h2 className="text-lg font-semibold">{product.name}</h2>
-              <p className="text-gray-600">${product.price}</p>
-              <button className="bg-black text-white px-4 py-2 hover:bg-green-600 mt-2" onClick={() => navigate(`/product/${product._id}`)}>
-                Shop Now
-              </button>
-            </div>
-          ))}
-        </div>
+            <img
+              src={product.images[0]?.url || '/path/to/fallback-image.jpg'}
+              alt={product.name || 'Product'}
+              className="w-full h-48 object-contain rounded-lg mb-4"
+            />
+            <Star stars={product.ratings} reviews={product.reviews} />
+            <h2 className="text-lg font-semibold text-gray-700">{product.name}</h2>
+            <p className="text-gray-600 font-medium">&#8377;{product.price}</p>
+            <button className="w-full bg-gray-800 text-white px-4 py-2 mt-4 hover:bg-green-600 rounded-md">
+              Shop Now
+            </button>
+          </div>
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
 
-  console.log(categories);
-  
   return (
-    
-    <div className="flex flex-col flex-grow w-full">
-      <div className="mx-auto flex flex-col gap-7 px-4 w-full">
-        <h1 className="text-3xl font-bold mb-8 text-center">Shop by Categories</h1>
-        {categories.map((category) => renderCategoryRow(category))}
-      </div>
+    <div className="flex flex-col w-full ">
+      <h1 className="text-4xl font-bold text-center mb-10">Shop by Categories</h1>
+      {categories.map((category) => renderCategoryRow(category))}
     </div>
   );
 }

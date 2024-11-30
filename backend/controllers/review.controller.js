@@ -1,7 +1,7 @@
 import Product from "../models/product.model.js";
 import Review from "../models/review.model.js";
 
-export const postReview = async(req, res)=>{
+export const postReview = async(req, res, next)=>{
     try {
         const user = req.id;
         const {product} = req.params;
@@ -25,6 +25,10 @@ export const postReview = async(req, res)=>{
             review,
             rating,
         });
+        const allReviews = await Review.find({product});
+        const totalRatings = allReviews.reduce((sum, r) => sum + r.rating, 0);
+        const averageRating = totalRatings / allReviews.length;
+        prod.ratings = averageRating;
 
         prod.reviews.push(respone._id);
 
@@ -39,10 +43,11 @@ export const postReview = async(req, res)=>{
 
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const updateReview  = async(req, res)=>{
+export const updateReview  = async(req, res, next)=>{
     try {
         const {id} = req.params;
         const user = req.id;
@@ -70,10 +75,11 @@ export const updateReview  = async(req, res)=>{
 
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const deleteReview = async(req, res)=>{
+export const deleteReview = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -89,5 +95,6 @@ export const deleteReview = async(req, res)=>{
 
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }

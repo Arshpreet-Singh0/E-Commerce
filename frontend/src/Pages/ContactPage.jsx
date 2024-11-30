@@ -7,7 +7,7 @@ const { Title, Text } = Typography;
 
 const ContactPage = () => {
   const onFinish = (values) => {
-    console.log('Form Values:', values);
+    // console.log('Form Values:', values);
     // Handle form submission here
   };
 

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice'; // Import the action
 import Profile from './profileDrop';
-import { Menu, Dropdown, Button, Layout, Avatar, Drawer } from 'antd';
+import { Menu, Dropdown, Button, Layout, Avatar, Drawer, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import axios from 'axios';
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 
 const Navbar = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -15,9 +17,11 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
   const navigate = useNavigate()
+  
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
-    closeMenu();
+    setIsMenuOpen(false);
+    setIsDrawerVisible(false);  // Close the drawer when a menu item is clicked
   };
 
   const menuItems = (
@@ -40,10 +44,19 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    navigate('/home')
-    dispatch(setUser(null));
-    
+  const handleLogout = async() => {
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`,{},{
+        withCredentials : true,
+      })
+      if(res?.data?.success){
+        message.success(res?.data?.message);
+        navigate('/home')
+        dispatch(setUser(null));
+      }
+    } catch (error) {
+      message.error(error?.response?.data?.message);
+    }
   };
 
   const navStyles = {
@@ -90,6 +103,15 @@ const Navbar = () => {
               onClick={() => handleButtonClick('Home')}
             >
               Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={user?.role==='admin' ? '/admin/orders' : '/myorders'}
+              className={`text-sm ${activeButton === 'myorders' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              onClick={() => handleButtonClick('myorders')}
+            >
+              Orders
             </Link>
           </li>
           <li>

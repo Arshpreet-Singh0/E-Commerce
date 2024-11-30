@@ -1,10 +1,10 @@
 import React from 'react';
 import { DownOutlined, SettingOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, message, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice';
 import axios from 'axios';
-import { USER_API_END_POINT } from '../utils/constant';
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { setCartItems } from '../redux/cartSlice';
@@ -19,15 +19,17 @@ const Profile = () => {
     try {
       const res = await axios.post(`${USER_API_END_POINT}/logout`, {}, {
         withCredentials : true,
-      })
+      });
       
       if(res?.data?.success){
+        message.success(res?.data?.message);
         navigate('/')
         dispatch(setUser(null));
         dispatch(setCartItems(null));
       }
       
     } catch (error) {
+      message.error(error?.response?.data?.message);
     }
   };
 
@@ -46,9 +48,10 @@ const Profile = () => {
       extra: '⌘P',
     },
     {
-      key: '3',
-      label: 'Billing',
-      extra: '⌘B',
+      key : '3',
+      label : 'My Orders',
+      onClick : ()=>navigate('/myorders'),
+      extra: '⌘O',
     },
     {
       key: '4',
@@ -73,7 +76,7 @@ const Profile = () => {
       <a onClick={(e) => e.preventDefault()}>
         <Space>
           <img
-            src={user?.profilePhoto || "https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png"}
+            src={"https://res.cloudinary.com/dxxics5nv/image/upload/v1729768865/qxneinnynlowwbrokxf7.png"}
             alt="Profile"
             className='w-8 h-8'
           />

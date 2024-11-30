@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f8fc; /* Light blue background */
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #d6e9f8;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #1e90ff; /* Primary blue color */
+        color: white;
+        padding: 15px 0;
+        border-radius: 5px 5px 0 0;
+      }
+      .content {
+        padding: 20px;
+        color: #333333;
+      }
+      .button {
+        display: inline-block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        color: white;
+        background-color: #1e90ff; /* Button blue color */
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+      .button:hover {
+        background-color: #0d6efd; /* Darker blue on hover */
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #555555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Email Verification</h1>
+      </div>
+      <div class="content">
+        <p>Hi <%= username %>,</p>
+        <p>Thank you for registering with us! Please verify your email address by clicking the button below:</p>
+        <a href="<%= verifyUrl %>" class="button">Verify Email</a>
+        <p>If you did not sign up for this account, you can safely ignore this email.</p>
+      </div>
+      <div class="footer">
+        <p>&copy; 2024 ShopIt. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

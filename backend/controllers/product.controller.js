@@ -1,26 +1,45 @@
 import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
+import getDataUri from "../utils/dataURI.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const listProduct = async (req, res, next) => {
   try {
-    const { name, description, price, category, stock, images, brand, subcategory } = req.body;
-    const id = req.id;
-    
+    const { name, description, price, category, stock, brand, subcategory } = req.body;
     if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !images ||
-      images.length === 0 ||
-      !brand ||
-      !stock
-    ) {
-        return res.status(400).json({
-            message: "All fields are required",
-            success : false, 
-            });
-    }
+          !name ||
+          !description ||
+          !price ||
+          !category ||
+          !brand ||
+          !stock ||
+          !req.files ||
+          req.files.length===0
+        ) {
+            return res.status(400).json({
+                message: "All fields are required",
+                success : false, 
+                });
+        }
+        const id = req.id;
+        const filesDataUri = req.files.map((file)=>{
+            return getDataUri(file)
+        })
+    
+    const uploadPromises = filesDataUri.map((dataUri) =>
+        cloudinary.uploader.upload(dataUri.content, { folder: 'E-Commerce' })
+      );
+  
+      // Wait for all uploads to complete
+      const uploadedFiles = await Promise.all(uploadPromises);
+      
+      const images = uploadedFiles.map((data)=>{
+        return {url:data.secure_url, public_id:data.public_id};
+      })
+
+    //   console.log('images : ', images);
+      
+      
 
     const product = await Product.create({
         created_by : id,
@@ -34,22 +53,19 @@ export const listProduct = async (req, res, next) => {
         brand,
     });
 
-    // console.log(product);
-    
-
     return res.status(200).json({
         message : 'Product created succfully',
         success : true,
     })
   } catch (error) {
     console.log(error);
-    
+    next(error);
   }
 };
 
-export const updateProductInfo = async(req, res)=>{
+export const updateProductInfo = async(req, res, next)=>{
     try {
-        const { name, description, price, category, stock, images, brand } = req.body;
+        const { name, description, price, category, stock, images, brand , subcategory} = req.body;
         const {id} = req.params;
 
         const product = await Product.findById(id);
@@ -68,9 +84,9 @@ export const updateProductInfo = async(req, res)=>{
         if(stock)  product.stock = stock;
         if(images)  product.images = images;
         if(brand)  product.brand = brand;
+        if(subcategory) product.subcategory = subcategory;
 
-        const response = await  product.save();
-        console.log(response);
+        await product.save();
 
         return res.status(200).json({
             message : 'Product updated successfully.',
@@ -79,10 +95,11 @@ export const updateProductInfo = async(req, res)=>{
         
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const getAllProduct = async(req, res)=>{
+export const getAllProduct = async(req, res, next)=>{
     try {
         const keyword = req.query.keyword || "";
         const query = {
@@ -103,11 +120,11 @@ export const getAllProduct = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
-export const getProductById = async(req, res)=>{
+export const getProductById = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -119,6 +136,9 @@ export const getProductById = async(req, res)=>{
             populate : {
                 path : 'user'
             }
+        }).populate({
+            path : 'subcategory',
+            strictpopulate : false,
         });
         // console.log(product);
         
@@ -136,11 +156,11 @@ export const getProductById = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
-export const getCategoryProducts = async(req, res)=>{
+export const getCategoryProducts = async(req, res, next)=>{
     try {
         const {name} = req.params;
         const category = await Category.findOne({name});
@@ -153,7 +173,7 @@ export const getCategoryProducts = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 
@@ -169,10 +189,11 @@ export const getProductByBrand = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const getProductBySubCategory = async(req, res)=>{
+export const getProductBySubCategory = async(req, res, next)=>{
     try {
         const {subcategory} = req.params;
 
@@ -186,10 +207,11 @@ export const getProductBySubCategory = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
+        next(error);
     }
 }
 
-export const deleteProduct = async(req, res)=>{
+export const deleteProduct = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -209,7 +231,7 @@ export const deleteProduct = async(req, res)=>{
         })
     } catch (error) {
         console.log(error);
-        
+        next(error);
     }
 }
 

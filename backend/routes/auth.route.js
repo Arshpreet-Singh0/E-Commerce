@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUser, login, logout, signup, updatePassword, updateProfile } from '../controllers/auth.controller.js';
+import { getUser, login, logout, resendEmail, signup, updatePassword, updateProfile, verifyEmail, } from '../controllers/auth.controller.js';
 import { isAuthenticated } from '../middlewares/isAuthenticated.js';
 const router = express.Router();
 
@@ -8,6 +8,10 @@ router.route('/').post(isAuthenticated, getUser);
 router.route('/signup').post(signup);
 
 router.route('/login').post(login);
+
+router.route('/verify/:token').post(verifyEmail);
+
+router.route('/resend-email').post(resendEmail);
 
 router.route('/logout').post(logout);
 

@@ -1,6 +1,14 @@
 import mongoose, {Schema} from "mongoose";
 
 export const addressSchema = new mongoose.Schema({
+    name : {
+      type: String,  
+      required: true
+    },
+    phone : {
+      type: String,
+      required: true,
+    },
     street: { 
       type: String, 
       required: true, 
@@ -24,6 +32,12 @@ export const addressSchema = new mongoose.Schema({
       type: String, 
       required: true, 
       trim: true 
+    },
+    landmark : {
+      type: String,
+    },
+    addresstype : {
+      type: String,
     }
   }, { _id: false });
 
@@ -44,11 +58,18 @@ const userSchema = Schema({
     phone : {
         type : Number,
     },
-    address : [addressSchema],
+    address : {
+      type : addressSchema
+    },
     role : {
       type : String,
       enum : ['user','admin','superadmin'],
-    }
+    },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false
+  }
 },{ timestamps: true })
 
 const User = mongoose.model('User', userSchema);

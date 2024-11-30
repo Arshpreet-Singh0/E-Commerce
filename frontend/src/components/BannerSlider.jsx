@@ -22,26 +22,36 @@ const bannerData = [
 ];
 
 const contentStyle = {
-  margin: 0,
-  height: '500px', // Updated height
-  color: '#fff',
-  lineHeight: '500px', // Updated line height to center text vertically
-  textAlign: 'center',
-  background: '#364d79',
+  width: '100%',
+  height: '400px', // Reduced height for a more compact banner
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#364d79',
+  overflow: 'hidden',
 };
+
 
 const BannerSlider = () => (
   <div>
-    <Carousel style={contentStyle} arrows dotPosition="left" infinite={true} autoplay>
-      {bannerData.map((banner, index) => (
-        <div key={index} className='relative'>
-          <div className='absolute bottom-20 right-16 text-xl md:text-3xl'>
-            {banner.discount}
-          </div>
-        </div>
-      ))}
+    <Carousel dotPosition="top" autoplay style={contentStyle} arrows>
+      <div >
+        <img
+          src="https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-119090.jpg?t=st=1731129344~exp=1731132944~hmac=02a494d8e1e48245e7423cd12e0d5a8c7c48afcb35d451d07ffbbc27c0da862c&w=2000"
+          alt="Banner 1"
+          className="object-cover w-full h-full"
+        />
+      </div>
+      <div >
+        <img
+          src="https://img.freepik.com/free-photo/excited-girl-scream-joy-making-fist-pump-holding-shopping-bag-rejoicing-standing-dress-ove_1258-120529.jpg?t=st=1731129790~exp=1731133390~hmac=86e41a314c75ae74b853ac1fe255de6225b6c69f6be4a8545d2441330bbd8062&w=2000"
+          alt="Banner 2"
+          className="object-cover w-full h-full"
+        />
+      </div>
     </Carousel>
   </div>
 );
 
 export default BannerSlider;
+ 

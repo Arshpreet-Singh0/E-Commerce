@@ -12,6 +12,7 @@ import productRouter from './routes/product.route.js'
 import orderRouter from './routes/order.route.js'
 import reviewRouter from './routes/review.route.js'
 import cartRouter from './routes/cart.route.js'
+import paymentRouter from './routes/payment.route.js'
 
 
 const app = express();
@@ -21,7 +22,7 @@ connectDatabase();
 const PORT = process.env.PORT || 8080;
 
 const corsOptions = {
-    origin: ['http://localhost:5173','http://localhost:5174'], 
+    origin: [process.env.APP_URL, 'http://localhost:5173'], 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -40,20 +41,26 @@ app.use('/api/v1/product', productRouter);
 app.use('/api/v1/order', orderRouter);
 app.use('/api/v1/review', reviewRouter);
 app.use('/api/v1/cart', cartRouter);
+app.use('/api/v1/payment', paymentRouter);
 
 app.get('/',(req,res)=>{
     res.send('working');
-})
-app.get('*',(req,res)=>{
-    res.json("not found");
+});
+
+//to get razor pay keuy at frontend
+app.get('/getkey', (req,res)=>{
+    return res.json({key:process.env.RAZORPAY_KEY_ID});
 })
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    // console.error(err.stack);
     res.status(err.status || 500).json({
-      message: err.message || 'Internal Server Error',
+        message: err.message || 'Internal Server Error',
     });
-  });
+});
+app.use('*',(req,res)=>{
+    res.json("not found");
+})
 app.listen(PORT,()=>{
     console.log(`App Listining to port ${PORT}`);
     

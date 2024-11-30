@@ -6,6 +6,10 @@ import DropDown from "./DropDown";
 import { useNavigate } from "react-router";
 import CartLogo from "./CartLogo";
 import { useSelector } from "react-redux";
+import { Button } from "antd";
+import axios from "axios";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
+
 const SearchNav = () => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -13,8 +17,8 @@ const SearchNav = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [timer, setTimer] = useState(null);
   const navigate = useNavigate();
-  const {user} = useSelector(store=>store.auth);
-  const {cartItems} = useSelector(store=>store.cart);
+  // const {user} = useSelector(store=>store.auth);
+  // const {cartItems} = useSelector(store=>store.cart);
 
   const handleChange = (value) => {
     setInput(value);
@@ -43,7 +47,7 @@ const SearchNav = () => {
     setShowSuggestions(true); // Show suggestions when fetching
 
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/product/get?keyword=${value}`);
+      const response = await axios.get(`${PRODUCT_API_END_POINT}/get?keyword=${value}`);
       const data = await response.json();
       const namesArray = data.products ? data.products.map(product => product.name.trim()) : [];
       setSuggestions(namesArray); // Set suggestions based on trimmed names
@@ -59,6 +63,11 @@ const SearchNav = () => {
     setTimeout(() => setShowSuggestions(false), 200); // Delay to allow click events on suggestions
   };
 
+  const handleSearchButtonClick = ()=>{
+    if(!input) return;
+    navigate(`/search?search=${input}`);
+  }
+
   return (
     <div className="relative bg-[#E4E0E1] p-2 flex flex-row gap-8 items-center justify-between align-middle">
       <div id="input" onBlur={handleBlur} className="relative">
@@ -69,6 +78,7 @@ const SearchNav = () => {
           onChange={(e) => handleChange(e.target.value)} // Update input on change
           // className="border border-gray-300 rounded-md p-2" // Add some basic styles
         />
+        <Button type="primary" onClick={handleSearchButtonClick}>Search</Button>
         
         {/* Suggestions Section */}
         {loading ? (
@@ -95,9 +105,9 @@ const SearchNav = () => {
         )}
       </div>
       <div className="flex flex-col md:flex-row lg:flex-row gap-4 items-center justify-between">
-        <div className="w-full md:w-auto">
+        {/* <div className="w-full md:w-auto">
           <DropDown />
-        </div>
+        </div> */}
         <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300" onClick={()=>navigate("/cart")}>
           <CartLogo/>
         </button>

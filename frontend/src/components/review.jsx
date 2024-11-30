@@ -87,14 +87,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FaRegUserCircle } from "react-icons/fa";
-import { REVIEW_API_END_POINT } from "../utils/constant";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
+const REVIEW_API_END_POINT = import.meta.env.VITE_REVIEW_API_END_POINT;
 import Star from "./Star";
 import { Input, Button, Modal, Rate, message } from "antd";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice';
 
-const ReviewComponent = ({ reviews, productId }) => {
+const ReviewComponent = ({ reviews, productId ,setProduct}) => {
   const [reviewList, setReviewList] = useState(reviews || []);
   const [newReview, setNewReview] = useState("");
   const [newRating, setNewRating] = useState(0);
@@ -102,11 +103,12 @@ const ReviewComponent = ({ reviews, productId }) => {
   const [editedText, setEditedText] = useState("");
   const [editedRating, setEditedRating] = useState(0);
   const { user } = useSelector((store) => store.auth);
+
   const navigate = useNavigate();
   const fetch = async () =>{
     console.log("hello")
-    const res = await axios.get(`http://localhost:8080/api/v1/product/get/${productId}`);
-    setReviewList(res.data.product.reviews)
+    const res = await axios.get(`${PRODUCT_API_END_POINT}/get/${productId}`);
+    setProduct(res?.data?.product);
 
   }
   const handleSubmit = async () => {
@@ -116,7 +118,7 @@ const ReviewComponent = ({ reviews, productId }) => {
   }
   if (newReview.trim() && newRating > 0) {
     try {
-      console.log(productId);
+      // console.log(productId);
       const response = await axios.post(
         `${REVIEW_API_END_POINT}/create/${productId}`,
         {
