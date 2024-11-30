@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,9 +17,11 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
   const navigate = useNavigate()
+  
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
-    closeMenu();
+    setIsMenuOpen(false);
+    setIsDrawerVisible(false);  // Close the drawer when a menu item is clicked
   };
 
   const menuItems = (
@@ -51,12 +53,10 @@ const Navbar = () => {
         message.success(res?.data?.message);
         navigate('/home')
         dispatch(setUser(null));
-
       }
     } catch (error) {
       message.error(error?.response?.data?.message);
     }
-    
   };
 
   const navStyles = {

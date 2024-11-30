@@ -64,7 +64,7 @@ function Categories() {
           className="bg-gray-800 text-white px-4 py-2 hover:bg-green-600 rounded-md"
           onClick={() => navigate(`/categories/${category.name}`)}
         >
-          View More
+          More
         </button>
       </div>
 
@@ -93,7 +93,7 @@ function Categories() {
   );
 
   return (
-    <div className="flex flex-col w-full px-4">
+    <div className="flex flex-col w-full ">
       <h1 className="text-4xl font-bold text-center mb-10">Shop by Categories</h1>
       {categories.map((category) => renderCategoryRow(category))}
     </div>
