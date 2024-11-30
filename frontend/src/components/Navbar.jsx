@@ -68,10 +68,8 @@ const Navbar = () => {
     overflow: 'hidden',
     zIndex: 1,
     width: '100%',
-    backgroundColor: '',
     marginBottom: '20px',
     top: 0,
-    borderBottom: '5px solid blue',
   };
 
   const toggleDrawer = () => {
@@ -79,10 +77,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-blue-500">
-      <nav id="nav" style={navStyles}>
+    <div className=" bg-white/10 ">
+      <nav id="nav" style={navStyles} className='bg-white/10 '>
         <div className="flex flex-row justify-center align-middle gap-3 text-center">
-          <Link className="text-3xl font-bold leading-none mt-1 flex flex-row" to="/" style={{ color: '#000', fontStyle: '' }}>
+          <Link className="text-3xl font-bold leading-none mt-1 flex flex-row" to="/" style={{ color: '#fff', fontStyle: '' }}>
             Shop<div className='text-[red]'>It</div>
           </Link>
           <img className="w-full h-9" src={log} alt="logo" />
@@ -99,7 +97,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Home' ? 'text-xl text-white font-light' : 'text-gray-300 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Home')}
             >
               Home
@@ -108,7 +106,7 @@ const Navbar = () => {
           <li>
             <Link
               to={user?.role==='admin' ? '/admin/orders' : '/myorders'}
-              className={`text-sm ${activeButton === 'myorders' ? 'text-xl text-white font-bold' : 'text-gray-400 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'myorders' ? 'text-xl text-white font-light' : 'text-gray-300 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('myorders')}
             >
               Orders
@@ -117,7 +115,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/About"
-              className={`text-sm ${activeButton === 'About' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'About' ? 'text-xl text-white font-light' : 'text-gray-300 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('About')}
             >
               About
@@ -126,7 +124,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/Contact"
-              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Contact' ? 'text-xl text-white font-light' : 'text-gray-300 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Contact')}
             >
               Contact
@@ -135,7 +133,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/help"
-              className={`text-sm ${activeButton === 'Help' ? 'text-xl text-black font-bold' : 'text-gray-700 hover:text-gray-500'} transition duration-200 ease-in-out`}
+              className={`text-sm ${activeButton === 'Help' ? 'text-xl text-white font-light' : 'text-gray-300 hover:text-gray-500'} transition duration-200 ease-in-out`}
               onClick={() => handleButtonClick('Help')}
             >
               Help

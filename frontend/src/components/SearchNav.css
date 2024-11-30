@@ -1,12 +1,11 @@
 #input {
     width: 60%;
     height: 2.5rem;
-    border: 10px rgba(8, 130, 243, 0.742);
-    border-radius: 10px;
-    padding: 10px;
-    background-color: white;
+    border: 1px solid rgba(15, 26, 37, 0.742);
+    padding: 5px;
     display: flex;
     gap: 10px;
+    color: black;
     align-items: center;
     margin-left: 20%;
 }
@@ -27,4 +26,13 @@ input:focus {
 
 #search-icon {
     color: royalblue;
+}
+
+#search{
+    backdrop-filter: blur(10px);
+        background-image: linear-gradient(120deg,
+                rgba(95, 91, 91, 0.3),
+                rgba(244, 239, 255, 0.2));
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
