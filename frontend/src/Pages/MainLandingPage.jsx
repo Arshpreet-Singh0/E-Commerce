@@ -3,7 +3,6 @@ import axios from 'axios';
 import BannerSlider from '../components/BannerSlider';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import Category from '../../../backend/models/category.model';
 import Categories from '../components/categories';
 import { useSelector, useDispatch } from 'react-redux';
 import MyProductComponent from '../components/ProductSection';
