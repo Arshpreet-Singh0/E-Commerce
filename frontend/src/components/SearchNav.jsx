@@ -7,6 +7,9 @@ import { useNavigate } from "react-router";
 import CartLogo from "./CartLogo";
 import { useSelector } from "react-redux";
 import { Button } from "antd";
+import axios from "axios";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
+
 const SearchNav = () => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -44,7 +47,7 @@ const SearchNav = () => {
     setShowSuggestions(true); // Show suggestions when fetching
 
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/product/get?keyword=${value}`);
+      const response = await axios.get(`${PRODUCT_API_END_POINT}/get?keyword=${value}`);
       const data = await response.json();
       const namesArray = data.products ? data.products.map(product => product.name.trim()) : [];
       setSuggestions(namesArray); // Set suggestions based on trimmed names
@@ -102,9 +105,9 @@ const SearchNav = () => {
         )}
       </div>
       <div className="flex flex-col md:flex-row lg:flex-row gap-4 items-center justify-between">
-        <div className="w-full md:w-auto">
+        {/* <div className="w-full md:w-auto">
           <DropDown />
-        </div>
+        </div> */}
         <button className="p-2 rounded-lg transition transform hover:scale-105 focus:ring-2 focus:ring-blue-300" onClick={()=>navigate("/cart")}>
           <CartLogo/>
         </button>
