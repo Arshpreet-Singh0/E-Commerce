@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Input , message} from "antd";
 import axios from "axios";
-import { USER_API_END_POINT } from "../../utils/constant";
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 
 const ResendVerificationEmail = () => {
     const [email, setEmail] = useState();

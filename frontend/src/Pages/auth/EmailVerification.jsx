@@ -2,7 +2,7 @@ import { Button, Result } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
-import { USER_API_END_POINT } from '../../utils/constant';
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import Loader from '../../components/Loder'
 
 const EmailVerification = () => {

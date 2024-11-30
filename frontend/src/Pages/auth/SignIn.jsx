@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { USER_API_END_POINT } from "../../utils/constant";
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import { setUser } from "../../redux/authSlice";
 import Aos from "aos";
 import "aos/dist/aos.css";

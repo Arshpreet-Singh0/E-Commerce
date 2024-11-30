@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PRODUCT_API_END_POINT } from "../../utils/constant";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
 import ProductCard from "../../components/admin/ProductCard";
 import { Button } from "antd";
 import { useNavigate } from "react-router";
+import Loader from "../../components/Loder";
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getAdminProducts = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`${PRODUCT_API_END_POINT}/get/admin`, {
           withCredentials: true,
         });
-        console.log(res);
 
         if (res?.data?.success) {
           setProducts(res?.data?.products);
         }
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false);
       }
     };
     getAdminProducts();
   }, []);
+
+  if(loading){
+    return <Loader />
+  }
 
 
   return (

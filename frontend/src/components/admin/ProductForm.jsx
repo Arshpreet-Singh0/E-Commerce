@@ -3,7 +3,7 @@ import { Button, Form, Input, Select, Upload } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { CATEGORIES_API_END_POINT } from "../../utils/constant";
+const CATEGORIES_API_END_POINT = import.meta.env.VITE_CATEGORIES_API_END_POINT;
 import { ToastContainer } from "react-toastify";
 const { TextArea } = Input;
 
@@ -42,7 +42,6 @@ const ProductForm = ({ product, handleChange, setProduct, selectedCategory, setS
 
   return (
     <div className="w-[95%] md:w-[600px] mx-auto mt-5">
-       <ToastContainer position="top-right"/>
       <h1 className="text-2xl font-bold">{editForm==true ? 'Edit Product Details : ' : 'List New Product'}</h1>
 
       <form className="mt-5 mb-10" onSubmit={handleFormSubmit}>

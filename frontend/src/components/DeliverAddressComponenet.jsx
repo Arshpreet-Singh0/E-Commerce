@@ -3,7 +3,7 @@ import { Button, Card, Input, Radio, Select, Typography , message} from 'antd'
 const { Text: AntText, Title } = Typography;
 import statesOfIndia from '../utils/states';
 import axios from 'axios';
-import { USER_API_END_POINT } from '../utils/constant';
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/authSlice';
 

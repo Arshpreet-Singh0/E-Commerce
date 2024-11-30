@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Typography, List, message, Row, Col } from 'antd'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import { CART_API_END_POINT } from '../utils/constant.js';
+const CART_API_END_POINT = import.meta.env.VITE_CART_API_END_POINT;
 import { setCartItems } from '../redux/cartSlice.js';
 
 const { Text, Title } = Typography;
@@ -26,6 +26,8 @@ const Cart = () => {
         const res = await axios.get(`${CART_API_END_POINT}/get`, {
           withCredentials: true,
         });
+        console.log(res);
+        
 
         if (res?.data?.success) {
           dispatch(setCartItems(res?.data?.cart));
@@ -65,7 +67,7 @@ const Cart = () => {
         <Text>Your cart is empty</Text>
       ) : (
         <Row justify="center" gutter={[16, 16]}>
-          {cartItems.map((item) => (
+          {cartItems?.map((item) => (
             <Col xs={24} md={20} lg={18} key={item.product}>
               <Card style={{ marginBottom: '16px', width: '100%' }}>
                 <Row gutter={[16, 16]} align="middle">

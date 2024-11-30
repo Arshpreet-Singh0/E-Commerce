@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Card , Typography, message} from 'antd'
 import axios from 'axios';
-import { ORDER_API_END_POINT, PAYMENT_API_END_POINT } from '../utils/constant';
+const ORDER_API_END_POINT = import.meta.env.VITE_ORDER_API_END_POINT;
+const PAYMENT_API_END_POINT = import.meta.env.VITE_PAYMENT_API_END_POINT;
 const {Text} = Typography;
 
 const PriceDetails = ({quantity, product, shippingAddress,user}) => {

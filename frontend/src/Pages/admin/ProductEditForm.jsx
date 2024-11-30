@@ -3,7 +3,7 @@ import axios from "axios";
 import ProductForm from '../../components/admin/ProductForm.jsx'
 import { useNavigate, useParams } from "react-router";
 import { PRODUCT_API_END_POINT } from "../../utils/constant";
-import { toast, ToastContainer } from "react-toastify";
+import { message } from "antd";
 
 export const ProductEditForm = () => {
   const [product, setProduct] = useState([]);
@@ -58,7 +58,7 @@ export const ProductEditForm = () => {
 
       console.log(response);
       if(response?.data?.success){
-        toast.success(response?.data?.message);
+        message.success(response?.data?.message);
 
         setTimeout(()=>{
           navigate(`/product/${id}`);
@@ -66,7 +66,7 @@ export const ProductEditForm = () => {
       }
       
     } catch (error) {
-      toast.error(error?.response?.data?.message || "An error occurred!");
+      message.error(error?.response?.data?.message || "An error occurred!");
     }finally{
       setLoading(false);
     }

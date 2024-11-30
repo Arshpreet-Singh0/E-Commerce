@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Input, message, Modal, Select, Typography } from "antd";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { ORDER_API_END_POINT } from "../utils/constant";
+const ORDER_API_END_POINT = import.meta.env.VITE_ORDER_API_END_POINT;
 const { Text, Title } = Typography;
 
 const OrderCard = ({ order, admin}) => {

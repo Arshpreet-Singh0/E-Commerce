@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import ProductForm from "../../components/admin/ProductForm";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { PRODUCT_API_END_POINT } from "../../utils/constant";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
 import { toast, ToastContainer } from "react-toastify";
+import { message } from "antd";
 
 const NewProductForm = () => {
   const [product, setProduct] = useState({
@@ -53,14 +54,12 @@ const NewProductForm = () => {
           withCredentials : true,
       });
       if(res?.data?.success){
-        toast.success(res?.data?.message);
-        setTimeout(()=>{
+        message.success(res?.data?.message);
           navigate('/admin');
-        },1000)
       }
       
     } catch (error) {
-      toast.error(error?.response?.data?.message || "An error occurred!");
+      message.error(error?.response?.data?.message || "An error occurred!");
     }finally{
       setLoading(false);
     }
@@ -69,7 +68,6 @@ const NewProductForm = () => {
 
   return (
     <>
-      <ToastContainer position="top-right" />
       <ProductForm
         handleFileUpload={handleFileUpload}
         files={files}

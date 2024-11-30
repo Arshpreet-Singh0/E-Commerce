@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-import { USER_API_END_POINT } from "../../utils/constant";
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import {message} from 'antd';
 import { useSelector } from "react-redux";
 
@@ -186,6 +186,15 @@ const SignUp = () => {
             Already have an account?{" "}
             <button
               onClick={() => navigate("/sign-in")}
+              className="text-blue-500 hover:underline"
+            >
+              Sign In
+            </button>
+          </p>
+          <p className="text-center text-gray-600 mt-4">
+            Create Admin Account ?{" "}
+            <button
+              onClick={() => navigate("/admin/sign-up")}
               className="text-blue-500 hover:underline"
             >
               Sign In

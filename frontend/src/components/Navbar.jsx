@@ -5,8 +5,10 @@ import log from '../assets/shopping-basket-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/authSlice'; // Import the action
 import Profile from './profileDrop';
-import { Menu, Dropdown, Button, Layout, Avatar, Drawer } from 'antd';
+import { Menu, Dropdown, Button, Layout, Avatar, Drawer, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import axios from 'axios';
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 
 const Navbar = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -40,9 +42,20 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    navigate('/home')
-    dispatch(setUser(null));
+  const handleLogout = async() => {
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`,{},{
+        withCredentials : true,
+      })
+      if(res?.data?.success){
+        message.success(res?.data?.message);
+        navigate('/home')
+        dispatch(setUser(null));
+
+      }
+    } catch (error) {
+      message.error(error?.response?.data?.message);
+    }
     
   };
 

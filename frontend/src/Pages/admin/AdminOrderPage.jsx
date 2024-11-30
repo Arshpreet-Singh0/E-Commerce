@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { ORDER_API_END_POINT } from '../../utils/constant';
+const ORDER_API_END_POINT = import.meta.env.VITE_ORDER_API_END_POINT;
 import OrderCard from '../../components/OrderCard';
+import Loader from '../../components/Loder';
+import { message } from 'antd';
 
 const AdminOrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -14,21 +16,23 @@ const AdminOrderPage = () => {
         const res = await axios.get(`${ORDER_API_END_POINT}/admin/get`,{
           withCredentials : true,
         });
-        console.log(res);
-        
         if(res?.data?.success){
           setOrders(res?.data?.orders);
         }
 
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        message.error("Internal server error");
       }finally{
         setLoading(false);
       }
     };
     getOrders();
   },[])
-  console.log(orders);
+  
+  if(loading){
+    return <Loader />
+  }
   return (
     <div className='flex flex-col gap-5 mt-10 mb-10'>
       {

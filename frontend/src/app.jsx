@@ -4,7 +4,7 @@ import SearchNav from './components/SearchNav';
 import Footer from './components/Footer';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { USER_API_END_POINT } from "./utils/constant.js"
+const USER_API_END_POINT = import.meta.env.VITE_USER_API_END_POINT;
 import { useDispatch } from 'react-redux';
 import { setUser } from './redux/authSlice';
 import { setCartItems } from './redux/cartSlice.js';

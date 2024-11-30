@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { ORDER_API_END_POINT } from '../utils/constant';
+const ORDER_API_END_POINT = import.meta.env.VITE_ORDER_API_END_POINT;
 import OrderCard from '../components/OrderCard';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';

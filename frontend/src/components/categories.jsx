@@ -5,6 +5,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Loder from '../components/Loder'; 
 import Star from './Star';
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -12,12 +13,12 @@ function Categories() {
   const navigate = useNavigate();
 
   const apiUrls = {
-    Electronics: 'http://localhost:8080/api/v1/product/get/category/Electronics',
-    TVsAppliances: 'http://localhost:8080/api/v1/product/get/category/TVsAppliances',
-    Grocery: 'http://localhost:8080/api/v1/product/get/category/Grocery',
-    Fashion: 'http://localhost:8080/api/v1/product/get/category/Fashion',
-    Beauty: 'http://localhost:8080/api/v1/product/get/category/Beauty',
-    Furniture: 'http://localhost:8080/api/v1/product/get/category/Furniture',
+    Electronics: `${PRODUCT_API_END_POINT}/get/category/Electronics`,
+    TVsAppliances: `${PRODUCT_API_END_POINT}/get/category/TVsAppliances`,
+    Grocery: `${PRODUCT_API_END_POINT}/get/category/Grocery`,
+    Fashion: `${PRODUCT_API_END_POINT}/get/category/Fashion`,
+    Beauty: `${PRODUCT_API_END_POINT}/category/Beauty`,
+    Furniture: `${PRODUCT_API_END_POINT}/get/category/Furniture`,
   };
 
   const fetchCategories = async () => {
