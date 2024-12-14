@@ -10,9 +10,6 @@ import { setUser } from './redux/authSlice';
 import { setCartItems } from './redux/cartSlice.js';
 
 function App() {
-  const content = {
-    paddingTop: '4rem'
-  }
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -37,7 +34,7 @@ function App() {
     verifyUser();
   },[]);
   return (
-    <div style={content}>
+    <div>
       <Navbar />
       <SearchNav />
       <Outlet />

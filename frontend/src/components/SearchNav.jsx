@@ -75,8 +75,7 @@ const SearchNav = () => {
         <input
           placeholder="Type to search..."
           value={input}
-          onChange={(e) => handleChange(e.target.value)} // Update input on change
-          // className="border border-gray-300 rounded-md p-2" // Add some basic styles
+          onChange={(e) => handleChange(e.target.value)} // Update input on chang
         />
         <Button type="primary" onClick={handleSearchButtonClick}>Search</Button>
         
