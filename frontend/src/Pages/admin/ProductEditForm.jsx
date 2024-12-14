@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductForm from '../../components/admin/ProductForm.jsx'
 import { useNavigate, useParams } from "react-router";
-import { PRODUCT_API_END_POINT } from "../../utils/constant";
+const PRODUCT_API_END_POINT = import.meta.env.VITE_PRODUCT_API_END_POINT;
 import { message } from "antd";
 
 export const ProductEditForm = () => {
@@ -17,7 +17,7 @@ export const ProductEditForm = () => {
     const fetchProductDetail = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/product/get/${id}`
+          `${PRODUCT_API_END_POINT}/get/${id}`
         );
 
         setProduct(res?.data?.product);
